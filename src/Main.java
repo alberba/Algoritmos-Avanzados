@@ -1,6 +1,5 @@
 import mesurament.Mesurament24;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
