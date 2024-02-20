@@ -1,8 +1,6 @@
 import mesurament.Mesurament24;
 
-import java.util.Map;
 import java.util.Random;
-import java.util.TreeMap;
 import java.util.Arrays;
 
 public class Main {
@@ -33,27 +31,20 @@ public class Main {
         }
     }
 
-    public static void algoritmoN(int[] numeros) {
-        TreeMap<Integer, Integer> lista = new TreeMap<>();
+    public static void algoritmoN(int [] numeros) {
+        int [] frecuenciaNumeros = new int[101];
         for (int numero : numeros) {
-            // Si el número ya está en el mapa, se le suma 1 a su valor
-            if (lista.containsKey(numero)) {
-                lista.put(numero, lista.get(numero) + 1);
-            } else {
-                // Se crea una nueva entrada en el mapa
-                lista.put(numero, 1);
+            frecuenciaNumeros[numero]++;
+        }
+        int moda = 0;
+        int maxRepeticiones = 0;
+        for (int i = 0; i < frecuenciaNumeros.length; i++) {
+            if (frecuenciaNumeros[i] > maxRepeticiones) {
+                moda = i;
+                maxRepeticiones = frecuenciaNumeros[i];
             }
         }
-
-        Map.Entry<Integer, Integer> moda = lista.firstEntry();
-
-        // Se recorren los valores de la lista
-        for (Map.Entry<Integer, Integer> entry : lista.entrySet()) {
-            if (entry.getValue() > moda.getValue()) {
-                moda = entry;
-            }
-        }
-        System.out.println("La moda es el valor " + moda.getKey() + " y aparece " + moda.getValue() + " veces.");
+        System.out.println("La moda es el valor " + moda + " y aparece " + maxRepeticiones + " veces.");
     }
 
     public static void algoritmoNlogN(int [] numeros) {
