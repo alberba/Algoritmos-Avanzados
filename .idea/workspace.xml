@@ -4,9 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08a3286c-396c-4498-82f6-03656df49aeb" name="Changes" comment="Implementación algoritmos primera práctica&#10;&#10;Co-authored-by: AdondeBoy &lt;106172989+adondeboy@users.noreply.github.com&gt;">
-      <change afterPath="$PROJECT_DIR$/src/Vista.java" afterDir="false" />
+    <list default="true" id="08a3286c-396c-4498-82f6-03656df49aeb" name="Changes" comment="Implementación clase Main">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AlgoritmosN/NotiEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AlgoritmosN/Vista/PanelGrafico.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AlgoritmosN/Vista/Vista.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AlgoritmosN/Modelo/Modelo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AlgoritmosN/Modelo/Modelo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AlgoritmosN/Notificacion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AlgoritmosN/Notificacion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Vista/PanelGrafico.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Vista/Vista.java" beforeDir="false" />
     </list>
     <list id="e4b1aef4-e878-47c8-b5fd-19951c411ef3" name="Changes by rmart" comment="" />
     <list id="ffb1445c-3050-4733-82ca-ea7bcea7ea17" name="Changes by Santi" comment="Changes by Santi" />
@@ -14,6 +23,15 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="Enum" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -29,14 +47,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "jdk.selected.JAVA_MODULE": "18",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/alber/OneDrive/Escritorio/MVC_Esdeveniments",
+    "last_opened_file_path": "C:/Albert/UIB/AlgoritmosAvanzadoss/src/AlgoritmosN",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -49,9 +67,17 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Albert\UIB\AlgoritmosAvanzadoss\src\AlgoritmosN" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="AlgoritmosN" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+      <option name="MAIN_CLASS_NAME" value="AlgoritmosN.Main.Main" />
       <module name="AlgoritmosAvanzadoss" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -75,7 +101,8 @@
       <workItem from="1708369406393" duration="313000" />
       <workItem from="1708676698425" duration="692000" />
       <workItem from="1708679011367" duration="9000" />
-      <workItem from="1708679032336" duration="344000" />
+      <workItem from="1708679032336" duration="3740000" />
+      <workItem from="1708682828420" duration="5549000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <option name="closed" value="true" />
@@ -101,7 +128,55 @@
       <option name="project" value="LOCAL" />
       <updated>1708369545598</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Constructor Vista">
+      <option name="closed" value="true" />
+      <created>1708680020677</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1708680020677</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Primera implementación Modelo y interface Notificación">
+      <option name="closed" value="true" />
+      <created>1708682290336</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1708682290336</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Primera implementación Modelo y interface Notificación">
+      <option name="closed" value="true" />
+      <created>1708682301269</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1708682301269</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Implementación Controlador">
+      <option name="closed" value="true" />
+      <created>1708688445130</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1708688445130</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Implementación clase Main">
+      <option name="closed" value="true" />
+      <created>1708688496768</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1708688496768</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Implementación clase Main">
+      <option name="closed" value="true" />
+      <created>1708688503668</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1708688503668</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -123,7 +198,11 @@
     <MESSAGE value="Changes by Santi" />
     <MESSAGE value="Implementación algoritmos primera práctica" />
     <MESSAGE value="Implementación algoritmos primera práctica&#10;&#10;Co-authored-by: AdondeBoy &lt;106172989+adondeboy@users.noreply.github.com&gt;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementación algoritmos primera práctica&#10;&#10;Co-authored-by: AdondeBoy &lt;106172989+adondeboy@users.noreply.github.com&gt;" />
+    <MESSAGE value="Constructor Vista" />
+    <MESSAGE value="Primera implementación Modelo y interface Notificación" />
+    <MESSAGE value="Implementación Controlador" />
+    <MESSAGE value="Implementación clase Main" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementación clase Main" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
