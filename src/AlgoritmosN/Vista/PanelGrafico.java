@@ -24,11 +24,13 @@ public class PanelGrafico extends JPanel {
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public void paint(Graphics g) {
+        // Se pinta el fondo de blanco
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        // IMPLEMENTAR AQUI LA GRÁFICA
+
         ArrayList<Integer> arrayN = prog.getModelo().getArrayN();
         ArrayList<ArrayList<Long>> arrayT = prog.getModelo().getTiemposN();
+        // Para que la gráfica sea más visual, se usan colores para cada tipo de algoritmo
         Color [] colores = {Color.BLUE, Color.RED, Color.GREEN};
 
         if (arrayN.size() >= 2) {
@@ -38,13 +40,19 @@ public class PanelGrafico extends JPanel {
             double scaleX = (double) this.getWidth() / maxX;
             double scaleY = (double) this.getHeight() / maxY;
 
+            // Recorrido para pintar la gráfica
+            // Se recorren los tiempos de cada algoritmo
             for(int i = 0; i < arrayT.size(); i++) {
+                // Se recorren los tiempos para cada N
                 for(int j = 0; j < arrayT.get(i).size() - 1; j++) {
                     g.setColor(colores[i]);
                     int x1 = (int) (arrayN.get(j) * scaleX);
-                    int y1 = (int) (arrayT.get(i).get(j) * scaleY);
+                    // Se invierte el eje Y para que la gráfica tenga una visión más intuitiva
+                    int y1 = (int) (this.getHeight() - (arrayT.get(i).get(j) * scaleY));
                     int x2 = (int) (arrayN.get(j + 1) * scaleX);
-                    int y2 = (int) (arrayT.get(i).get(j + 1) * scaleY);
+                    // Se invierte el eje Y para que la gráfica tenga una visión más intuitiva
+                    int y2 = (int) (this.getHeight() - (arrayT.get(i).get(j + 1) * scaleY));
+                    // Une los puntos con una línea
                     g.drawLine(x1, y1, x2, y2);
                 }
             }

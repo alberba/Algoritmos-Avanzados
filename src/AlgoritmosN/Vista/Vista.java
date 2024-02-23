@@ -17,6 +17,8 @@ public class Vista extends JFrame implements ActionListener {
         super(title);
         prog = p;
         this.getContentPane().setLayout(new BorderLayout());
+
+        // INSERCIÓN DE BOTONES
         JPanel buttons = new JPanel();
         iniButton = new JButton("Iniciar");
         iniButton.addActionListener(this);
@@ -26,9 +28,10 @@ public class Vista extends JFrame implements ActionListener {
         buttons.add(stopButton);
         this.add(buttons);
         this.add(BorderLayout.NORTH, buttons);
+
+        // INSERCIÓN DE PANEL
         PanelGrafico panel = new PanelGrafico(p);
         this.add(BorderLayout.CENTER, panel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void mostrar() {
