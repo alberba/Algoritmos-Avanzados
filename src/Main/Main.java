@@ -1,3 +1,5 @@
+package Main;
+
 import mesurament.Mesurament24;
 
 import java.util.Random;
