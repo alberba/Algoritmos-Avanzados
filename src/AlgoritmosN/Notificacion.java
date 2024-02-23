@@ -1,5 +1,5 @@
 package AlgoritmosN;
 
 public interface Notificacion {
-    public void notificar(String s);
+    void notificar(NotiEnum s);
 }
