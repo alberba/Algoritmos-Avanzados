@@ -3,13 +3,14 @@ package AlgoritmosN.Vista;
 
 import AlgoritmosN.Main.Main;
 import AlgoritmosN.NotiEnum;
+import AlgoritmosN.Notificacion;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Vista extends JFrame implements ActionListener {
+public class Vista extends JFrame implements ActionListener, Notificacion {
 
     private final Main prog;
     private final JButton iniButton, stopButton;
@@ -51,4 +52,10 @@ public class Vista extends JFrame implements ActionListener {
         }
     }
 
+    @Override
+    public void notificar(NotiEnum s) {
+        if (s == NotiEnum.DIBUJAR) {
+            this.repaint();
+        }
+    }
 }

@@ -1,11 +1,12 @@
 package AlgoritmosN.Modelo;
 
 import AlgoritmosN.Main.Main;
+import AlgoritmosN.NotiEnum;
 
 import java.util.ArrayList;
 
 public class Modelo {
-    private Main prog;
+    private final Main prog;
     private final ArrayList<Integer> arrayN;
     // Tendran la estructura de: <<0, t1N10, t1N100, ...>, <0, t2N10, t2N100,...>, ...>
     private final ArrayList<ArrayList<Long>> tiemposN;
@@ -24,12 +25,13 @@ public class Modelo {
      * @param n tamaño del array
      * @param tiempo tiempos de los algoritmos
      */
-    public void addTiempoN(int n, long[] tiempo){
-        arrayN.add(n);
+    public void addTiempoN(int n, long tiempo, int indice){
+        if (!arrayN.contains(n))
+            arrayN.add(n);
 
-        tiemposN.get(0).add(tiempo[0]);
-        tiemposN.get(1).add(tiempo[1]);
-        tiemposN.get(2).add(tiempo[2]);
+        tiemposN.get(indice).add(tiempo);
+        // Notificamos a la vista para que se actualice
+        prog.getVista().notificar(NotiEnum.DIBUJAR);
     }
 
     /**

@@ -2,7 +2,6 @@ package AlgoritmosN.Controlador;
 
 import AlgoritmosN.Main.Main;
 import AlgoritmosN.Modelo.Modelo;
-import AlgoritmosN.NotiEnum;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -22,7 +21,7 @@ public class Controlador extends Thread {
 
         // Recorrido a todas las muestras de n
         for (int n : nMuestras) {
-            long[] tiempos = new long[3];
+            long tiempo;
             int[] numeros = new int[n];
 
             // Generación de n números aleatorios
@@ -35,25 +34,26 @@ public class Controlador extends Thread {
 
             // Cálculo del algoritmo de complejidad n
             algoritmoN(numeros);
-            tiempos[0] = System.nanoTime() - iniTime;
-            System.out.println("Tiempo del algoritmo de complejidad n: " + tiempos[0]);
+            tiempo = System.nanoTime() - iniTime;
+            System.out.println("Tiempo del algoritmo de complejidad n: " + tiempo);
+            // Pasamos el resultado al modelo
+            modelo.addTiempoN(n, tiempo, 0);
 
             // Cálculo del algoritmo de complejidad nlog(n)
             iniTime = System.nanoTime();
             algoritmoNlogN(numeros);
-            tiempos[1] = System.nanoTime() - iniTime;
-            System.out.println("Tiempo del algoritmo de complejidad nlog(n): " + tiempos[1]);
+            tiempo = System.nanoTime() - iniTime;
+            System.out.println("Tiempo del algoritmo de complejidad nlog(n): " + tiempo);
+            // Pasamos el resultado al modelo
+            modelo.addTiempoN(n, tiempo, 1);
 
-            // Cálculo del algoritmo de complejidad n^2
+            // Cálculo del algoritmo de complejidad n^
             iniTime = System.nanoTime();
             algoritmoN2(numeros);
-            tiempos[2] = System.nanoTime() - iniTime;
-            System.out.println("Tiempo del algoritmo de complejidad n^2: " + tiempos[2]);
-
-            // Pasamos los resultados al modelo
-            modelo.addTiempoN(n, tiempos);
-            // Notificamos a la vista para que se actualice
-            prog.notificar(NotiEnum.DIBUJAR);
+            tiempo = System.nanoTime() - iniTime;
+            System.out.println("Tiempo del algoritmo de complejidad n^2: " + tiempo);
+            // Pasamos el resultado al modelo
+            modelo.addTiempoN(n, tiempo, 2);
         }
     }
 
