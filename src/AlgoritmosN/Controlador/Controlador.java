@@ -9,25 +9,20 @@ import java.util.Random;
 public class Controlador extends Thread {
 
     private final Main prog;
+    private final int [] nMuestras = {100, 500, 1000, 2000, 3000};
     public Controlador(Main p) {
         prog = p;
         p.getModelo().reset();
     }
 
     public void run() {
-        Random random = new Random();
         Modelo modelo = prog.getModelo();
-        int [] nMuestras = {100, 500, 1000, 2000, 3000};
+
 
         // Recorrido a todas las muestras de n
         for (int n : nMuestras) {
             long tiempo;
-            int[] numeros = new int[n];
-
-            // Generación de n números aleatorios
-            for (int i = 0; i < n; i++) {
-                numeros[i] = random.nextInt(101);
-            }
+            int[] numeros = generarNAleatorios100(n);
 
             long iniTime = System.nanoTime();
             System.out.println("\nTiempos para n = " + n + ": ");
@@ -133,5 +128,20 @@ public class Controlador extends Thread {
             }
         }
         System.out.println("La moda es el valor " + moda + " y aparece " + maxRepeticiones + " veces.");
+    }
+
+    /**
+     * Método que genera n números aleatorios entre 0 y 100
+     * @param n Tamño del array
+     * @return Array de enteros
+     */
+    private int[] generarNAleatorios100(int n) {
+        Random random = new Random();
+        int[] numeros = new int[n];
+        // Generación de n números aleatorios
+        for (int i = 0; i < n; i++) {
+            numeros[i] = random.nextInt(101);
+        }
+        return numeros;
     }
 }

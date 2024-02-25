@@ -38,9 +38,6 @@ public class Main implements Notificacion {
                 controlador = null;
                 vista.repaint();
                 break;
-            case DIBUJAR:
-                vista.repaint();
-                break;
             default:
                 break;
         }
