@@ -21,7 +21,7 @@ public class Main implements Notificacion {
     }
 
     public static void main(String[] args) {
-        //Mesurament24.mesura();
+        Mesurament24.mesura();
         new Main();
     }
 
@@ -53,10 +53,5 @@ public class Main implements Notificacion {
     public Modelo getModelo() {
         return modelo;
     }
-
-    public Controlador getControlador() {
-        return controlador;
-    }
-
 
 }
