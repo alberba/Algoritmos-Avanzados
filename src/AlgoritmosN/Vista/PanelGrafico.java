@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class PanelGrafico extends JPanel {
 
     private final Main prog;
+
     public PanelGrafico(Main p) {
         prog = p;
         this.setPreferredSize(new Dimension(800, 600));
