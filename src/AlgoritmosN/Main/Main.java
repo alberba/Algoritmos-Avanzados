@@ -37,6 +37,7 @@ public class Main implements Notificacion {
             case PARAR:
                 controlador = null;
                 vista.repaint();
+                vista.setValueProgreso(0);
                 break;
             default:
                 break;

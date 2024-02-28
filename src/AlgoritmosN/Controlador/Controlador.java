@@ -2,6 +2,7 @@ package AlgoritmosN.Controlador;
 
 import AlgoritmosN.Main.Main;
 import AlgoritmosN.Modelo.Modelo;
+import AlgoritmosN.NotiEnum;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -10,6 +11,7 @@ public class Controlador extends Thread {
 
     private final Main prog;
     private final int [] nMuestras = {100, 500, 1000, 2000, 3000};
+    private int pasos = 0;
     public Controlador(Main p) {
         prog = p;
         p.getModelo().reset();
@@ -50,13 +52,14 @@ public class Controlador extends Thread {
             // Pasamos el resultado al modelo
             modelo.addTiempoN(n, tiempo, 2);
         }
+        prog.notificar(NotiEnum.PARAR);
     }
 
     /**
      * Algoritmo de complejidad N para calcular la moda de un array de enteros
      * @param numeros Array de enteros
      */
-    public static void algoritmoN(int [] numeros) {
+    public void algoritmoN(int [] numeros) {
         int [] frecuenciaNumeros = new int[101];
         int moda = 0;
         int maxRepeticiones = 0;
@@ -67,6 +70,11 @@ public class Controlador extends Thread {
 
         // Se busca el valor con más repeticiones
         for (int i = 0; i < frecuenciaNumeros.length; i++) {
+            pasos++;
+            if(pasos % 10000 == 0) {
+                pasos = 0;
+                prog.getVista().notificar(NotiEnum.PROGRESO);
+            }
             if (frecuenciaNumeros[i] > maxRepeticiones) {
                 moda = i;
                 maxRepeticiones = frecuenciaNumeros[i];
@@ -79,7 +87,7 @@ public class Controlador extends Thread {
      * Algoritmo de complejidad nlog(n) para calcular la moda de un array de enteros
      * @param numeros Array de enteros
      */
-    public static void algoritmoNlogN(int [] numeros) {
+    public void algoritmoNlogN(int [] numeros) {
         // Se ordena el array (complejidad nlog(n))
         Arrays.sort(numeros);
         int moda = numeros[0];
@@ -88,6 +96,11 @@ public class Controlador extends Thread {
 
         // Los valores repetidos se encontrarán juntos, por lo que se recorre el array y se cuentan las repeticiones
         for (int i = 1; i < numeros.length; i++) {
+            pasos++;
+            if(pasos % 10000 == 0) {
+                pasos = 0;
+                prog.getVista().notificar(NotiEnum.PROGRESO);
+            }
             // En el caso de coincidencia, se incrementa el contador de repeticiones
             if (numeros[i] == numeros[i - 1]) {
                 repeticiones++;
@@ -109,14 +122,21 @@ public class Controlador extends Thread {
      * Algoritmo de complejidad n^2 para calcular la moda de un array de enteros
      * @param numeros Array de enteros
      */
-    public static void algoritmoN2(int [] numeros) {
+    public void algoritmoN2(int [] numeros) {
         int moda = numeros[0];
         int maxRepeticiones = 1;
         // Se recorren los valores
         for (int numero : numeros) {
+            pasos++;
+            pasos++;
+            if(pasos % 10000 == 0) {
+                pasos = 0;
+                prog.getVista().notificar(NotiEnum.PROGRESO);
+            }
             int repeticiones = 0;
             // Para cada valor, se cuentan las veces que aparece
             for (int aux : numeros) {
+
                 if (numero == aux) {
                     repeticiones++;
                 }
