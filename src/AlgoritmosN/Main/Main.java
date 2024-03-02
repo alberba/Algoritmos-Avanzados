@@ -35,9 +35,11 @@ public class Main implements Notificacion {
                 }
                 break;
             case PARAR:
+                // Se detiene el controlador
+                controlador.notificar(NotiEnum.PARAR);
                 controlador = null;
-                vista.repaint();
-                vista.setValueProgreso(0);
+                vista.notificar(NotiEnum.DIBUJAR);
+                vista.setValueProgreso(100);
                 break;
             default:
                 break;

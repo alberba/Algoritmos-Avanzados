@@ -38,6 +38,9 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         // INSERCIÓN DE BARRA DE PROGRESO
         progreso = new JProgressBar();
         progreso.setValue(0);
+        // Se muestra el porcentaje de la barra, inicialmente 0%
+        progreso.setString("0%");
+        progreso.setStringPainted(true);
         this.add(progreso, BorderLayout.SOUTH);
     }
 
@@ -65,10 +68,12 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
             p = 0;
         }
         progreso.setValue(p);
+        progreso.setString(p + "%");
     }
 
     public void setValueProgreso(int p) {
         progreso.setValue(p);
+        progreso.setString(p + "%");
     }
 
     @Override

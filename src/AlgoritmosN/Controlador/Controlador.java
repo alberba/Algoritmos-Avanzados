@@ -11,6 +11,7 @@ public class Controlador extends Thread {
 
     private final Main prog;
     private final int [] nMuestras = {100, 500, 1000, 2000, 3000};
+    private boolean interrumpir = false;
     private int pasos = 0;
     public Controlador(Main p) {
         prog = p;
@@ -19,10 +20,11 @@ public class Controlador extends Thread {
 
     public void run() {
         Modelo modelo = prog.getModelo();
-
-
         // Recorrido a todas las muestras de n
         for (int n : nMuestras) {
+            if (interrumpir) {
+                break;
+            }
             long tiempo;
             int[] numeros = generarNAleatorios100(n);
 
@@ -31,6 +33,9 @@ public class Controlador extends Thread {
 
             // Cálculo del algoritmo de complejidad n
             algoritmoN(numeros);
+            if (interrumpir) {
+                break;
+            }
             tiempo = System.nanoTime() - iniTime;
             System.out.println("Tiempo del algoritmo de complejidad n: " + tiempo);
             // Pasamos el resultado al modelo
@@ -39,6 +44,9 @@ public class Controlador extends Thread {
             // Cálculo del algoritmo de complejidad nlog(n)
             iniTime = System.nanoTime();
             algoritmoNlogN(numeros);
+            if (interrumpir) {
+                break;
+            }
             tiempo = System.nanoTime() - iniTime;
             System.out.println("Tiempo del algoritmo de complejidad nlog(n): " + tiempo);
             // Pasamos el resultado al modelo
@@ -47,12 +55,21 @@ public class Controlador extends Thread {
             // Cálculo del algoritmo de complejidad n^
             iniTime = System.nanoTime();
             algoritmoN2(numeros);
+            if (interrumpir) {
+                break;
+            }
             tiempo = System.nanoTime() - iniTime;
             System.out.println("Tiempo del algoritmo de complejidad n^2: " + tiempo);
             // Pasamos el resultado al modelo
             modelo.addTiempoN(n, tiempo, 2);
         }
-        prog.notificar(NotiEnum.PARAR);
+        // Solo envía la notificación de parar si ha acabado las ejecuciones
+        if (!interrumpir) {
+            prog.getVista().notificar(NotiEnum.PARAR);
+        } else {
+            // Se notifica mediante la consola de salida que se ha interrumpido el proceso
+            System.out.println("Interrumpido");
+        }
     }
 
     /**
@@ -70,6 +87,9 @@ public class Controlador extends Thread {
 
         // Se busca el valor con más repeticiones
         for (int i = 0; i < frecuenciaNumeros.length; i++) {
+            if (interrumpir) {
+                return;
+            }
             pasos++;
             if(pasos % 10000 == 0) {
                 pasos = 0;
@@ -96,6 +116,9 @@ public class Controlador extends Thread {
 
         // Los valores repetidos se encontrarán juntos, por lo que se recorre el array y se cuentan las repeticiones
         for (int i = 1; i < numeros.length; i++) {
+            if (interrumpir) {
+                return;
+            }
             pasos++;
             if(pasos % 10000 == 0) {
                 pasos = 0;
@@ -127,6 +150,9 @@ public class Controlador extends Thread {
         int maxRepeticiones = 1;
         // Se recorren los valores
         for (int numero : numeros) {
+            if (interrumpir) {
+                return;
+            }
             pasos++;
             pasos++;
             if(pasos % 10000 == 0) {
@@ -163,5 +189,11 @@ public class Controlador extends Thread {
             numeros[i] = random.nextInt(101);
         }
         return numeros;
+    }
+
+    public void notificar(NotiEnum s) {
+        if (s == NotiEnum.PARAR) {
+            interrumpir = true;
+        }
     }
 }
