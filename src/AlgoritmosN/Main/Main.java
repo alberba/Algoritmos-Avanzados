@@ -38,8 +38,8 @@ public class Main implements Notificacion {
                 // Se detiene el controlador
                 controlador.notificar(NotiEnum.PARAR);
                 controlador = null;
-                vista.notificar(NotiEnum.DIBUJAR);
                 vista.setValueProgreso(100);
+                vista.notificar(NotiEnum.DIBUJAR);
                 break;
             default:
                 break;

@@ -65,7 +65,8 @@ public class Controlador extends Thread {
         }
         // Solo envía la notificación de parar si ha acabado las ejecuciones
         if (!interrumpir) {
-            prog.getVista().notificar(NotiEnum.PARAR);
+            prog.notificar(NotiEnum.PARAR);
+            System.out.println("Fin de las ejecuciones");
         } else {
             // Se notifica mediante la consola de salida que se ha interrumpido el proceso
             System.out.println("Interrumpido");
