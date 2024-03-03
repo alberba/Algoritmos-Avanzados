@@ -67,8 +67,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         if (p > 100) {
             p = 0;
         }
-        progreso.setValue(p);
-        progreso.setString(p + "%");
+        setValueProgreso(p);
     }
 
     public void setValueProgreso(int p) {

@@ -93,7 +93,7 @@ public class Controlador extends Thread implements Notificacion {
                 return;
             }
             pasos++;
-            if(pasos % 10000 == 0) {
+            if (pasos % 10000 == 0) {
                 pasos = 0;
                 prog.getVista().notificar(NotiEnum.PROGRESO);
             }
@@ -155,8 +155,7 @@ public class Controlador extends Thread implements Notificacion {
             if (interrumpir) {
                 return;
             }
-            pasos++;
-            pasos++;
+            pasos = pasos + 2;
             if(pasos % 10000 == 0) {
                 pasos = 0;
                 prog.getVista().notificar(NotiEnum.PROGRESO);
@@ -193,6 +192,7 @@ public class Controlador extends Thread implements Notificacion {
         return numeros;
     }
 
+    @Override
     public void notificar(NotiEnum s) {
         if (s == NotiEnum.PARAR) {
             interrumpir = true;
