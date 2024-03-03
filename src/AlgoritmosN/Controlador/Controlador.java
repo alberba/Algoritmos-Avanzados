@@ -3,11 +3,12 @@ package AlgoritmosN.Controlador;
 import AlgoritmosN.Main.Main;
 import AlgoritmosN.Modelo.Modelo;
 import AlgoritmosN.NotiEnum;
+import AlgoritmosN.Notificacion;
 
 import java.util.Arrays;
 import java.util.Random;
 
-public class Controlador extends Thread {
+public class Controlador extends Thread implements Notificacion {
 
     private final Main prog;
     private final int [] nMuestras = {100, 500, 1000, 2000, 3000};
