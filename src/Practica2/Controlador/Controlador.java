@@ -2,6 +2,7 @@ package Practica2.Controlador;
 
 import Practica2.Main.Main;
 import Practica2.Modelo.Formas.Cuadrado;
+import Practica2.Modelo.Formas.Punto;
 import Practica2.Modelo.Modelo;
 import Practica2.NotiEnum;
 import Practica2.Notificacion;
@@ -13,7 +14,6 @@ public class Controlador extends Thread implements Notificacion {
 
     private final Main prog;
     private boolean interrumpir = false;
-    private int nivel = 0;
     public Controlador(Main p) {
         prog = p;
     }
@@ -34,11 +34,10 @@ public class Controlador extends Thread implements Notificacion {
         }
     }
 
-    public void generarCuadrado(int centroX, int centroY, int lado, int profundidad) {
+    public void generarCuadrado(Punto centro, int lado, int profundidad) {
         // Dibujar el contorno del cuadrado actual con el color correspondiente al nivel
-        int topLeftX = centroX - lado / 2;
-        int topLeftY = centroY - lado / 2;
-        prog.getModelo().notificar(NotiEnum.ADDCUADRADO, new Cuadrado(topLeftX, topLeftY, lado));
+        Punto topLeft = new Punto(centro.getX() - lado / 2, centro.getY() - lado / 2);
+        prog.getModelo().notificar(NotiEnum.ADDCUADRADO, new Cuadrado(topLeft, lado));
 
         // Caso base: si el nivel es 0, detener la recursión
         if (profundidad == 0)
@@ -48,18 +47,25 @@ public class Controlador extends Thread implements Notificacion {
         int ladoHijos = lado / 2;
 
         // Calcular las coordenadas de los centros de los cuadrados más pequeños
-        int[] centrosHijosX = {centroX - ladoHijos, centroX + ladoHijos, centroX + ladoHijos, centroX - ladoHijos};
-        int[] centrosHijosY = {centroY - ladoHijos, centroY - ladoHijos, centroY + ladoHijos, centroY + ladoHijos};
+        Punto[] centrosHijos = crearCentrosHijos(centro, ladoHijos);
 
         // Dibujar los contornos de los cuadrados más pequeños recursivamente
-        for (int i = 0; i < 4; i++) {
-            generarCuadrado(centrosHijosX[i], centrosHijosY[i], ladoHijos, profundidad - 1);
+        for (Punto centroHijo : centrosHijos) {
+            generarCuadrado(centroHijo, ladoHijos, profundidad - 1);
         }
+    }
+
+    private Punto[] crearCentrosHijos(Punto centro, int ladoHijos) {
+        return new Punto[]{
+                new Punto(centro.getX() - ladoHijos, centro.getY() - ladoHijos),
+                new Punto(centro.getX() + ladoHijos, centro.getY() - ladoHijos),
+                new Punto(centro.getX() + ladoHijos, centro.getY() + ladoHijos),
+                new Punto(centro.getX() - ladoHijos, centro.getY() + ladoHijos)};
     }
 
     @Override
     public void notificar(NotiEnum s, Object o) {
-        if (s == NotiEnum.PARAR) {
+        if (s == NotiEnum.INICIAR) {
             interrumpir = true;
         }
     }
