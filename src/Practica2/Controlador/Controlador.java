@@ -20,11 +20,6 @@ public class Controlador extends Thread implements Notificacion {
 
     public void run() {
         Modelo modelo = prog.getModelo();
-        // Recorrido a todas las muestras de n
-
-
-
-
         if (!interrumpir) {
             prog.notificar(NotiEnum.PARAR, null);
             System.out.println("Fin de las ejecuciones");
@@ -55,6 +50,28 @@ public class Controlador extends Thread implements Notificacion {
         }
     }
 
+    // Función recursiva para dibujar el triángulo de Sierpinski
+
+    private void drawSierpinski(Graphics g, Punto p1, Punto p2, Punto p3, int depth, Color[] colors) {
+        // Caso base: si la profundidad es 0, dibujar el triángulo
+        if (depth == 0) {
+            g.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+            g.drawLine(p2.getX(), p2.getY(), p3.getX(), p3.getY());
+            g.drawLine(p3.getX(), p3.getY(), p1.getX(), p1.getY());
+        } else {
+            // Calcular los puntos medios de los lados del triángulo
+            Punto mid1 = new Punto((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
+            Punto mid2 = new Punto((p2.getX() + p3.getX()) / 2, (p2.getY() + p3.getY()) / 2);
+            Punto mid3 = new Punto((p3.getX() + p1.getX()) / 2, (p3.getY() + p1.getY()) / 2);
+
+            // Dibujar los triángulos de Sierpinski recursivamente, con colores diferentes para cada nivel
+            drawSierpinski(g, p1, mid1, mid3, depth - 1, colors);
+            drawSierpinski(g, mid1, p2, mid2, depth - 1, colors);
+            drawSierpinski(g, mid3, mid2, p3, depth - 1, colors);
+        }
+    }
+
+
     private Punto[] crearCentrosHijos(Punto centro, int ladoHijos) {
         return new Punto[]{
                 new Punto(centro.getX() - ladoHijos, centro.getY() - ladoHijos),
@@ -66,7 +83,7 @@ public class Controlador extends Thread implements Notificacion {
     @Override
     public void notificar(NotiEnum s, Object o) {
         if (s == NotiEnum.INICIAR) {
-            interrumpir = true;
+            generarCuadrado();
         }
     }
 }

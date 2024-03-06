@@ -13,7 +13,9 @@ import java.awt.event.ActionListener;
 public class Vista extends JFrame implements ActionListener, Notificacion {
 
     private final Main prog;
-    private final JButton iniButton, stopButton, paramButton;
+    private final JButton iniButton, stopButton, paramButton,selectButton;
+
+    private final JComboBox Forma;
     private final JProgressBar progreso;
     public Vista(String title, Main p) {
         super(title);
@@ -33,7 +35,13 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         buttons.add(paramButton);
         this.add(buttons);
         this.add(BorderLayout.NORTH, buttons);
+        selectButton = new JButton("Seleccionar");
+        selectButton.addActionListener(this);
+        buttons.add(selectButton);
 
+        // Crear el menú desplegable
+        String[] tipos = {"Cuadrados", "Triángulos de Sierpinski"};
+        Forma = new JComboBox<>(tipos);
         // INSERCIÓN DE PANEL
         PanelGrafico panel = new PanelGrafico(p);
         this.add(BorderLayout.CENTER, panel);
@@ -64,6 +72,17 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         } else if (e.getSource() == paramButton) {
             Dialogo dialogo = new Dialogo(prog, prog.getModelo().getProfundidad());
             dialogo.setVisible(true);
+
+        } else if (e.getSource() == selectButton) {
+            // Acción cuando se presiona el botón "Seleccionar"
+            // Mostrar cuadro de diálogo para seleccionar entre cuadrados y triángulos
+            String[] options = {"Cuadrados", "Triángulos de Sierpinski"};
+            int choice = JOptionPane.showOptionDialog(this, "Selecciona una forma", "Selección de Forma", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (choice == 0) {
+                //Habria que notificar al modelo que lo que se deben dbujar deben ser cuadrados
+            } else if (choice == 1) {
+               // habra que notificar al modelo que lo q se debe dibujar son triangulos
+            }
         }
     }
 

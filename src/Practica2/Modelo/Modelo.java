@@ -15,7 +15,6 @@ public class Modelo implements Notificacion {
         prog = p;
         profundidad = 3;
         cuadrados = new ArrayList<>();
-
     }
 
     public int getProfundidad() {
