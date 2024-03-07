@@ -16,7 +16,7 @@ public class Main implements Notificacion {
     public Main() {
         controlador = null;
         modelo = new Modelo(this);
-        vista = new Vista("AlgoritmosN", this);
+        vista = new Vista("Patrones Repetitivos", this);
         vista.mostrar();
     }
 
