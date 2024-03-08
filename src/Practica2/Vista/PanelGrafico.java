@@ -9,10 +9,11 @@ import java.util.ArrayList;
 public class PanelGrafico extends JPanel {
 
     private final Main prog;
+    public static final int SIZE = 768;
 
     public PanelGrafico(Main p) {
         prog = p;
-        this.setPreferredSize(new Dimension(640, 640));
+        this.setPreferredSize(new Dimension(SIZE, SIZE));
     }
 
     // Función recursiva para dibujar contornos de cuadrados
@@ -66,6 +67,5 @@ public class PanelGrafico extends JPanel {
             paint(g);
         }
     }
-
 
 }

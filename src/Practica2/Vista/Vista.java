@@ -14,6 +14,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
 
     private final Main prog;
     private final JButton iniButton, stopButton, paramButton,selectButton;
+    private PanelGrafico panel;
 
     private final JComboBox Forma;
     private final JProgressBar progreso;
@@ -43,7 +44,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         String[] tipos = {"Cuadrados", "Triángulos de Sierpinski"};
         Forma = new JComboBox<>(tipos);
         // INSERCIÓN DE PANEL
-        PanelGrafico panel = new PanelGrafico(p);
+        panel = new PanelGrafico(p);
         this.add(BorderLayout.CENTER, panel);
 
         // INSERCIÓN DE BARRA DE PROGRESO
