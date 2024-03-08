@@ -42,7 +42,7 @@ public class Controlador extends Thread implements Notificacion {
         int ladoHijos = lado / 2;
 
         // Calcular las coordenadas de los centros de los cuadrados más pequeños
-        Punto[] centrosHijos = crearCentrosHijos(centro, ladoHijos);
+        Punto[] centrosHijos = crearCentrosHijosCuadrados(centro, ladoHijos);
 
         // Dibujar los contornos de los cuadrados más pequeños recursivamente
         for (Punto centroHijo : centrosHijos) {
@@ -72,7 +72,7 @@ public class Controlador extends Thread implements Notificacion {
     }
 
 
-    private Punto[] crearCentrosHijos(Punto centro, int ladoHijos) {
+    private Punto[] crearCentrosHijosCuadrados(Punto centro, int ladoHijos) {
         return new Punto[]{
                 new Punto(centro.getX() - ladoHijos, centro.getY() - ladoHijos),
                 new Punto(centro.getX() + ladoHijos, centro.getY() - ladoHijos),
