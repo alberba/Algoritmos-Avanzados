@@ -6,13 +6,15 @@ import Practica2.Modelo.Formas.Punto;
 import Practica2.Modelo.Modelo;
 import Practica2.NotiEnum;
 import Practica2.Notificacion;
+import Practica2.Vista.PanelGrafico;
+import Practica2.Vista.dialogos.TypePolygon;
 
 import java.awt.*;
-import java.util.Random;
 
 public class Controlador extends Thread implements Notificacion {
 
     private final Main prog;
+    private static final int LADO_INICIAL = 256;
     private boolean interrumpir = false;
     public Controlador(Main p) {
         prog = p;
@@ -20,6 +22,12 @@ public class Controlador extends Thread implements Notificacion {
 
     public void run() {
         Modelo modelo = prog.getModelo();
+        if (modelo.getTipo() == TypePolygon.CUADRADO) {
+            generarCuadrado(new Punto(PanelGrafico.SIZE / 2, PanelGrafico.SIZE / 2), LADO_INICIAL, modelo.getProfundidad());
+        } else {
+            // TODO: Realizar la llamada a la función
+            //drawSierpinski();
+        }
         if (!interrumpir) {
             prog.notificar(NotiEnum.PARAR, null);
             System.out.println("Fin de las ejecuciones");
@@ -83,7 +91,7 @@ public class Controlador extends Thread implements Notificacion {
     @Override
     public void notificar(NotiEnum s, Object o) {
         if (s == NotiEnum.INICIAR) {
-            generarCuadrado();
+            //generarCuadrado();
         }
     }
 }
