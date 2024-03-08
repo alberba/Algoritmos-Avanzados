@@ -3,6 +3,8 @@ package Practica2.Vista;
 import Practica2.Main.Main;
 import Practica2.NotiEnum;
 import Practica2.Vista.dialogos.ProfPanel;
+import Practica2.Vista.dialogos.TypePanel;
+import Practica2.Vista.dialogos.TypePolygon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,6 +30,12 @@ public class Dialogo extends JDialog implements ActionListener {
 
     public Dialogo(Main prog) {
         this.interior = new TypePanel();
+        this.prog = prog;
+        this.setLayout(new FlowLayout());
+        okButton.addActionListener(this);
+        interior.add(okButton);
+        this.add(interior);
+        mostrar();
     }
 
     public void mostrar() {
