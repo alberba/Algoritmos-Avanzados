@@ -1,10 +1,9 @@
 package Practica2.Vista.dialogos;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Enumeration;
 
-public class TypePanel extends JPanel implements ActionListener {
+public class TypePanel extends JPanel {
 
     private ButtonGroup grupo;
 
@@ -18,8 +17,13 @@ public class TypePanel extends JPanel implements ActionListener {
         this.add(r2);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
+    public String getTipo() {
+        for (Enumeration<AbstractButton> buttons = grupo.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+        return null;
     }
 }

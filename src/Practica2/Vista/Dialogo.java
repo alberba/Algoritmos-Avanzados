@@ -55,7 +55,14 @@ public class Dialogo extends JDialog implements ActionListener {
 
     public void notificar() {
         try {
-            prog.getModelo().notificar(NotiEnum.SETPARAM, Integer.parseInt(numero.getText()));
+            if (interior instanceof ProfPanel)
+                prog.getModelo().notificar(NotiEnum.SETPARAM, ((ProfPanel) interior).getProfundidad());
+            if (interior instanceof TypePanel){
+                if (((TypePanel) interior).getTipo().equals("Cuadrado"))
+                    prog.getModelo().notificar(NotiEnum.SETPARAM, TypePolygon.CUADRADO);
+                else
+                    prog.getModelo().notificar(NotiEnum.SETPARAM, TypePolygon.TRIANGULO);
+            }
         } catch (Exception e) {
             System.out.println("Error en la entrada de datos");
         }
