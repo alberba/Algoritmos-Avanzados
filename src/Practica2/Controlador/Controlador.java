@@ -92,8 +92,8 @@ public class Controlador extends Thread implements Notificacion {
 
     @Override
     public void notificar(NotiEnum s, Object o) {
-        if (s == NotiEnum.INICIAR) {
-            //generarCuadrado();
+        if (s == NotiEnum.PARAR) {
+            interrumpir = true;
         }
     }
 }
