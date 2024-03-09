@@ -32,6 +32,7 @@ public class Main implements Notificacion {
                 if (controlador == null) {
                     controlador = new Controlador(this);
                     controlador.start();
+                    vista.resetPanel();
                 }
                 break;
             case PARAR:

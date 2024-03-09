@@ -64,6 +64,10 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         this.setVisible(true);
     }
 
+    public void resetPanel() {
+        panel.clear();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == iniButton) {
