@@ -81,25 +81,17 @@ public class PanelGrafico extends JPanel {
     }
 
     private Color selectColor(Cuadrado cuadrado, Color[] colores) {
-        switch (cuadrado.getLado()) {
-            case 256:
-                return colores[0];
-            case 128:
-                return colores[1];
-            case 64:
-                return colores[2];
-            case 32:
-                return colores[3];
-            case 16:
-                return colores[4];
-            case 8:
-                return colores[5];
-            case 4:
-                return colores[6];
-            case 2:
-                return colores[7];
-        }
-        return colores[0];
+        return switch (cuadrado.getLado()) {
+            case 256 -> colores[0];
+            case 128 -> colores[1];
+            case 64 -> colores[2];
+            case 32 -> colores[3];
+            case 16 -> colores[4];
+            case 8 -> colores[5];
+            case 4 -> colores[6];
+            case 2 -> colores[7];
+            default -> colores[0];
+        };
     }
 
 

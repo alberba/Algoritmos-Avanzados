@@ -14,7 +14,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
 
     private final Main prog;
     private final JButton iniButton, stopButton, paramButton,selectButton;
-    private PanelGrafico panel;
+    private final PanelGrafico panel;
 
     private final JProgressBar progreso;
     public Vista(String title, Main p) {

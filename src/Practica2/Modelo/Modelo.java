@@ -1,7 +1,6 @@
 package Practica2.Modelo;
 
 import Practica2.Main.Main;
-import Practica2.Modelo.Formas.Cuadrado;
 import Practica2.NotiEnum;
 import Practica2.Notificacion;
 import Practica2.Vista.dialogos.EnumPolygon;

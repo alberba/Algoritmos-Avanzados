@@ -38,6 +38,7 @@ public class Controlador extends Thread implements Notificacion {
         }
     }
 
+    // TODO: Implementar uso de interrumpir en la función
     public void generarCuadrado(Punto centro, int lado, int profundidad) {
         // Dibujar el contorno del cuadrado actual con el color correspondiente al nivel
         Punto topLeft = new Punto(centro.getX() - lado / 2, centro.getY() - lado / 2);
