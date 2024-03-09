@@ -13,9 +13,18 @@ public class Modelo implements Notificacion {
     private int profundidad;
     private EnumPolygon tipo;
     private ArrayList<Object> poligonos;
+
     public Modelo (Main p) {
         prog = p;
         profundidad = 3;
+        tipo = EnumPolygon.CUADRADO;
+        poligonos = new ArrayList<>();
+    }
+
+    /**
+     * Resetea los polígonos registrados
+     */
+    public void reset() {
         poligonos = new ArrayList<>();
     }
 
@@ -27,6 +36,10 @@ public class Modelo implements Notificacion {
         return tipo;
     }
 
+    public ArrayList<Object> getPoligonos() {
+        return poligonos;
+    }
+
     @Override
     public void notificar(NotiEnum s, Object o) {
         if (s == NotiEnum.SETPARAM) {
@@ -36,7 +49,7 @@ public class Modelo implements Notificacion {
                 tipo = (EnumPolygon) o;
             }
         } else if (s == NotiEnum.ADDCUADRADO) {
-            poligonos.add((Cuadrado) o);
+            poligonos.add(o);
             prog.getVista().notificar(NotiEnum.DIBUJAR, null);
         }
     }

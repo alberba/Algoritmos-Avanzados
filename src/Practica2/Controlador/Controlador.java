@@ -18,6 +18,7 @@ public class Controlador extends Thread implements Notificacion {
     private boolean interrumpir = false;
     public Controlador(Main p) {
         prog = p;
+        prog.getModelo().reset();
     }
 
     public void run() {
