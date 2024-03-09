@@ -1,5 +1,5 @@
 package Practica2.Vista.dialogos;
 
-public enum TypePolygon {
+public enum EnumPolygon {
     CUADRADO, TRIANGULO
 }

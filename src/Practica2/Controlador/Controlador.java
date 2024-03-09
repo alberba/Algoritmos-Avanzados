@@ -7,7 +7,7 @@ import Practica2.Modelo.Modelo;
 import Practica2.NotiEnum;
 import Practica2.Notificacion;
 import Practica2.Vista.PanelGrafico;
-import Practica2.Vista.dialogos.TypePolygon;
+import Practica2.Vista.dialogos.EnumPolygon;
 
 import java.awt.*;
 
@@ -22,7 +22,7 @@ public class Controlador extends Thread implements Notificacion {
 
     public void run() {
         Modelo modelo = prog.getModelo();
-        if (modelo.getTipo() == TypePolygon.CUADRADO) {
+        if (modelo.getTipo() == EnumPolygon.CUADRADO) {
             generarCuadrado(new Punto(PanelGrafico.SIZE / 2, PanelGrafico.SIZE / 2), LADO_INICIAL, modelo.getProfundidad());
         } else {
             // TODO: Realizar la llamada a la función

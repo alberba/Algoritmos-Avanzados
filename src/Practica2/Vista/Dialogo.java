@@ -4,7 +4,7 @@ import Practica2.Main.Main;
 import Practica2.NotiEnum;
 import Practica2.Vista.dialogos.ProfPanel;
 import Practica2.Vista.dialogos.TypePanel;
-import Practica2.Vista.dialogos.TypePolygon;
+import Practica2.Vista.dialogos.EnumPolygon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,9 +59,9 @@ public class Dialogo extends JDialog implements ActionListener {
                 prog.getModelo().notificar(NotiEnum.SETPARAM, ((ProfPanel) interior).getProfundidad());
             if (interior instanceof TypePanel){
                 if (((TypePanel) interior).getTipo().equals("Cuadrado"))
-                    prog.getModelo().notificar(NotiEnum.SETPARAM, TypePolygon.CUADRADO);
+                    prog.getModelo().notificar(NotiEnum.SETPARAM, EnumPolygon.CUADRADO);
                 else
-                    prog.getModelo().notificar(NotiEnum.SETPARAM, TypePolygon.TRIANGULO);
+                    prog.getModelo().notificar(NotiEnum.SETPARAM, EnumPolygon.TRIANGULO);
             }
         } catch (Exception e) {
             System.out.println("Error en la entrada de datos");

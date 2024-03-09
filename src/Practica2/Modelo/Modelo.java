@@ -4,14 +4,14 @@ import Practica2.Main.Main;
 import Practica2.Modelo.Formas.Cuadrado;
 import Practica2.NotiEnum;
 import Practica2.Notificacion;
-import Practica2.Vista.dialogos.TypePolygon;
+import Practica2.Vista.dialogos.EnumPolygon;
 
 import java.util.ArrayList;
 
 public class Modelo implements Notificacion {
     private final Main prog;
     private int profundidad;
-    private TypePolygon tipo;
+    private EnumPolygon tipo;
     private ArrayList<Object> poligonos;
     public Modelo (Main p) {
         prog = p;
@@ -23,7 +23,7 @@ public class Modelo implements Notificacion {
         return profundidad;
     }
 
-    public TypePolygon getTipo() {
+    public EnumPolygon getTipo() {
         return tipo;
     }
 
@@ -33,7 +33,7 @@ public class Modelo implements Notificacion {
             if (o instanceof Integer){
                 profundidad = (Integer) o;
             } else {
-                tipo = (TypePolygon) o;
+                tipo = (EnumPolygon) o;
             }
         } else if (s == NotiEnum.ADDCUADRADO) {
             poligonos.add((Cuadrado) o);
