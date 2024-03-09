@@ -13,10 +13,9 @@ import java.awt.event.ActionListener;
 
 public class Dialogo extends JDialog implements ActionListener {
 
-    private JButton okButton = new JButton("OK");
-    private Main prog;
-    private JTextField numero;
-    private JPanel interior;
+    private final JButton okButton = new JButton("OK");
+    private final Main prog;
+    private final JPanel interior;
 
     public Dialogo(Main prog, int profActual) {
         this.interior = new ProfPanel(profActual);

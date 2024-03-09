@@ -5,7 +5,7 @@ import java.util.Enumeration;
 
 public class TypePanel extends JPanel {
 
-    private ButtonGroup grupo;
+    private final ButtonGroup grupo;
 
     public TypePanel() {
         grupo = new ButtonGroup();
