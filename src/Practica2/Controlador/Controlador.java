@@ -1,15 +1,12 @@
 package Practica2.Controlador;
 
 import Practica2.Main.Main;
-import Practica2.Modelo.Formas.Cuadrado;
-import Practica2.Modelo.Formas.Punto;
+import Practica2.Modelo.Formas.*;
 import Practica2.Modelo.Modelo;
 import Practica2.NotiEnum;
 import Practica2.Notificacion;
 import Practica2.Vista.PanelGrafico;
 import Practica2.Vista.dialogos.EnumPolygon;
-
-import java.awt.*;
 
 public class Controlador extends Thread implements Notificacion {
 
@@ -26,8 +23,8 @@ public class Controlador extends Thread implements Notificacion {
         if (modelo.getTipo() == EnumPolygon.CUADRADO) {
             generarCuadrado(new Punto(PanelGrafico.SIZE / 2, PanelGrafico.SIZE / 2), LADO_INICIAL, modelo.getProfundidad());
         } else {
-            // TODO: Realizar la llamada a la función
-            //drawSierpinski();
+            Punto[] puntosIniciales = Triangulo.getPuntosIniciales();
+            generarSierpinski(puntosIniciales[0], puntosIniciales[1], puntosIniciales[2], modelo.getProfundidad());
         }
         if (!interrumpir) {
             prog.notificar(NotiEnum.PARAR, null);
@@ -39,6 +36,13 @@ public class Controlador extends Thread implements Notificacion {
     }
 
     // TODO: Implementar uso de interrumpir en la función
+
+    /**
+     * Función para dibujar los cuadrados de forma recursiva
+     * @param centro
+     * @param lado
+     * @param profundidad
+     */
     public void generarCuadrado(Punto centro, int lado, int profundidad) {
         // Dibujar el contorno del cuadrado actual con el color correspondiente al nivel
         Punto topLeft = new Punto(centro.getX() - lado / 2, centro.getY() - lado / 2);
@@ -60,24 +64,27 @@ public class Controlador extends Thread implements Notificacion {
         }
     }
 
-    // Función recursiva para dibujar el triángulo de Sierpinski
-
-    private void drawSierpinski(Graphics g, Punto p1, Punto p2, Punto p3, int depth, Color[] colors) {
+    /**
+     * Función para dibujar los triángulos de Sierpinski de forma recursiva
+     * @param p1
+     * @param p2
+     * @param p3
+     * @param depth
+     */
+    private void generarSierpinski(Punto p1, Punto p2, Punto p3, int depth) {
         // Caso base: si la profundidad es 0, dibujar el triángulo
         if (depth == 0) {
-            g.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-            g.drawLine(p2.getX(), p2.getY(), p3.getX(), p3.getY());
-            g.drawLine(p3.getX(), p3.getY(), p1.getX(), p1.getY());
+            prog.getModelo().notificar(NotiEnum.ADDTRIANGULO, new Triangulo(p1, p2, p3));
         } else {
             // Calcular los puntos medios de los lados del triángulo
             Punto mid1 = new Punto((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
             Punto mid2 = new Punto((p2.getX() + p3.getX()) / 2, (p2.getY() + p3.getY()) / 2);
             Punto mid3 = new Punto((p3.getX() + p1.getX()) / 2, (p3.getY() + p1.getY()) / 2);
 
-            // Dibujar los triángulos de Sierpinski recursivamente, con colores diferentes para cada nivel
-            drawSierpinski(g, p1, mid1, mid3, depth - 1, colors);
-            drawSierpinski(g, mid1, p2, mid2, depth - 1, colors);
-            drawSierpinski(g, mid3, mid2, p3, depth - 1, colors);
+            // Dibujar los triángulos de Sierpinski recursivamente
+            generarSierpinski(p1, mid1, mid3, depth - 1);
+            generarSierpinski(mid1, p2, mid2, depth - 1);
+            generarSierpinski(mid3, mid2, p3, depth - 1);
         }
     }
 

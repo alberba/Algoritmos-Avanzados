@@ -97,7 +97,6 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
     @Override
     public void notificar(NotiEnum s, Object o) {
         if (s == NotiEnum.DIBUJAR) {
-
             this.repaint();
         } else if (s == NotiEnum.PROGRESO) {
             progreso();

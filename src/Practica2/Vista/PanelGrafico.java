@@ -1,7 +1,7 @@
 package Practica2.Vista;
 
 import Practica2.Main.Main;
-import Practica2.Modelo.Formas.Cuadrado;
+import Practica2.Modelo.Formas.*;
 import Practica2.Modelo.Modelo;
 
 import javax.swing.*;
@@ -16,31 +16,6 @@ public class PanelGrafico extends JPanel {
     public PanelGrafico(Main p) {
         prog = p;
         this.setPreferredSize(new Dimension(SIZE, SIZE));
-    }
-
-    // Función recursiva para dibujar contornos de cuadrados
-    public void drawSquareOutline(Graphics g, int centerX, int centerY, int size, int profundidad, Color[] colors) {
-        // Dibujar el contorno del cuadrado actual con el color correspondiente al nivel
-        int topLeftX = centerX - size / 2;
-        int topLeftY = centerY - size / 2;
-        g.setColor(colors[profundidad % 4]);
-        g.drawRect(topLeftX, topLeftY, size, size);
-
-        // Caso base: si el nivel es 0, detener la recursión
-        if (profundidad == 0)
-            return;
-
-        // Calcular el tamaño de los cuadrados más pequeños
-        int smallerSize = size / 2;
-
-        // Calcular las coordenadas de los centros de los cuadrados más pequeños
-        int[] smallerCenterX = {centerX - size / 2, centerX + size / 2, centerX + size / 2, centerX - size / 2};
-        int[] smallerCenterY = {centerY - size / 2, centerY - size / 2, centerY + size / 2, centerY + size / 2};
-
-        // Dibujar los contornos de los cuadrados más pequeños recursivamente
-        for (int i = 0; i < 4; i++) {
-            drawSquareOutline(g, smallerCenterX[i], smallerCenterY[i], smallerSize, profundidad - 1, colors);
-        }
     }
 
     /*public void paintComponent(Graphics g, int profundidad) {
@@ -72,17 +47,26 @@ public class PanelGrafico extends JPanel {
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
         for (Object poligono : poligonos) {
+            // Caso de cuadrados
             if (poligono instanceof Cuadrado cuadrado) {
                 g.setColor(selectColor(cuadrado, colores));
                 g.drawRect(cuadrado.getPunto().getX(), cuadrado.getPunto().getY(), cuadrado.getLado(), cuadrado.getLado());
-
+            } else if (poligono instanceof Triangulo triangulo) { // Caso de triángulos
+                g.setColor(Color.BLACK);
+                // Obtención de los vértices
+                Punto[] puntos = triangulo.getPuntos();
+                // Se dibujan los lados del triángulo
+                g.drawLine(puntos[0].getX(), puntos[0].getY(), puntos[1].getX(), puntos[1].getY());
+                g.drawLine(puntos[1].getX(), puntos[1].getY(), puntos[2].getX(), puntos[2].getY());
+                g.drawLine(puntos[2].getX(), puntos[2].getY(), puntos[0].getX(), puntos[0].getY());
+            } else {
+                System.out.println("Error: polígono no reconocido");
             }
         }
     }
 
     private Color selectColor(Cuadrado cuadrado, Color[] colores) {
         return switch (cuadrado.getLado()) {
-            case 256 -> colores[0];
             case 128 -> colores[1];
             case 64 -> colores[2];
             case 32 -> colores[3];

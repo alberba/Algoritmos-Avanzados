@@ -41,15 +41,20 @@ public class Modelo implements Notificacion {
 
     @Override
     public void notificar(NotiEnum s, Object o) {
-        if (s == NotiEnum.SETPARAM) {
-            if (o instanceof Integer){
-                profundidad = (Integer) o;
-            } else {
-                tipo = (EnumPolygon) o;
-            }
-        } else if (s == NotiEnum.ADDCUADRADO) {
-            poligonos.add(o);
-            prog.getVista().notificar(NotiEnum.DIBUJAR, null);
+        switch (s) {
+            case SETPARAM:
+                if (o instanceof Integer){
+                    profundidad = (Integer) o;
+                } else {
+                    tipo = (EnumPolygon) o;
+                }
+                break;
+            case ADDCUADRADO, ADDTRIANGULO:
+                poligonos.add(o);
+                prog.getVista().notificar(NotiEnum.DIBUJAR, null);
+                break;
+            default:
+                break;
         }
     }
 }
