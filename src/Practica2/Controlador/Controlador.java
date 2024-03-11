@@ -48,8 +48,15 @@ public class Controlador extends Thread implements Notificacion {
         Punto topLeft = new Punto(centro.getX() - lado / 2, centro.getY() - lado / 2);
         prog.getModelo().notificar(NotiEnum.ADDCUADRADO, new Cuadrado(topLeft, lado));
 
+        // Tiempo de espera para visualizar el progreso
+        try {
+            sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // Caso base: si el nivel es 0, detener la recursión
-        if (profundidad == 0)
+        if (profundidad == 0 || interrumpir)
             return;
 
         // Calcular el tamaño de los cuadrados más pequeños
@@ -71,7 +78,19 @@ public class Controlador extends Thread implements Notificacion {
      * @param p3
      * @param depth
      */
-    private void generarSierpinski(Punto p1, Punto p2, Punto p3, int depth) {
+    private void generarSierpinski(Punto p1, Punto p2, Punto p3, int profundidad) {
+
+        // Tiempo de espera para visualizar el progreso
+        try {
+            sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Manejo de finalización
+        if (interrumpir)
+            return;
+
         // Caso base: si la profundidad es 0, dibujar el triángulo
         if (depth == 0) {
             prog.getModelo().notificar(NotiEnum.ADDTRIANGULO, new Triangulo(p1, p2, p3));
