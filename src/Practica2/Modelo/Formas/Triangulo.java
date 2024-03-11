@@ -12,6 +12,7 @@ public class Triangulo {
         this.puntos[2] = p3;
     }
 
+    // Devuelve los puntos
     public Punto[] getPuntos() {
         return puntos;
     }

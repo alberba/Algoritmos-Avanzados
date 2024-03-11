@@ -58,13 +58,11 @@ public class Controlador extends Thread implements Notificacion {
         }
     }
 
-    // TODO: Implementar uso de interrumpir en la función
-
     /**
      * Función para dibujar los cuadrados de forma recursiva
-     * @param centro
-     * @param lado
-     * @param profundidad
+     * @param centro Coordenadas del centro del cuadrado actual
+     * @param lado Tamaño del cuadrado actual
+     * @param profundidad Nivel de profundidad actual
      */
     public void generarCuadrado(Punto centro, int lado, int profundidad) {
         // Dibujar el contorno del cuadrado actual con el color correspondiente al nivel
