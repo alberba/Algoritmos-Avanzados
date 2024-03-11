@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Modelo implements Notificacion {
     private final Main prog;
     private int profundidad;
+    private double c;
     private EnumPolygon tipo;
     private ArrayList<Object> poligonos;
 
@@ -18,6 +19,7 @@ public class Modelo implements Notificacion {
         profundidad = 3;
         tipo = EnumPolygon.CUADRADO;
         poligonos = new ArrayList<>();
+        c = 0;
     }
 
     /**
@@ -39,6 +41,10 @@ public class Modelo implements Notificacion {
         return poligonos;
     }
 
+    public double getC() { return c; }
+
+    public void setC(double c) { this.c = c; }
+
     @Override
     public void notificar(NotiEnum s, Object o) {
         switch (s) {
@@ -47,7 +53,10 @@ public class Modelo implements Notificacion {
                     profundidad = (Integer) o;
                 } else {
                     tipo = (EnumPolygon) o;
+                    // Se reinicia la c al cambiar el tipo de polígono para volver a calcularla más tarde
+                    c = 0.0;
                 }
+
                 break;
             case ADDCUADRADO, ADDTRIANGULO:
                 poligonos.add(o);
