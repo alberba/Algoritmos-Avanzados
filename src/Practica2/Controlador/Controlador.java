@@ -128,6 +128,7 @@ public class Controlador extends Thread implements Notificacion {
             generarSierpinski(mid1, p2, mid2, profundidad - 1);
             generarSierpinski(mid3, mid2, p3, profundidad - 1);
         }
+
     }
 
 
