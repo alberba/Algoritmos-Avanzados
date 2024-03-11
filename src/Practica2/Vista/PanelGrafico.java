@@ -65,8 +65,15 @@ public class PanelGrafico extends JPanel {
         }
     }
 
+    /**
+     * Función que devuelve el color dependiendo del lado del cuadrado
+     * @param cuadrado Cuadrado
+     * @param colores Array de colores
+     * @return Color
+     */
     private Color selectColor(Cuadrado cuadrado, Color[] colores) {
         return switch (cuadrado.getLado()) {
+            case 256 -> colores[0];
             case 128 -> colores[1];
             case 64 -> colores[2];
             case 32 -> colores[3];
@@ -74,7 +81,7 @@ public class PanelGrafico extends JPanel {
             case 8 -> colores[5];
             case 4 -> colores[6];
             case 2 -> colores[7];
-            default -> colores[0];
+            default -> throw new IllegalStateException("Unexpected value: " + cuadrado.getLado());
         };
     }
 
