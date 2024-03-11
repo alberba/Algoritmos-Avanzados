@@ -46,12 +46,12 @@ public class PanelGrafico extends JPanel {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-        for (Object poligono : poligonos) {
+        for (int i = 0; i < poligonos.size(); i++) { // Enhanced for parece dar error, es preferible no usarlo
             // Caso de cuadrados
-            if (poligono instanceof Cuadrado cuadrado) {
+            if (poligonos.get(i) instanceof Cuadrado cuadrado) {
                 g.setColor(selectColor(cuadrado, colores));
                 g.drawRect(cuadrado.getPunto().getX(), cuadrado.getPunto().getY(), cuadrado.getLado(), cuadrado.getLado());
-            } else if (poligono instanceof Triangulo triangulo) { // Caso de triángulos
+            } else if (poligonos.get(i) instanceof Triangulo triangulo) { // Caso de triángulos
                 g.setColor(Color.BLACK);
                 // Obtención de los vértices
                 Punto[] puntos = triangulo.getPuntos();
