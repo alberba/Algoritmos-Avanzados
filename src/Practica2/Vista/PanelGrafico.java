@@ -54,11 +54,8 @@ public class PanelGrafico extends JPanel {
             } else if (poligonos.get(i) instanceof Triangulo triangulo) { // Caso de triángulos
                 g.setColor(Color.BLACK);
                 // Obtención de los vértices
-                Punto[] puntos = triangulo.getPuntos();
-                // Se dibujan los lados del triángulo
-                g.drawLine(puntos[0].getX(), puntos[0].getY(), puntos[1].getX(), puntos[1].getY());
-                g.drawLine(puntos[1].getX(), puntos[1].getY(), puntos[2].getX(), puntos[2].getY());
-                g.drawLine(puntos[2].getX(), puntos[2].getY(), puntos[0].getX(), puntos[0].getY());
+                Polygon pol = new Polygon(triangulo.getX(), triangulo.getY(), Triangulo.getN_VERTICES());
+                g.fillPolygon(pol);
             } else {
                 System.out.println("Error: polígono no reconocido");
             }

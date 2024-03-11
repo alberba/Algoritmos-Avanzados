@@ -4,6 +4,7 @@ import Practica2.Vista.PanelGrafico;
 
 public class Triangulo {
     private final Punto[] puntos = new Punto[3];
+    private static final int N_VERTICES = 3;
 
     public Triangulo(Punto p1, Punto p2, Punto p3) {
         this.puntos[0] = p1;
@@ -13,6 +14,20 @@ public class Triangulo {
 
     public Punto[] getPuntos() {
         return puntos;
+    }
+
+    // Devuelve las coordenadas x de los puntos
+    public int[] getX() {
+        return new int[]{puntos[0].getX(), puntos[1].getX(), puntos[2].getX()};
+    }
+
+    // Devuelve las coordenadas y de los puntos
+    public int[] getY() {
+        return new int[] {puntos[0].getY(), puntos[1].getY(), puntos[2].getY()};
+    }
+
+    public static int getN_VERTICES() {
+        return N_VERTICES;
     }
 
     public static Punto[] getPuntosIniciales() {
