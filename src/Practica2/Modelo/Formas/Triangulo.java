@@ -32,9 +32,9 @@ public class Triangulo {
 
     public static Punto[] getPuntosIniciales() {
         Punto[] puntos = new Punto[3];
-        puntos[0] = new Punto(PanelGrafico.SIZE / 2, 0);
-        puntos[1] = new Punto(0, PanelGrafico.SIZE);
-        puntos[2] = new Punto(PanelGrafico.SIZE, PanelGrafico.SIZE);
+        puntos[0] = new Punto(PanelGrafico.SIZE / 2, 51);
+        puntos[1] = new Punto(0, PanelGrafico.SIZE - 51);
+        puntos[2] = new Punto(PanelGrafico.SIZE, PanelGrafico.SIZE - 51);
         return puntos;
     }
 
