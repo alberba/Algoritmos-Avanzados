@@ -28,7 +28,7 @@ public class Dialogo extends JDialog implements ActionListener {
     }
 
     public Dialogo(Main prog) {
-        this.interior = new TypePanel();
+        this.interior = new TypePanel(prog.getModelo().getTipo() == EnumPolygon.CUADRADO);
         this.prog = prog;
         this.setLayout(new FlowLayout());
         okButton.addActionListener(this);
