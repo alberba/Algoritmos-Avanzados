@@ -20,8 +20,31 @@ public class Controlador extends Thread implements Notificacion {
 
     public void run() {
         Modelo modelo = prog.getModelo();
+        int n = modelo.getProfundidad();
         if (modelo.getTipo() == EnumPolygon.CUADRADO) {
-            generarCuadrado(new Punto(PanelGrafico.SIZE / 2, PanelGrafico.SIZE / 2), LADO_INICIAL, modelo.getProfundidad());
+            double log2N = Math.log(n) / Math.log(2);
+            // Si no es la primera ejecución, no hace falta calcular la predicción
+            // TODO: Solucionar los tiempos
+
+            if (modelo.getC() > 0.000001) { // Ejecuciones repetidas
+                long estimacion = (long) (modelo.getC() * (n * log2N));
+                System.out.println("Para " + n + " tardaré unos " + estimacion + " ns.");
+                long tiempo = System.nanoTime();
+                generarCuadrado(new Punto(PanelGrafico.SIZE / 2, PanelGrafico.SIZE / 2), LADO_INICIAL, n);
+                tiempo = System.nanoTime() - tiempo;
+                System.out.println("He tardado " + tiempo + " ns.");
+                double c = (1.0 * tiempo) / (n * log2N);
+                modelo.setC(c);
+            } else { // Primera ejecución
+                long tiempo = System.nanoTime();
+                generarCuadrado(new Punto(PanelGrafico.SIZE / 2, PanelGrafico.SIZE / 2), LADO_INICIAL, n);
+                tiempo = System.nanoTime() - tiempo;
+                double c = (1.0 * tiempo) / (n * log2N);
+                long estimacion = (long) (c * (n * log2N));
+                System.out.println("He tardado unos " + tiempo + " ns.");
+                // Se actualiza la c para futuras estimaciones
+                modelo.setC(c);
+            }
         } else {
             Punto[] puntosIniciales = Triangulo.getPuntosIniciales();
             generarSierpinski(puntosIniciales[0], puntosIniciales[1], puntosIniciales[2], modelo.getProfundidad());
