@@ -90,14 +90,15 @@ public class Controlador extends Thread implements Notificacion {
         for (Punto centroHijo : centrosHijos) {
             generarCuadrado(centroHijo, ladoHijos, profundidad - 1);
         }
+
     }
 
     /**
      * Función para dibujar los triángulos de Sierpinski de forma recursiva
-     * @param p1
-     * @param p2
-     * @param p3
-     * @param depth
+     * @param p1 Primer vértice del triángulo
+     * @param p2 Segundo vértice del triángulo
+     * @param p3 Tercer vértice del triángulo
+     * @param profundidad Nivel de profundidad actual
      */
     private void generarSierpinski(Punto p1, Punto p2, Punto p3, int profundidad) {
 
@@ -113,18 +114,19 @@ public class Controlador extends Thread implements Notificacion {
             return;
 
         // Caso base: si la profundidad es 0, dibujar el triángulo
-        if (depth == 0) {
+        if (profundidad == 0) {
             prog.getModelo().notificar(NotiEnum.ADDTRIANGULO, new Triangulo(p1, p2, p3));
         } else {
+
             // Calcular los puntos medios de los lados del triángulo
             Punto mid1 = new Punto((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
             Punto mid2 = new Punto((p2.getX() + p3.getX()) / 2, (p2.getY() + p3.getY()) / 2);
             Punto mid3 = new Punto((p3.getX() + p1.getX()) / 2, (p3.getY() + p1.getY()) / 2);
 
             // Dibujar los triángulos de Sierpinski recursivamente
-            generarSierpinski(p1, mid1, mid3, depth - 1);
-            generarSierpinski(mid1, p2, mid2, depth - 1);
-            generarSierpinski(mid3, mid2, p3, depth - 1);
+            generarSierpinski(p1, mid1, mid3, profundidad - 1);
+            generarSierpinski(mid1, p2, mid2, profundidad - 1);
+            generarSierpinski(mid3, mid2, p3, profundidad - 1);
         }
     }
 
