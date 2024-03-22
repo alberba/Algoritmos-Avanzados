@@ -145,9 +145,9 @@ public class Controlador extends Thread implements Notificacion {
 
     /**
      * Se cuenta el número de pasos que se deben realizar (número de polígonos que se han de dibujar)
-     * @param isCuadrado
-     * @param profundidad
-     * @return
+     * @param isCuadrado Indica si se trata de un cuadrado o un triángulo
+     * @param profundidad Nivel de profundidad
+     * @return Número de pasos a realizar
      */
     public int obtenerPasosPoligono(boolean isCuadrado, int profundidad) {
         int base = 3;

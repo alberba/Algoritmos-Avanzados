@@ -1,7 +1,6 @@
 package Practica2.Vista.dialogos;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class ProfPanel extends JPanel {
