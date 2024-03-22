@@ -13,6 +13,8 @@ public class Controlador extends Thread implements Notificacion {
     private final Main prog;
     private static final int LADO_INICIAL = 256;
     private boolean interrumpir = false;
+    private double pasos = 0;
+    private static int nPasosTotal = 0;
     public Controlador(Main p) {
         prog = p;
         prog.getModelo().reset();
@@ -21,33 +23,42 @@ public class Controlador extends Thread implements Notificacion {
     public void run() {
         Modelo modelo = prog.getModelo();
         int n = modelo.getProfundidad();
-        if (modelo.getTipo() == EnumPolygon.CUADRADO) {
-            double log2N = Math.log(n) / Math.log(2);
-            // Si no es la primera ejecución, no hace falta calcular la predicción
-            // TODO: Solucionar los tiempos
-
-            if (modelo.getC() > 0.000001) { // Ejecuciones repetidas
-                long estimacion = (long) (modelo.getC() * (n * log2N));
+        long tiempo;
+        nPasosTotal = obtenerPasosPoligono(modelo.getTipo() == EnumPolygon.CUADRADO, n);
+        // ESTIMACIONES // Complejidad = a^n
+        // Si no es la primera ejecución, no hace falta calcular la predicción
+        if (modelo.getC() > 0.000001) { // Ejecuciones repetidas
+            if (modelo.getTipo() == EnumPolygon.CUADRADO) {
+                long estimacion = (long) (modelo.getC() * Math.pow(4, n));
                 System.out.println("Para " + n + " tardaré unos " + estimacion + " ns.");
-                long tiempo = System.nanoTime();
+                tiempo = System.nanoTime();
                 generarCuadrado(new Punto(PanelGrafico.SIZE / 2, PanelGrafico.SIZE / 2), LADO_INICIAL, n);
-                tiempo = System.nanoTime() - tiempo;
-                System.out.println("He tardado " + tiempo + " ns.");
-                double c = (1.0 * tiempo) / (n * log2N);
-                modelo.setC(c);
-            } else { // Primera ejecución
-                long tiempo = System.nanoTime();
-                generarCuadrado(new Punto(PanelGrafico.SIZE / 2, PanelGrafico.SIZE / 2), LADO_INICIAL, n);
-                tiempo = System.nanoTime() - tiempo;
-                double c = (1.0 * tiempo) / (n * log2N);
-                long estimacion = (long) (c * (n * log2N));
-                System.out.println("He tardado unos " + tiempo + " ns.");
-                // Se actualiza la c para futuras estimaciones
-                modelo.setC(c);
+            } else {
+                Punto[] puntosIniciales = Triangulo.getPuntosIniciales();
+                long estimacion = (long) (modelo.getC() * Math.pow(3, n));
+                System.out.println("Para " + n + " tardaré unos " + estimacion + " ns.");
+                tiempo = System.nanoTime();
+                generarSierpinski(puntosIniciales[0], puntosIniciales[1], puntosIniciales[2], modelo.getProfundidad());
             }
-        } else {
-            Punto[] puntosIniciales = Triangulo.getPuntosIniciales();
-            generarSierpinski(puntosIniciales[0], puntosIniciales[1], puntosIniciales[2], modelo.getProfundidad());
+
+            tiempo = System.nanoTime() - tiempo;
+            System.out.println("He tardado " + tiempo + " ns.");
+        } else { // Primera ejecución
+            double c;
+            tiempo = System.nanoTime();
+            if (modelo.getTipo() == EnumPolygon.CUADRADO) {
+                generarCuadrado(new Punto(PanelGrafico.SIZE / 2, PanelGrafico.SIZE / 2), LADO_INICIAL, n);
+                tiempo = System.nanoTime() - tiempo;
+                c = (1.0 * tiempo) / Math.pow(4, n);
+            } else {
+                Punto[] puntosIniciales = Triangulo.getPuntosIniciales();
+                generarSierpinski(puntosIniciales[0], puntosIniciales[1], puntosIniciales[2], modelo.getProfundidad());
+                tiempo = System.nanoTime() - tiempo;
+                c = (1.0 * tiempo) / Math.pow(3, n);
+            }
+            System.out.println("He tardado unos " + tiempo + " ns.");
+            // Se actualiza la c para futuras estimaciones
+            modelo.setC(c);
         }
         if (!interrumpir) {
             prog.notificar(NotiEnum.PARAR, null);
@@ -67,7 +78,8 @@ public class Controlador extends Thread implements Notificacion {
     public void generarCuadrado(Punto centro, int lado, int profundidad) {
         // Dibujar el contorno del cuadrado actual con el color correspondiente al nivel
         Punto topLeft = new Punto(centro.getX() - lado / 2, centro.getY() - lado / 2);
-        prog.getModelo().notificar(NotiEnum.ADDCUADRADO, new Cuadrado(topLeft, lado));
+        prog.getModelo().notificar(NotiEnum.ADDPOLIGONO, new Cuadrado(topLeft, lado));
+        actualizarProgreso();
 
         // Tiempo de espera para visualizar el progreso
         try {
@@ -101,7 +113,7 @@ public class Controlador extends Thread implements Notificacion {
      * @param profundidad Nivel de profundidad actual
      */
     private void generarSierpinski(Punto p1, Punto p2, Punto p3, int profundidad) {
-
+        actualizarProgreso();
         // Tiempo de espera para visualizar el progreso
         try {
             sleep(50);
@@ -115,7 +127,7 @@ public class Controlador extends Thread implements Notificacion {
 
         // Caso base: si la profundidad es 0, dibujar el triángulo
         if (profundidad == 0) {
-            prog.getModelo().notificar(NotiEnum.ADDTRIANGULO, new Triangulo(p1, p2, p3));
+            prog.getModelo().notificar(NotiEnum.ADDPOLIGONO, new Triangulo(p1, p2, p3));
         } else {
 
             // Calcular los puntos medios de los lados del triángulo
@@ -131,6 +143,37 @@ public class Controlador extends Thread implements Notificacion {
 
     }
 
+    /**
+     * Se cuenta el número de pasos que se deben realizar (número de polígonos que se han de dibujar)
+     * @param isCuadrado
+     * @param profundidad
+     * @return
+     */
+    public int obtenerPasosPoligono(boolean isCuadrado, int profundidad) {
+        int base = 3;
+        if (isCuadrado)
+            base = 4;
+        int nPasos = 0;
+        for (int i = profundidad; i >= 0; i--) {
+            nPasos += (int) Math.pow(base, i);
+        }
+        return nPasos;
+    }
+
+    /**
+     * Método encargado de actualizar el progreso en función de los pasos realizados hasta el momento
+     * y el número de pasos totales a realizar
+     */
+    public void actualizarProgreso() {
+        pasos++;
+        while (pasos >=  (nPasosTotal * 1.0) / 100) {
+            // Aumentamos el porcentaje tantas veces como sea necesario
+            // Esto puede suceder en caso de que los polígonos totales a dibujar
+            // sea menor a 100
+            pasos -= (nPasosTotal * 1.0) / 100;
+            prog.getVista().notificar(NotiEnum.PROGRESO, null);
+        }
+    }
 
     private Punto[] crearCentrosHijosCuadrados(Punto centro, int ladoHijos) {
         return new Punto[]{

@@ -1,5 +1,7 @@
 package Practica2.Modelo.Formas;
 
+import java.awt.*;
+
 public class Cuadrado {
     private Punto punto;
     private int lado;

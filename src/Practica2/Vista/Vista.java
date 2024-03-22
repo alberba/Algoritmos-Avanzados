@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 public class Vista extends JFrame implements ActionListener, Notificacion {
 
     private final Main prog;
-    private final JButton iniButton, stopButton, paramButton,selectButton;
+    private final JButton iniButton, stopButton, paramButton, patronButton;
     private final PanelGrafico panel;
 
     private final JProgressBar progreso;
@@ -35,9 +35,9 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         buttons.add(paramButton);
         this.add(buttons);
         this.add(BorderLayout.NORTH, buttons);
-        selectButton = new JButton("Seleccionar");
-        selectButton.addActionListener(this);
-        buttons.add(selectButton);
+        patronButton = new JButton("Patrón");
+        patronButton.addActionListener(this);
+        buttons.add(patronButton);
 
         // INSERCIÓN DE PANEL
         panel = new PanelGrafico(p);
@@ -62,6 +62,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
 
     public void resetPanel() {
         panel.clear();
+        setValueProgreso(0);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
             Dialogo dialogo = new Dialogo(prog, prog.getModelo().getProfundidad());
             dialogo.setVisible(true);
 
-        } else if (e.getSource() == selectButton) {
+        } else if (e.getSource() == patronButton) {
             Dialogo dialogo = new Dialogo(prog);
             dialogo.setVisible(true);
         }
@@ -83,9 +84,6 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
     public void progreso() {
         int p = progreso.getValue();
         p++;
-        if (p > 100) {
-            p = 0;
-        }
         setValueProgreso(p);
     }
 
@@ -96,10 +94,11 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
 
     @Override
     public void notificar(NotiEnum s, Object o) {
-        if (s == NotiEnum.DIBUJAR) {
-            this.repaint();
-        } else if (s == NotiEnum.PROGRESO) {
-            progreso();
+        switch (s) {
+            case DIBUJAR -> this.repaint();
+            case PROGRESO -> progreso();
+            // case ESTIMAR -> System.out.println("Set texto");
+            default -> System.out.println("");
         }
     }
 }

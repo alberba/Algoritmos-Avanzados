@@ -56,9 +56,9 @@ public class Modelo implements Notificacion {
                     // Se reinicia la c al cambiar el tipo de polígono para volver a calcularla más tarde
                     c = 0.0;
                 }
-
                 break;
-            case ADDCUADRADO, ADDTRIANGULO:
+            case ADDPOLIGONO:
+                // En caso de añadir un cuadrado o un triángulo
                 poligonos.add(o);
                 prog.getVista().notificar(NotiEnum.DIBUJAR, null);
                 break;
