@@ -15,6 +15,7 @@ public class Controlador extends Thread implements Notificacion {
     private boolean interrumpir = false;
     private double pasos = 0;
     private static int nPasosTotal = 0;
+    
     public Controlador(Main p) {
         prog = p;
         prog.getModelo().reset();
