@@ -98,7 +98,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
             case DIBUJAR -> this.repaint();
             case PROGRESO -> progreso();
             // case ESTIMAR -> System.out.println("Set texto");
-            default -> System.out.println("");
+            default -> System.out.println();
         }
     }
 }
