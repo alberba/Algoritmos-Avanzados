@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="Mesurament24">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/AlgoritmosN/lib/Mesurament24.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/Mesurament24.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
