@@ -7,6 +7,7 @@ import Practica3.NotiEnum;
 import Practica3.Notificacion;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Controlador extends Thread implements Notificacion {
 
@@ -24,8 +25,25 @@ public class Controlador extends Thread implements Notificacion {
     public void run() {
         Modelo modelo = prog.getModelo();
         Distribucion dist = modelo.getDistribucion();
+        int n = modelo.getN();
+        datos = new ArrayList<>();
+        Random rand = new Random();
 
-        datos = modelo.getDatos().clone;
+        switch (dist) { // Se generan los datos en función de la distribución
+            case UNIFORME:
+                for (int i = 0; i < n; i++) {
+                    datos.add((int) (Math.random() * 100));
+                }
+                break;
+            case GAUSSIANA:
+                for (int i = 0; i < n; i++) {
+                    datos.add((int) (rand.nextGaussian() * 100));
+                }
+                break;
+            case EXPONENCIAL:
+
+                break;
+        }
 
         // Se ordenan los datos con cada uno de los algoritmos, se calcula el tiempo y se añade al modelo
         // TIN //

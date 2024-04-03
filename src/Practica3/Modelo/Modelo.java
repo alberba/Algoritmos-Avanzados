@@ -7,8 +7,9 @@ import Practica3.Notificacion;
 
 import java.util.ArrayList;
 
-public class Modelo implements Notificacion {
-    private final AlgoritmosN.Main.Main prog;
+public class Modelo implements Practica3.Notificacion {
+    private final Main prog;
+    private int n;
     private final ArrayList<Integer> arrayN;
     private Distribucion distribucion;
     // Tendran la estructura de: <<0, t1N10, t1N100, ...>, <0, t2N10, t2N100,...>, ...>
@@ -20,7 +21,7 @@ public class Modelo implements Notificacion {
         for (int i = 0; i < 3; i++) {
             tiemposN.add(new ArrayList<>());
         }
-
+        n = 0;
     }
 
     /**
@@ -61,8 +62,12 @@ public class Modelo implements Notificacion {
 
     public void setDistribucion(Distribucion d) { distribucion = d; }
 
+    public int getN() { return n; }
+
+    public void setN(int n) { this.n = n; }
+
     @Override
-    public void notificar(NotiEnum s, Object message) {
+    public void notificar(Practica3.NotiEnum s, Object message) {
 
     }
 }
