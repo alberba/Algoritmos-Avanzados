@@ -2,6 +2,7 @@ package Practica3.Modelo;
 
 import AlgoritmosN.Main.Main;
 import AlgoritmosN.NotiEnum;
+import Practica3.Distribucion;
 import Practica3.Notificacion;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 public class Modelo implements Notificacion {
     private final AlgoritmosN.Main.Main prog;
     private final ArrayList<Integer> arrayN;
+    private Distribucion distribucion;
     // Tendran la estructura de: <<0, t1N10, t1N100, ...>, <0, t2N10, t2N100,...>, ...>
     private final ArrayList<ArrayList<Long>> tiemposN;
     public Modelo (Main p, ArrayList<Integer> datos) {
@@ -54,6 +56,10 @@ public class Modelo implements Notificacion {
     public ArrayList<ArrayList<Long>> getTiemposN() {
         return tiemposN;
     }
+
+    public Distribucion getDistribucion() { return distribucion; }
+
+    public void setDistribucion(Distribucion d) { distribucion = d; }
 
     @Override
     public void notificar(NotiEnum s, Object message) {
