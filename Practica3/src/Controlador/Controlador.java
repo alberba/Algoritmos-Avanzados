@@ -97,26 +97,41 @@ public class Controlador extends Thread implements Notificacion {
         // Según el tipo de distribución, se añaden los elementos a los buckets de una forma u otra
         if (dist == Distribucion.UNIFORME) {
             for (double element : arr) {
-                int indexBucket = (int) element * nDatos;
+                int indexBucket = (int) (element * numBuckets);
                 buckets.get(indexBucket).add(element);
             }
         } else {
+            int [] offsetIndiceBucket = {0, (int) (0.09 * numBuckets), (int) (0.25 * numBuckets), (int) (0.5 * numBuckets), (int) (0.75 * numBuckets), (int) (0.91 * numBuckets)}; // 6 valores, uno para cada franja de buckets
+            int franja;
+            Random rng = new Random();
             for (double element : arr) {
+                // Se asigna el elemento a un bucket en función de la franja a la que pertenezca
                 if (element < 0.3) {
                     // 9% de los buckets
+                    franja = 0;
                 } else if (element < 0.4) {
                     // 16% de los buckets
+                    franja = 1;
                 } else if (element < 0.5) {
                     // 25% de los buckets
+                    franja = 2;
                 } else if (element < 0.6) {
                     // 25% de los buckets
+                    franja = 3;
                 } else if (element < 0.7) {
                     // 16% de los buckets
+                    franja = 4;
                 } else {
                     // 9% de los buckets
+                    franja = 5;
                 }
-                int indexBucket = (int) Math.pow(element, 2) * numBuckets;
-                buckets.get(indexBucket).add(element);
+                // Índice = valor aleatorio entre el rango de buckets de la franja + offset de la franja
+                int indiceBucket = rng.nextInt((offsetIndiceBucket[franja] - offsetIndiceBucket[franja - 1])) + offsetIndiceBucket[franja];
+                buckets.get(indiceBucket).add(element);
+                // Se ordenan los buckets
+                for (List<Double> bucket : buckets) {
+                    Collections.sort(bucket);
+                }
             }
         }
 
