@@ -9,18 +9,17 @@ import java.util.ArrayList;
 public class Modelo implements Notificacion {
     private final Main prog;
     private int n;
-    private final ArrayList<Integer> arrayN;
+    private int nBuckets;
     private Distribucion distribucion;
-    // Tendran la estructura de: <<0, t1N10, t1N100, ...>, <0, t2N10, t2N100,...>, ...>
-    private final ArrayList<ArrayList<Long>> tiemposN;
+    private final ArrayList<Long> tiempos;
+    private final ArrayList<String> algoritmos;
     public Modelo (Main p, ArrayList<Integer> datos) {
         prog = p;
-        arrayN = new ArrayList<>();
-        tiemposN = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            tiemposN.add(new ArrayList<>());
-        }
-        n = 0;
+        tiempos = new ArrayList<>();
+        algoritmos = new ArrayList<>();
+        n = 30000; // Por defecto
+        nBuckets = (int) Math.sqrt(n); // Por defecto
+        distribucion = Distribucion.UNIFORME; // Por defecto
     }
 
     /**
@@ -28,33 +27,29 @@ public class Modelo implements Notificacion {
      * @param n tamaño del array
      * @param tiempo tiempos de los algoritmos
      */
-    public void addTiempoN(int n, long tiempo, int indice) {
-        if (!arrayN.contains(n))
-            arrayN.add(n);
-
-        tiemposN.get(indice).add(tiempo);
+    public void addTiempo(long tiempo) {
+        tiempos.add(tiempo);
         // Notificamos a la vista para que se actualice
-        prog.getVista().notificar(NotiEnum.DIBUJAR, null);
+        //prog.getVista().notificar(NotiEnum.DIBUJAR, null);No sé si dejarlo ¿?
     }
 
     /**
      * Resetea los valores de los arrays
      */
     public void reset() {
-        arrayN.clear();
-        arrayN.add(0);
-        for (int i = 0; i < 3; i++) {
-            tiemposN.get(i).clear();
-            tiemposN.get(i).add(0L);
-        }
+        tiempos.clear();
     }
 
-    public ArrayList<Integer> getArrayN() {
-        return arrayN;
+    public ArrayList<Long> getTiempos() {
+        return tiempos;
     }
 
-    public ArrayList<ArrayList<Long>> getTiemposN() {
-        return tiemposN;
+    public void añadirAlgoritmo(String nombre) {
+        algoritmos.add(nombre);
+    }
+
+    public String getAlgoritmo(int i) {
+        return algoritmos.get(i);
     }
 
     public Distribucion getDistribucion() { return distribucion; }
