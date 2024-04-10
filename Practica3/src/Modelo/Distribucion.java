@@ -1,5 +1,5 @@
 package Modelo;
 
 public enum Distribucion {
-    UNIFORME, GAUSSIANA, EXPONENCIAL
+    UNIFORME, GAUSSIANA
 }

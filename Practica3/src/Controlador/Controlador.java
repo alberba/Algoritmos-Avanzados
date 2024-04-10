@@ -19,12 +19,10 @@ public class Controlador extends Thread implements Notificacion {
     private double pasos = 0;
     private static int nPasosTotal = 0;
     private ArrayList<Double> datos;
-    private long [] tiempos;
 
     public Controlador(Main p) {
         prog = p;
         prog.getModelo().reset();
-        tiempos = new long[4];
     }
 
     public void run() {
@@ -52,26 +50,34 @@ public class Controlador extends Thread implements Notificacion {
                     datos.add((rand.nextGaussian() + 3) / 6);
                 }
                 break;
-            case EXPONENCIAL:
 
-                break;
         }
         // Se ordenan los datos con cada uno de los algoritmos, se calcula el tiempo y se añade al modelo
-        // TIN //
-        long t = System.nanoTime();
-        timsort(new ArrayList<>(datos));
-        tiempos[0] = System.nanoTime() - t;
-
+        // Algoritmo 1
         // BUCKET //
-        t = System.nanoTime();
+        long t = System.nanoTime();
         bucketSort(new ArrayList<>(datos), dist);
-        tiempos[1] = System.nanoTime() - t;
-
+        t = System.nanoTime() - t;
+        modelo.añadirAlgoritmo("Bucketsort");
+        // Algoritmo 2
+        // TIMSORT //
+        t = System.nanoTime();
+        timsort(new ArrayList<>(datos));
+        t = System.nanoTime() - t;
+        modelo.addTiempo(t);
+        modelo.añadirAlgoritmo("Timsort");
+        // Algoritmo 3
         // TREESORT //
         t = System.nanoTime();
         TreeSort treeSort = new TreeSort();
         treeSort.sort(new ArrayList<>(datos));
-        tiempos[2] = System.nanoTime() - t;
+        t = System.nanoTime() - t;
+        modelo.añadirAlgoritmo("Treesort");
+        // Algoritmo 4
+        // QUICKSORT //
+        t = System.nanoTime();
+        quickSort(new ArrayList<>(datos), 0, datos.size()-1);
+        t = System.nanoTime() - t;
 
         if (!interrumpir) {
             prog.notificar(NotiEnum.PARAR, null);
@@ -84,6 +90,36 @@ public class Controlador extends Thread implements Notificacion {
 
     private void timsort(ArrayList<Double> arr) {
         Collections.sort(arr);
+    }
+
+    public void quickSort(ArrayList<Double> arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex-1);
+            quickSort(arr, partitionIndex+1, end);
+        }
+    }
+
+    private int partition(ArrayList<Double> arr, int begin, int end) {
+        double pivot = arr.get(arr.size()-1);
+        int i = (begin-1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr.get(j) <= pivot) {
+                i++;
+
+                double swapTemp = arr.get(i);
+                arr.set(i, arr.get(j));
+                arr.set(j, swapTemp);
+            }
+        }
+
+        double swapTemp = arr.get(i+1);
+        arr.set(i+1, arr.get(arr.size()-1));
+        arr.set(arr.size()-1, swapTemp);
+
+        return i+1;
     }
 
     private void bucketSort(ArrayList<Double> arr, Enum<Distribucion> dist) {

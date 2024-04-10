@@ -1,8 +1,6 @@
 package Vista;
 
 import Main.Main;
-import Modelo.Formas.Cuadrado;
-import Modelo.Formas.Triangulo;
 import Modelo.Modelo;
 
 import javax.swing.*;
@@ -12,54 +10,68 @@ import java.util.ArrayList;
 public class PanelGrafico extends JPanel {
 
     private final Main prog;
-    public static final int SIZE = 768;
 
     public PanelGrafico(Main p) {
         prog = p;
-        this.setPreferredSize(new Dimension(SIZE, SIZE));
+        this.setPreferredSize(new Dimension(800, 600));
     }
-
+    // Método que dibuja el contenido del panel
+    @Override
     public void paint(Graphics g) {
+        // Obtener los datos del modelo
         Modelo modelo = prog.getModelo();
-        // TODO: Fix this
-        ArrayList<Object> poligonos = null;
+        ArrayList<Long> tiempos = modelo.getTiempos(); // Tiempos de ejecución
 
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        // Calcular dimensiones para dibujar las barras
+        int barWidth = (getWidth() - 100) / tiempos.size(); // Ancho de cada barra
+        int maxValue = getMaxValue(tiempos); // Valor máximo de los tiempos
+        int panelHeight = getHeight() - 50; // Altura del panel
+        int scaleStep = panelHeight / 10; // El divisor indica el número de valores indicados en la escala
 
-        for (int i = 0; i < poligonos.size(); i++) { // Enhanced for parece dar error, es preferible no usarlo
-            // Caso de cuadrados
-            if (poligonos.get(i) instanceof Cuadrado cuadrado) {
-                g.setColor(selectColor(cuadrado));
-                g.drawRect(cuadrado.getPunto().getX(), cuadrado.getPunto().getY(), cuadrado.getLado(), cuadrado.getLado());
-            } else if (poligonos.get(i) instanceof Triangulo triangulo) { // Caso de triángulos
-                g.setColor(Color.BLACK);
-                // Obtención de los vértices
-                Polygon pol = new Polygon(triangulo.getX(), triangulo.getY(), Triangulo.getN_VERTICES());
-                g.fillPolygon(pol);
-            } else {
-                System.out.println("Error: polígono no reconocido");
-            }
+        // Dibujar la escala de valores en el lado izquierdo del panel
+        g.setColor(Color.BLACK);
+        for (int i = 0; i <= 10; i++) {
+            int y = panelHeight - i * scaleStep; // Calcular posición en función del paso
+            g.drawString(String.valueOf(i * 10), 5, y + 5); // Mostrar el valor de la escala
+            g.drawLine(30, y, 35, y); // Dibujar una línea para indicar el paso
+        }
+
+        // Dibujar las barras para cada tamaño de array
+        int x = 50; // Posición inicial de la primera barra
+        for (int i = 0; i < tiempos.size(); i++) {
+            Long tiempo = tiempos.get(i); // Obtener los tiempos para este tamaño de array
+            int barHeight = (int) ((double) tiempo / maxValue * panelHeight); // Calcular altura de la barra en función del tiempo
+            int y = panelHeight - barHeight; // Calcular posición vertical de la barra
+            g.setColor(Color.BLUE); // Establecer el color de la barra
+            g.fillRect(x, y, barWidth, barHeight); // Dibujar la barra
+            g.setColor(Color.BLACK); // Establecer color del borde de la barra
+            g.drawRect(x, y, barWidth, barHeight); // Dibujar borde de la barra
+
+
+            // Agregar el nombre del algoritmo debajo de la barra
+            String nombreAlgoritmo = modelo.getAlgoritmo(i);
+            g.drawString(nombreAlgoritmo, x + barWidth / 2 - g.getFontMetrics().stringWidth(nombreAlgoritmo) / 2, getHeight() - 5);
+
+
+            x += barWidth + 5; // Mover posición horizontal para dibujar la próxima barra (con separación)
         }
     }
 
-    /**
-     * Función que devuelve el color dependiendo del lado del cuadrado
-     * @param cuadrado Cuadrado
-     * @return Color
-     */
-    private Color selectColor(Cuadrado cuadrado) {
-        return switch (cuadrado.getLado()) {
-            case 256 -> Color.YELLOW;
-            case 128 -> Color.GREEN;
-            case 64 -> Color.BLUE;
-            case 32 -> Color.RED;
-            case 16 -> Color.MAGENTA;
-            case 8 -> Color.CYAN;
-            case 4 -> Color.ORANGE;
-            case 2 -> Color.PINK;
-            default -> throw new IllegalStateException("Unexpected value: " + cuadrado.getLado());
-        };
+    // Método para obtener el valor máximo de los tiempos de ejecución
+    private int getMaxValue(ArrayList<Long> tiemposN) {
+        long max = Long.MIN_VALUE;
+        // Iterar sobre todos los tiempos para encontrar el máximo
+        for (Long tiempo : tiemposN) {
+            if (tiempo > max) {
+                max = tiempo;
+            }
+        }
+        return (int) max; // Devolver el máximo valor encontrado
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(800, 600);
     }
 
 

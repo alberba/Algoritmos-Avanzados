@@ -30,12 +30,12 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         stopButton = new JButton("Parar");
         stopButton.addActionListener(this);
         buttons.add(stopButton);
-        paramButton = new JButton("Parámetros");
+        paramButton = new JButton("Distribución");
         paramButton.addActionListener(this);
         buttons.add(paramButton);
         this.add(buttons);
         this.add(BorderLayout.NORTH, buttons);
-        patronButton = new JButton("Patrón");
+        patronButton = new JButton("Numero de Buckets");
         patronButton.addActionListener(this);
         buttons.add(patronButton);
 
