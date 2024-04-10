@@ -1,13 +1,27 @@
 package Controlador.TreeSort;
 
 
+import Modelo.Modelo;
+import Modelo.Algoritmo;
+
 import java.util.ArrayList;
 
-public class TreeSort {
+public class TreeSort extends Thread {
+    private final Modelo modelo;
     private TreeNode raiz;
+    private final ArrayList<Double> arrayInicial;
 
-    public TreeSort() {
+    public TreeSort(ArrayList<Double> arrayInicial, Modelo modelo) {
         raiz = null;
+        this.arrayInicial = arrayInicial;
+        this.modelo = modelo;
+    }
+
+    public void run() {
+        long t = System.nanoTime();
+        sort();
+        modelo.addTiempo(System.nanoTime() - t);
+        modelo.añadirAlgoritmo(Algoritmo.Treesort);
     }
 
     /**
@@ -35,12 +49,11 @@ public class TreeSort {
 
     /**
      * Método para ordenar un array o conjunto de datos utilizando el mecanismo de TreeSort
-     * @param arr Array a ordenar
      * @return Array ordenado
      */
-    public ArrayList<Double> sort(ArrayList<Double> arr) {
+    public ArrayList<Double> sort() {
         // Inserta todos los elementos del array
-        for (double i: arr) {
+        for (double i: arrayInicial) {
             raiz = insert(raiz, i);
         }
 

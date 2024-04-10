@@ -3,14 +3,12 @@ package Controlador;
 import Controlador.TreeSort.TreeSort;
 import Modelo.Distribucion;
 import Modelo.Modelo;
+import Modelo.Algoritmo;
 import Main.Main;
 import Notification.NotiEnum;
 import Notification.Notificacion;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Collections;
+import java.util.*;
 
 public class Controlador extends Thread implements Notificacion {
 
@@ -30,6 +28,7 @@ public class Controlador extends Thread implements Notificacion {
         Distribucion dist = modelo.getDistribucion();
         int n = modelo.getN();
         datos = new ArrayList<>();
+        int nBuckets = modelo.getnBuckets();
         Random rand = new Random();
         // Se generan los datos en función de la distribución
         switch (dist) {
@@ -55,29 +54,21 @@ public class Controlador extends Thread implements Notificacion {
         // Se ordenan los datos con cada uno de los algoritmos, se calcula el tiempo y se añade al modelo
         // Algoritmo 1
         // BUCKET //
-        long t = System.nanoTime();
-        bucketSort(new ArrayList<>(datos), dist);
-        t = System.nanoTime() - t;
-        modelo.añadirAlgoritmo("Bucketsort");
+        BucketSort bucketSort = new BucketSort(new ArrayList<>(datos), dist, nBuckets, modelo);
+        bucketSort.start();
         // Algoritmo 2
         // TIMSORT //
-        t = System.nanoTime();
-        timsort(new ArrayList<>(datos));
-        t = System.nanoTime() - t;
-        modelo.addTiempo(t);
-        modelo.añadirAlgoritmo("Timsort");
+        TimSort timSort = new TimSort(new ArrayList<>(datos), modelo);
+        timSort.start();
         // Algoritmo 3
         // TREESORT //
-        t = System.nanoTime();
-        TreeSort treeSort = new TreeSort();
-        treeSort.sort(new ArrayList<>(datos));
-        t = System.nanoTime() - t;
-        modelo.añadirAlgoritmo("Treesort");
+        TreeSort treeSort = new TreeSort(new ArrayList<>(datos), modelo);
+        treeSort.start();
         // Algoritmo 4
         // QUICKSORT //
-        t = System.nanoTime();
-        quickSort(new ArrayList<>(datos), 0, datos.size()-1);
-        t = System.nanoTime() - t;
+        QuickSort quickSort = new QuickSort(new ArrayList<>(datos), modelo);
+        quickSort.start();
+
 
         if (!interrumpir) {
             prog.notificar(NotiEnum.PARAR, null);
@@ -85,102 +76,6 @@ public class Controlador extends Thread implements Notificacion {
         } else {
             // Se notifica mediante la consola de salida que se ha interrumpido el proceso
             System.out.println("Interrumpido");
-        }
-    }
-
-    private void timsort(ArrayList<Double> arr) {
-        Collections.sort(arr);
-    }
-
-    public void quickSort(ArrayList<Double> arr, int begin, int end) {
-        if (begin < end) {
-            int partitionIndex = partition(arr, begin, end);
-
-            quickSort(arr, begin, partitionIndex-1);
-            quickSort(arr, partitionIndex+1, end);
-        }
-    }
-
-    private int partition(ArrayList<Double> arr, int begin, int end) {
-        double pivot = arr.get(arr.size()-1);
-        int i = (begin-1);
-
-        for (int j = begin; j < end; j++) {
-            if (arr.get(j) <= pivot) {
-                i++;
-
-                double swapTemp = arr.get(i);
-                arr.set(i, arr.get(j));
-                arr.set(j, swapTemp);
-            }
-        }
-
-        double swapTemp = arr.get(i+1);
-        arr.set(i+1, arr.get(arr.size()-1));
-        arr.set(arr.size()-1, swapTemp);
-
-        return i+1;
-    }
-
-    private void bucketSort(ArrayList<Double> arr, Enum<Distribucion> dist) {
-        int nDatos = arr.size();
-        // Se generan los buckets
-        List<List<Double>> buckets = new ArrayList<>();
-        int numBuckets = (int) Math.sqrt(nDatos); // Número de buckets más indicado = sqrt(n)
-        for (int i = 0; i < numBuckets; i++) {
-            buckets.add(new ArrayList<>());
-        }
-        // Según el tipo de distribución, se añaden los elementos a los buckets de una forma u otra
-        if (dist == Distribucion.UNIFORME) {
-            for (double element : arr) {
-                int indexBucket = (int) (element * numBuckets);
-                buckets.get(indexBucket).add(element);
-            }
-        } else {
-            int [] offsetIndiceBucket = {0, (int) (0.09 * numBuckets), (int) (0.25 * numBuckets), (int) (0.5 * numBuckets), (int) (0.75 * numBuckets), (int) (0.91 * numBuckets)}; // 6 valores, uno para cada franja de buckets
-            int franja;
-            Random rng = new Random();
-            for (double element : arr) {
-                // Se asigna el elemento a un bucket en función de la franja a la que pertenezca
-                if (element < 0.3) {
-                    // 9% de los buckets
-                    franja = 0;
-                } else if (element < 0.4) {
-                    // 16% de los buckets
-                    franja = 1;
-                } else if (element < 0.5) {
-                    // 25% de los buckets
-                    franja = 2;
-                } else if (element < 0.6) {
-                    // 25% de los buckets
-                    franja = 3;
-                } else if (element < 0.7) {
-                    // 16% de los buckets
-                    franja = 4;
-                } else {
-                    // 9% de los buckets
-                    franja = 5;
-                }
-                // Índice = valor aleatorio entre el rango de buckets de la franja + offset de la franja
-                int indiceBucket = rng.nextInt((offsetIndiceBucket[franja] - offsetIndiceBucket[franja - 1])) + offsetIndiceBucket[franja];
-                buckets.get(indiceBucket).add(element);
-                // Se ordenan los buckets
-                for (List<Double> bucket : buckets) {
-                    Collections.sort(bucket);
-                }
-            }
-        }
-
-
-        for (int i = 0; i < nDatos; i++) {
-            Collections.sort(buckets.get(i));
-        }
-
-        int index = 0;
-        for (int i = 0; i < nDatos; i++) {
-            for (int j = 0; j < nDatos; j++) {
-                arr.set(index++, buckets.get(i).get(j));
-            }
         }
     }
 

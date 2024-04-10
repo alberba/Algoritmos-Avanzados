@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 public class Vista extends JFrame implements ActionListener, Notificacion {
 
     private final Main prog;
-    private final JButton iniButton, stopButton, paramButton, patronButton;
+    private final JButton iniButton, stopButton, paramButton;
     private final PanelGrafico panel;
 
     private final JProgressBar progreso;
@@ -30,14 +30,11 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         stopButton = new JButton("Parar");
         stopButton.addActionListener(this);
         buttons.add(stopButton);
-        paramButton = new JButton("Distribución");
+        paramButton = new JButton("Parámetros");
         paramButton.addActionListener(this);
         buttons.add(paramButton);
         this.add(buttons);
         this.add(BorderLayout.NORTH, buttons);
-        patronButton = new JButton("Numero de Buckets");
-        patronButton.addActionListener(this);
-        buttons.add(patronButton);
 
         // INSERCIÓN DE PANEL
         panel = new PanelGrafico(p);
@@ -73,12 +70,9 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
             prog.notificar(NotiEnum.PARAR, null);
         } else if (e.getSource() == paramButton) {
             // TODO: Fix this
-            Dialogo dialogo = new Dialogo(prog, 0);
+            Dialogo dialogo = new Dialogo(prog, prog.getModelo().getnBuckets(), prog.getModelo().getN());
             dialogo.setVisible(true);
 
-        } else if (e.getSource() == patronButton) {
-            Dialogo dialogo = new Dialogo(prog);
-            dialogo.setVisible(true);
         }
     }
 

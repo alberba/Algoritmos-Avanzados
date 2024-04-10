@@ -12,7 +12,7 @@ public class Modelo implements Notificacion {
     private int nBuckets;
     private Distribucion distribucion;
     private final ArrayList<Long> tiempos;
-    private final ArrayList<String> algoritmos;
+    private final ArrayList<Algoritmo> algoritmos;
     public Modelo (Main p, ArrayList<Integer> datos) {
         prog = p;
         tiempos = new ArrayList<>();
@@ -44,15 +44,17 @@ public class Modelo implements Notificacion {
         return tiempos;
     }
 
-    public void añadirAlgoritmo(String nombre) {
-        algoritmos.add(nombre);
+    public void añadirAlgoritmo(Algoritmo algoritmo) {
+        algoritmos.add(algoritmo);
     }
 
-    public String getAlgoritmo(int i) {
+    public Algoritmo getAlgoritmo(int i) {
         return algoritmos.get(i);
     }
 
     public Distribucion getDistribucion() { return distribucion; }
+
+    public int getnBuckets() { return nBuckets; }
 
     public void setDistribucion(Distribucion d) { distribucion = d; }
 
@@ -62,6 +64,10 @@ public class Modelo implements Notificacion {
 
     @Override
     public void notificar(NotiEnum s, Object message) {
-
+        switch (s) {
+            case SETDISTRIBUCION -> distribucion = (Distribucion) message;
+            case SETNBUCKET -> nBuckets = (int) message;
+            case SETN -> n = (int) message;
+        }
     }
 }

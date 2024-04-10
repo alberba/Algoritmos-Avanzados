@@ -22,6 +22,9 @@ public class PanelGrafico extends JPanel {
         Modelo modelo = prog.getModelo();
         ArrayList<Long> tiempos = modelo.getTiempos(); // Tiempos de ejecución
 
+        if (tiempos.isEmpty()) {
+            return;
+        }
         // Calcular dimensiones para dibujar las barras
         int barWidth = (getWidth() - 100) / tiempos.size(); // Ancho de cada barra
         int maxValue = getMaxValue(tiempos); // Valor máximo de los tiempos
@@ -49,12 +52,24 @@ public class PanelGrafico extends JPanel {
 
 
             // Agregar el nombre del algoritmo debajo de la barra
-            String nombreAlgoritmo = modelo.getAlgoritmo(i);
+            String nombreAlgoritmo = obtenerNombre(prog.getModelo(), i);
             g.drawString(nombreAlgoritmo, x + barWidth / 2 - g.getFontMetrics().stringWidth(nombreAlgoritmo) / 2, getHeight() - 5);
 
 
             x += barWidth + 5; // Mover posición horizontal para dibujar la próxima barra (con separación)
         }
+    }
+
+    /**
+     * Obtiene el nombre del algoritmo dado su índice y le da formato (primera letra mayúscula, el resto minúsculas)
+     * @param modelo
+     * @param i
+     * @return
+     */
+    private String obtenerNombre(Modelo modelo, int i) {
+        String nombre = modelo.getAlgoritmo(i).name();
+        nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1);
+        return nombre;
     }
 
     // Método para obtener el valor máximo de los tiempos de ejecución
