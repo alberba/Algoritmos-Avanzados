@@ -21,7 +21,7 @@ public class TreeSort extends Thread {
         long t = System.nanoTime();
         sort();
         modelo.addTiempo(System.nanoTime() - t);
-        modelo.añadirAlgoritmo(Algoritmo.Treesort);
+        modelo.añadirAlgoritmo(Algoritmo.TREESORT);
     }
 
     /**

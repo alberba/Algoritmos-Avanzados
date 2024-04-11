@@ -23,7 +23,7 @@ public class BucketSort extends Thread {
         long t = System.nanoTime();
         bucketSort();
         modelo.addTiempo(System.nanoTime() - t);
-        modelo.añadirAlgoritmo(Algoritmo.Bucketsort);
+        modelo.añadirAlgoritmo(Algoritmo.BUCKETSORT);
     }
 
     private void bucketSort() {

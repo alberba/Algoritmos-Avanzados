@@ -19,7 +19,7 @@ public class TimSort extends Thread {
         long t = System.nanoTime();
         Collections.sort(array);
         modelo.addTiempo(System.nanoTime() - t);
-        modelo.añadirAlgoritmo(Algoritmo.Timsort);
+        modelo.añadirAlgoritmo(Algoritmo.TIMSORT);
     }
 
 }

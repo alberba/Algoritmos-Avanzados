@@ -23,14 +23,13 @@ public class Modelo implements Notificacion {
     }
 
     /**
-     * Añade los tiempos de los algoritmos con respecto a n
-     * @param n tamaño del array
+     * Añade los tiempos de los algoritmos
      * @param tiempo tiempos de los algoritmos
      */
     public void addTiempo(long tiempo) {
         tiempos.add(tiempo);
         // Notificamos a la vista para que se actualice
-        //prog.getVista().notificar(NotiEnum.DIBUJAR, null);No sé si dejarlo ¿?
+        prog.getVista().notificar(NotiEnum.DIBUJAR, null);
     }
 
     /**

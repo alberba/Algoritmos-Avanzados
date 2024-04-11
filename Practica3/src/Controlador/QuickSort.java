@@ -20,7 +20,7 @@ public class QuickSort extends Thread {
         long t = System.nanoTime();
         quickSort(array, 0, array.size() - 1);
         modelo.addTiempo(System.nanoTime() - t);
-        modelo.añadirAlgoritmo(Algoritmo.Quicksort);
+        modelo.añadirAlgoritmo(Algoritmo.QUICKSORT);
     }
 
     public void quickSort(ArrayList<Double> arr, int begin, int end) {
