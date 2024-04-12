@@ -46,7 +46,7 @@ public class Controlador extends Thread implements Notificacion {
                         num = rand.nextGaussian();
                     }
                     // Se normalizan los datos, serán valores entre 0 y 1
-                    datos.add((rand.nextGaussian() + 3) / 6);
+                    datos.add((num + 3) / 6);
                 }
                 break;
 
