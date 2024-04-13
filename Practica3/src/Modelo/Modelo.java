@@ -13,7 +13,7 @@ public class Modelo implements Notificacion {
     private Distribucion distribucion;
     private final ArrayList<Long> tiempos;
     private final ArrayList<Algoritmo> algoritmos;
-    public Modelo (Main p, ArrayList<Integer> datos) {
+    public Modelo (Main p) {
         prog = p;
         tiempos = new ArrayList<>();
         algoritmos = new ArrayList<>();

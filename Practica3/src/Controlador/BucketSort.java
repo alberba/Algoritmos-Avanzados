@@ -17,6 +17,7 @@ public class BucketSort extends Thread {
         this.array = array;
         this.dist = dist;
         this.nBuckets = nBuckets;
+        this.modelo = modelo;
     }
 
     public void run() {

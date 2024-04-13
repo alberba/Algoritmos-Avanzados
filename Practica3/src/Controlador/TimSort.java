@@ -13,6 +13,7 @@ public class TimSort extends Thread {
 
     public TimSort(ArrayList<Double> array, Modelo modelo) {
         this.array = array;
+        this.modelo = modelo;
     }
 
     public void run() {

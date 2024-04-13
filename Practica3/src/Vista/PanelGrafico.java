@@ -45,7 +45,7 @@ public class PanelGrafico extends JPanel {
             Long tiempo = tiempos.get(i); // Obtener los tiempos para este tamaño de array
             int barHeight = (int) ((double) tiempo / maxValue * panelHeight); // Calcular altura de la barra en función del tiempo
             int y = panelHeight - barHeight; // Calcular posición vertical de la barra
-            g.setColor(Color.BLUE); // Establecer el color de la barra
+            g.setColor(selectColor(i)); // Establecer el color de la barra
             g.fillRect(x, y, barWidth, barHeight); // Dibujar la barra
             g.setColor(Color.BLACK); // Establecer color del borde de la barra
             g.drawRect(x, y, barWidth, barHeight); // Dibujar borde de la barra
@@ -58,6 +58,21 @@ public class PanelGrafico extends JPanel {
 
             x += barWidth + 5; // Mover posición horizontal para dibujar la próxima barra (con separación)
         }
+    }
+
+    /**
+     * Función que devuelve el color dependiendo del lado del cuadrado
+     * @param indice indice del algoritmo
+     * @return Color
+     */
+    private Color selectColor(int indice) {
+        return switch (indice) {
+            case 0 -> Color.YELLOW;
+            case 1 -> Color.GREEN;
+            case 2 -> Color.BLUE;
+            case 3 -> Color.RED;
+            default -> throw new IllegalStateException("Unexpected value: " + indice);
+        };
     }
 
     /**

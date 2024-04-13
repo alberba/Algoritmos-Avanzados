@@ -15,8 +15,7 @@ public class Main implements Notificacion {
 
     public Main() {
         controlador = null;
-        // TODO: Fix this
-        modelo = new Modelo(this, null);
+        modelo = new Modelo(this);
         vista = new Vista("Tiempos", this);
         vista.mostrar();
     }

@@ -42,11 +42,11 @@ public class Controlador extends Thread implements Notificacion {
                 for (int i = 0; i < n; i++) {
                     num = rand.nextGaussian();
                     // Si el valor se aleja mucho de la media, se descarta el valor
-                    while (num < -3 || num > 3) {
+                    while (num < -3.0 || num > 3.0) {
                         num = rand.nextGaussian();
                     }
                     // Se normalizan los datos, serán valores entre 0 y 1
-                    datos.add((rand.nextGaussian() + 3) / 6);
+                    datos.add((num + 3) / 6);
                 }
                 break;
 

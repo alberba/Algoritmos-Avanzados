@@ -55,7 +55,7 @@ public class Dialogo extends JDialog implements ActionListener {
             } else {
                 prog.getModelo().notificar(NotiEnum.SETDISTRIBUCION, Distribucion.GAUSSIANA);
             }
-            prog.getModelo().notificar(NotiEnum.SETNBUCKET, ((NDatosPanel) interior.getComponent(2)).getNDatos());
+            prog.getModelo().notificar(NotiEnum.SETN, ((NDatosPanel) interior.getComponent(2)).getNDatos());
         } catch (Exception e) {
             System.out.println("Error en la entrada de datos");
         }
