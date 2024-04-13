@@ -47,32 +47,32 @@ public class BucketSort extends Thread {
             int indiceBucket; // Índice dentro de la franja
             for (double element : array) {
                 // Se asigna el elemento a un bucket en función de la franja a la que pertenezca
-                if (element < 0.3) {
+                if (element < 0.16667) {
                     // 2.2% de los buckets
                     franja = 0;
                     // Se normaliza para obtener el índice
                     // ((elemento - valor máximo anterior a la franja) / rango de valores (valMax - valMin)) * %buckets
-                    indiceBucket = (int) ((element / 0.3) * 0.023 * nBuckets);
-                } else if (element < 0.4) {
+                    indiceBucket = (int) ((element / 0.16667) * 0.023 * nBuckets);
+                } else if (element < 0.33333) {
                     // 13.6% de los buckets
                     franja = 1;
-                    indiceBucket = (int) (((element - 0.3) / 0.1) * 0.136 * nBuckets);
+                    indiceBucket = (int) (((element - 0.16667) / 0.16667) * 0.136 * nBuckets);
                 } else if (element < 0.5) {
                     // 34.1% de los buckets
                     franja = 2;
-                    indiceBucket = (int) (((element - 0.4) / 0.1) * 0.341 * nBuckets);
-                } else if (element < 0.6) {
+                    indiceBucket = (int) (((element - 0.33333) / 0.16667) * 0.341 * nBuckets);
+                } else if (element < 0.66667) {
                     // 34.1% de los buckets
                     franja = 3;
-                    indiceBucket = (int) (((element - 0.5) / 0.1) * 0.341 * nBuckets);
-                } else if (element < 0.7) {
+                    indiceBucket = (int) (((element - 0.5) / 0.16667) * 0.341 * nBuckets);
+                } else if (element < 0.83333) {
                     // 13.6% de los buckets
                     franja = 4;
-                    indiceBucket = (int) (((element - 0.6) / 0.1) * 0.136 * nBuckets);
+                    indiceBucket = (int) (((element - 0.66667) / 0.16667) * 0.136 * nBuckets);
                 } else {
                     // 2.2% de los buckets
                     franja = 5;
-                    indiceBucket = (int) (((element - 0.7) / 0.3) * 0.023 * nBuckets);
+                    indiceBucket = (int) (((element - 0.83333) / 0.16667) * 0.023 * nBuckets);
                 }
                 // Índice = índice dentro de la franja + índice de offset de la franja
                 indiceBucket = indiceBucket + offsetIndiceBucket[franja];
@@ -86,9 +86,9 @@ public class BucketSort extends Thread {
             }
 
             int index = 0;
-            for (int i = 0; i < nDatos; i++) {
+            for (int i = 0; i < nBuckets; i++) {
                 Iterator<Double> iterator = buckets.get(i).iterator();
-                for (int j = 0; j < nDatos; j++) {
+                for (int j = 0; j < buckets.get(i).size(); j++) {
                     array.set(index++, iterator.next());
                 }
             }
