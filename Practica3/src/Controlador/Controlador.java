@@ -49,7 +49,6 @@ public class Controlador extends Thread implements Notificacion {
                     datos.add((num + 3) / 6);
                 }
                 break;
-
         }
         // Se ordenan los datos con cada uno de los algoritmos, se calcula el tiempo y se añade al modelo
         // Algoritmo 1
@@ -68,7 +67,6 @@ public class Controlador extends Thread implements Notificacion {
         // QUICKSORT //
         QuickSort quickSort = new QuickSort(new ArrayList<>(datos), modelo);
         quickSort.start();
-
 
         if (!interrumpir) {
             prog.notificar(NotiEnum.PARAR, null);

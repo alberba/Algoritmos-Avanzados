@@ -20,8 +20,8 @@ public class TreeSort extends Thread {
     public void run() {
         long t = System.nanoTime();
         sort();
-        modelo.addTiempo(System.nanoTime() - t);
-        modelo.añadirAlgoritmo(Algoritmo.TREESORT);
+        modelo.addTiempo(System.nanoTime() - t, Algoritmo.TREESORT);
+        System.out.println("Tiempo Treesort: " + (System.nanoTime() - t) + " ns");
     }
 
     /**
@@ -56,8 +56,6 @@ public class TreeSort extends Thread {
         for (double i: arrayInicial) {
             raiz = insert(raiz, i);
         }
-
-        ArrayList<Double> aux = new ArrayList<>();
         return treeToArray(raiz);
     }
 

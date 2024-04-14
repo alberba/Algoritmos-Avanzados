@@ -2,6 +2,7 @@ package Vista;
 
 import Main.Main;
 import Modelo.Modelo;
+import Modelo.Algoritmo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,26 +27,27 @@ public class PanelGrafico extends JPanel {
             return;
         }
         // Calcular dimensiones para dibujar las barras
-        int barWidth = (getWidth() - 100) / tiempos.size(); // Ancho de cada barra
-        int maxValue = getMaxValue(tiempos); // Valor máximo de los tiempos
+        int barWidth = (getWidth() - 120) / tiempos.size(); // Ancho de cada barra
+        int valorMax = getMaxValue(tiempos); // Valor máximo de los tiempos
+        int franjas = valorMax / 10; // Rango de valores
         int panelHeight = getHeight() - 50; // Altura del panel
-        int scaleStep = panelHeight / 10; // El divisor indica el número de valores indicados en la escala
+        int stepsEscala = panelHeight / 10; // El divisor indica el número de valores indicados en la escala
 
         // Dibujar la escala de valores en el lado izquierdo del panel
         g.setColor(Color.BLACK);
         for (int i = 0; i <= 10; i++) {
-            int y = panelHeight - i * scaleStep; // Calcular posición en función del paso
-            g.drawString(String.valueOf(i * 10), 5, y + 5); // Mostrar el valor de la escala
-            g.drawLine(30, y, 35, y); // Dibujar una línea para indicar el paso
+            int y = panelHeight - i * stepsEscala; // Calcular posición en función del paso
+            g.drawString(String.valueOf((i * franjas) / 1000000) + "ms", 5, y + 5); // Mostrar el valor de la escala
+            g.drawLine(45, y, 50, y); // Dibujar una línea para indicar el step
         }
 
         // Dibujar las barras para cada tamaño de array
-        int x = 50; // Posición inicial de la primera barra
+        int x = 60; // Posición inicial de la primera barra
         for (int i = 0; i < tiempos.size(); i++) {
             Long tiempo = tiempos.get(i); // Obtener los tiempos para este tamaño de array
-            int barHeight = (int) ((double) tiempo / maxValue * panelHeight); // Calcular altura de la barra en función del tiempo
+            int barHeight = (int) ((double) tiempo / valorMax * panelHeight); // Calcular altura de la barra en función del tiempo
             int y = panelHeight - barHeight; // Calcular posición vertical de la barra
-            g.setColor(selectColor(i)); // Establecer el color de la barra
+            g.setColor(selectColor(modelo.getAlgoritmo(i))); // Establecer el color de la barra
             g.fillRect(x, y, barWidth, barHeight); // Dibujar la barra
             g.setColor(Color.BLACK); // Establecer color del borde de la barra
             g.drawRect(x, y, barWidth, barHeight); // Dibujar borde de la barra
@@ -61,22 +63,22 @@ public class PanelGrafico extends JPanel {
     }
 
     /**
-     * Función que devuelve el color dependiendo del lado del cuadrado
-     * @param indice indice del algoritmo
+     * Función que devuelve el color dependiendo del tipo de algoritmo
+     * @param algoritmo
      * @return Color
      */
-    private Color selectColor(int indice) {
-        return switch (indice) {
-            case 0 -> Color.YELLOW;
-            case 1 -> Color.GREEN;
-            case 2 -> Color.BLUE;
-            case 3 -> Color.RED;
-            default -> throw new IllegalStateException("Unexpected value: " + indice);
+    private Color selectColor(Algoritmo algoritmo) {
+        return switch (algoritmo) {
+            case BUCKETSORT -> Color.YELLOW;
+            case QUICKSORT -> Color.GREEN;
+            case TIMSORT -> Color.BLUE;
+            case TREESORT -> Color.RED;
+            default -> throw new IllegalStateException("Unexpected value " + algoritmo);
         };
     }
 
     /**
-     * Obtiene el nombre del algoritmo dado su índice y le da formato (primera letra mayúscula, el resto minúsculas)
+     * Obtiene el nombre del algoritmo dado su índice y le da formato (primera letra mayúscula, el resto en minúsculas)
      * @param modelo
      * @param i
      * @return
@@ -89,7 +91,7 @@ public class PanelGrafico extends JPanel {
 
     // Método para obtener el valor máximo de los tiempos de ejecución
     private int getMaxValue(ArrayList<Long> tiemposN) {
-        long max = Long.MIN_VALUE;
+        long max = 0;
         // Iterar sobre todos los tiempos para encontrar el máximo
         for (Long tiempo : tiemposN) {
             if (tiempo > max) {
@@ -97,6 +99,18 @@ public class PanelGrafico extends JPanel {
             }
         }
         return (int) max; // Devolver el máximo valor encontrado
+    }
+
+    // Método para obtener el valor máximo de los tiempos de ejecución
+    private int getMinValue(ArrayList<Long> tiemposN) {
+        long min = Long.MAX_VALUE;
+        // Iterar sobre todos los tiempos para encontrar el máximo
+        for (Long tiempo : tiemposN) {
+            if (tiempo < min) {
+                min = tiempo;
+            }
+        }
+        return (int) min; // Devolver el máximo valor encontrado
     }
 
     @Override

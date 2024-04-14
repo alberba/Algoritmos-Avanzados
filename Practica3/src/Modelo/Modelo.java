@@ -26,8 +26,9 @@ public class Modelo implements Notificacion {
      * Añade los tiempos de los algoritmos
      * @param tiempo tiempos de los algoritmos
      */
-    public void addTiempo(long tiempo) {
+    public void addTiempo(long tiempo, Algoritmo algoritmo) {
         tiempos.add(tiempo);
+        algoritmos.add(algoritmo);
         // Notificamos a la vista para que se actualice
         prog.getVista().notificar(NotiEnum.DIBUJAR, null);
     }
@@ -36,15 +37,12 @@ public class Modelo implements Notificacion {
      * Resetea los valores de los arrays
      */
     public void reset() {
+        algoritmos.clear();
         tiempos.clear();
     }
 
     public ArrayList<Long> getTiempos() {
         return tiempos;
-    }
-
-    public void añadirAlgoritmo(Algoritmo algoritmo) {
-        algoritmos.add(algoritmo);
     }
 
     public Algoritmo getAlgoritmo(int i) {

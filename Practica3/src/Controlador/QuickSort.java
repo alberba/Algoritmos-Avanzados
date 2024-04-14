@@ -19,8 +19,8 @@ public class QuickSort extends Thread {
     public void run() {
         long t = System.nanoTime();
         quickSort(array, 0, array.size() - 1);
-        modelo.addTiempo(System.nanoTime() - t);
-        modelo.añadirAlgoritmo(Algoritmo.QUICKSORT);
+        modelo.addTiempo(System.nanoTime() - t, Algoritmo.QUICKSORT);
+        System.out.println("Tiempo Quicksort: " + (System.nanoTime() - t) + " ns");
     }
 
     public void quickSort(ArrayList<Double> arr, int begin, int end) {
@@ -33,7 +33,7 @@ public class QuickSort extends Thread {
     }
 
     private int particion(ArrayList<Double> arr, int begin, int end) {
-        double pivot = arr.get(arr.size() - 1);
+        double pivot = arr.get(end);
         int i = (begin - 1);
 
         for (int j = begin; j < end; j++) {
@@ -42,7 +42,7 @@ public class QuickSort extends Thread {
                 Collections.swap(arr, i, j);
             }
         }
-        Collections.swap(arr, i + 1, arr.size() - 1);
+        Collections.swap(arr, i + 1, end);
 
         return i+1;
     }
