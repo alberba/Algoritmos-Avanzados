@@ -1,5 +1,5 @@
 package Modelo;
 
-public enum Algoritmo {
+public enum AlgoritmoEnum {
     TIMSORT, BUCKETSORT, QUICKSORT, TREESORT
 }

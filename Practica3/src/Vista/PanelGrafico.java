@@ -2,7 +2,7 @@ package Vista;
 
 import Main.Main;
 import Modelo.Modelo;
-import Modelo.Algoritmo;
+import Modelo.AlgoritmoEnum;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,8 +28,8 @@ public class PanelGrafico extends JPanel {
         }
         // Calcular dimensiones para dibujar las barras
         int barWidth = (getWidth() - 120) / tiempos.size(); // Ancho de cada barra
-        int valorMax = getMaxValue(tiempos); // Valor máximo de los tiempos
-        int franjas = valorMax / 10; // Rango de valores
+        long valorMax = getMaxValue(tiempos); // Valor máximo de los tiempos
+        long franjas = valorMax / 10; // Rango de valores
         int panelHeight = getHeight() - 50; // Altura del panel
         int stepsEscala = panelHeight / 10; // El divisor indica el número de valores indicados en la escala
 
@@ -64,16 +64,16 @@ public class PanelGrafico extends JPanel {
 
     /**
      * Función que devuelve el color dependiendo del tipo de algoritmo
-     * @param algoritmo
+     * @param algoritmoEnum
      * @return Color
      */
-    private Color selectColor(Algoritmo algoritmo) {
-        return switch (algoritmo) {
+    private Color selectColor(AlgoritmoEnum algoritmoEnum) {
+        return switch (algoritmoEnum) {
             case BUCKETSORT -> Color.YELLOW;
             case QUICKSORT -> Color.GREEN;
             case TIMSORT -> Color.BLUE;
             case TREESORT -> Color.RED;
-            default -> throw new IllegalStateException("Unexpected value " + algoritmo);
+            default -> throw new IllegalStateException("Unexpected value " + algoritmoEnum);
         };
     }
 
@@ -90,7 +90,7 @@ public class PanelGrafico extends JPanel {
     }
 
     // Método para obtener el valor máximo de los tiempos de ejecución
-    private int getMaxValue(ArrayList<Long> tiemposN) {
+    private long getMaxValue(ArrayList<Long> tiemposN) {
         long max = 0;
         // Iterar sobre todos los tiempos para encontrar el máximo
         for (Long tiempo : tiemposN) {
@@ -98,11 +98,11 @@ public class PanelGrafico extends JPanel {
                 max = tiempo;
             }
         }
-        return (int) max; // Devolver el máximo valor encontrado
+        return max; // Devolver el máximo valor encontrado
     }
 
     // Método para obtener el valor máximo de los tiempos de ejecución
-    private int getMinValue(ArrayList<Long> tiemposN) {
+    private long getMinValue(ArrayList<Long> tiemposN) {
         long min = Long.MAX_VALUE;
         // Iterar sobre todos los tiempos para encontrar el máximo
         for (Long tiempo : tiemposN) {
@@ -110,7 +110,7 @@ public class PanelGrafico extends JPanel {
                 min = tiempo;
             }
         }
-        return (int) min; // Devolver el máximo valor encontrado
+        return min; // Devolver el máximo valor encontrado
     }
 
     @Override

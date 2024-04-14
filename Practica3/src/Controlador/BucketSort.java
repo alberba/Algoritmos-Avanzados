@@ -4,7 +4,7 @@ import Modelo.Distribucion;
 
 import java.util.*;
 import Modelo.Modelo;
-import Modelo.Algoritmo;
+import Modelo.AlgoritmoEnum;
 
 public class BucketSort extends Thread {
 
@@ -12,18 +12,20 @@ public class BucketSort extends Thread {
     Distribucion dist;
     int nBuckets;
     Modelo modelo;
+    Controlador controlador;
 
-    public BucketSort(ArrayList<Double> array, Distribucion dist, int nBuckets, Modelo modelo) {
+    public BucketSort(ArrayList<Double> array, Distribucion dist, int nBuckets, Modelo modelo, Controlador controlador) {
         this.array = array;
         this.dist = dist;
         this.nBuckets = nBuckets;
         this.modelo = modelo;
+        this.controlador = controlador;
     }
 
     public void run() {
         long t = System.nanoTime();
         bucketSort();
-        modelo.addTiempo(System.nanoTime() - t, Algoritmo.BUCKETSORT);
+        modelo.addTiempo(System.nanoTime() - t, AlgoritmoEnum.BUCKETSORT);
         System.out.println("Tiempo Bucketsort: " + (System.nanoTime() - t) + " ns");
     }
 
@@ -37,6 +39,7 @@ public class BucketSort extends Thread {
         // Según el tipo de distribución, se añaden los elementos a los buckets de una forma u otra
         if (dist == Distribucion.UNIFORME) {
             for (double elemento : array) {
+                controlador.actualizarProgreso();
                 int indexBucket = (int) (elemento * nBuckets);
                 if (indexBucket == nBuckets) { // Caso de elemento == 1.0
                     indexBucket--;
@@ -48,6 +51,7 @@ public class BucketSort extends Thread {
             int franja;
             int indiceBucket; // Índice dentro de la franja
             for (double elemento : array) {
+                controlador.actualizarProgreso();
                 // Se asigna el elemento a un bucket en función de la franja a la que pertenezca
                 if (elemento < 0.16667) {
                     // 2.2% de los buckets
@@ -78,6 +82,9 @@ public class BucketSort extends Thread {
                 }
                 // Índice = índice dentro de la franja + índice de offset de la franja
                 indiceBucket = indiceBucket + offsetIndiceBucket[franja];
+                if (indiceBucket == nBuckets) { // Caso elemento == 1.0
+                    indiceBucket--;
+                }
                 buckets.get(indiceBucket).add(elemento);
             }
         }
@@ -89,6 +96,7 @@ public class BucketSort extends Thread {
 
         int index = 0;
         for (int i = 0; i < nBuckets; i++) {
+            controlador.actualizarProgreso();
             Iterator<Double> iterator = buckets.get(i).iterator();
             for (int j = 0; j < buckets.get(i).size(); j++) {
                 array.set(index++, iterator.next());

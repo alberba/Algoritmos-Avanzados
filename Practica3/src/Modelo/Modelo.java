@@ -12,11 +12,11 @@ public class Modelo implements Notificacion {
     private int nBuckets;
     private Distribucion distribucion;
     private final ArrayList<Long> tiempos;
-    private final ArrayList<Algoritmo> algoritmos;
+    private final ArrayList<AlgoritmoEnum> algoritmoEnums;
     public Modelo (Main p) {
         prog = p;
         tiempos = new ArrayList<>();
-        algoritmos = new ArrayList<>();
+        algoritmoEnums = new ArrayList<>();
         n = 30000; // Por defecto
         nBuckets = (int) Math.sqrt(n); // Por defecto
         distribucion = Distribucion.UNIFORME; // Por defecto
@@ -26,9 +26,9 @@ public class Modelo implements Notificacion {
      * Añade los tiempos de los algoritmos
      * @param tiempo tiempos de los algoritmos
      */
-    public void addTiempo(long tiempo, Algoritmo algoritmo) {
+    public void addTiempo(long tiempo, AlgoritmoEnum algoritmoEnum) {
         tiempos.add(tiempo);
-        algoritmos.add(algoritmo);
+        algoritmoEnums.add(algoritmoEnum);
         // Notificamos a la vista para que se actualice
         prog.getVista().notificar(NotiEnum.DIBUJAR, null);
     }
@@ -37,7 +37,7 @@ public class Modelo implements Notificacion {
      * Resetea los valores de los arrays
      */
     public void reset() {
-        algoritmos.clear();
+        algoritmoEnums.clear();
         tiempos.clear();
     }
 
@@ -45,8 +45,8 @@ public class Modelo implements Notificacion {
         return tiempos;
     }
 
-    public Algoritmo getAlgoritmo(int i) {
-        return algoritmos.get(i);
+    public AlgoritmoEnum getAlgoritmo(int i) {
+        return algoritmoEnums.get(i);
     }
 
     public Distribucion getDistribucion() { return distribucion; }

@@ -69,7 +69,6 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         } else if (e.getSource() == stopButton) {
             prog.notificar(NotiEnum.PARAR, null);
         } else if (e.getSource() == paramButton) {
-            // TODO: Fix this
             Dialogo dialogo = new Dialogo(prog, prog.getModelo().getnBuckets(), prog.getModelo().getN());
             dialogo.setVisible(true);
 
@@ -78,7 +77,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
 
     public void progreso() {
         int p = progreso.getValue();
-        p++;
+        p = p == 100 ? 0 : p + 1;
         setValueProgreso(p);
     }
 
