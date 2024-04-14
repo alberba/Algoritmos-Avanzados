@@ -34,7 +34,7 @@ public class BucketSort extends Thread {
         List<List<Double>> buckets = new ArrayList<>();
         //int nBuckets = (int) Math.sqrt(nDatos); // Número de buckets más indicado = sqrt(n)
         for (int i = 0; i < nBuckets; i++) {
-            buckets.add(new ArrayList<Double>());
+            buckets.add(new ArrayList<>());
         }
         // Según el tipo de distribución, se añaden los elementos a los buckets de una forma u otra
         if (dist == Distribucion.UNIFORME) {
