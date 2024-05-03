@@ -10,10 +10,15 @@ import java.util.ArrayList;
 public class PanelGrafico extends JPanel {
 
     private final Main prog;
+    private final Modelo modelo;
+    private final ArrayList<Nodo> nodos;
 
     public PanelGrafico(Main p) {
         prog = p;
+        modelo = prog.getModelo();
+        nodos = new ArrayList<>();
         this.setPreferredSize(new Dimension(800, 600));
+        generarNodos(this.getGraphics(), modelo.getPoblaciones());
     }
     // Método que dibuja el contenido del panel
     @Override
@@ -22,28 +27,20 @@ public class PanelGrafico extends JPanel {
         Modelo modelo = prog.getModelo();
     }
 
-    // Método para obtener el valor máximo de los tiempos de ejecución
-    private long getMaxValue(ArrayList<Long> tiemposN) {
-        long max = 0;
-        // Iterar sobre todos los tiempos para encontrar el máximo
-        for (Long tiempo : tiemposN) {
-            if (tiempo > max) {
-                max = tiempo;
-            }
+    // Método que genera los 20 nodos del grafo
+    private void generarNodos(Graphics g, ArrayList<String> nodos) {
+        int x = 100;
+        int y = 100;
+        for (String nodo : nodos) {
+            // Crear el nodo y añadirlo a la lista
+            this.nodos.add(new Nodo(x, y, nodo));
+            // Dibujar el nodo
+            g.setColor(Color.BLACK);
+            g.fillOval(x, y, 10, 10);
+            // Dibujar el nombre del nodo
+            g.setColor(Color.BLACK);
+            g.drawString(nodo, x, y);
         }
-        return max; // Devolver el máximo valor encontrado
-    }
-
-    // Método para obtener el valor máximo de los tiempos de ejecución
-    private long getMinValue(ArrayList<Long> tiemposN) {
-        long min = Long.MAX_VALUE;
-        // Iterar sobre todos los tiempos para encontrar el máximo
-        for (Long tiempo : tiemposN) {
-            if (tiempo < min) {
-                min = tiempo;
-            }
-        }
-        return min; // Devolver el máximo valor encontrado
     }
 
     @Override

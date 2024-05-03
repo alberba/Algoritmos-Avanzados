@@ -8,8 +8,18 @@ import java.util.ArrayList;
 
 public class Modelo implements Notificacion {
     private final Main prog;
-    public Modelo (Main p) {
-        prog = p;
+    private Grafo grafo;
+    public Modelo (Main p, Grafo grafo) {
+        this.prog = p;
+        this.grafo = grafo;
+    }
+
+    public Grafo getGrafo() {
+        return grafo;
+    }
+
+    public ArrayList<String> getPoblaciones() {
+        return new ArrayList<>(grafo.getPoblaciones().keySet());
     }
 
     @Override
