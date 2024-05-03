@@ -1,6 +1,5 @@
 package Controlador;
 
-import Modelo.Modelo;
 import Main.Main;
 import Notification.NotiEnum;
 import Notification.Notificacion;

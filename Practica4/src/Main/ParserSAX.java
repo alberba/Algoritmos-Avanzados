@@ -2,7 +2,6 @@ package Main;
 
 import Modelo.Poblacion;
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.SAXParser;
@@ -10,7 +9,7 @@ import javax.xml.parsers.SAXParserFactory;
 import java.util.HashMap;
 
 public class ParserSAX {
-    private HashMap<String, Poblacion> poblaciones;
+    private final HashMap<String, Poblacion> poblaciones;
 
     public ParserSAX() {
         poblaciones = new HashMap<>();

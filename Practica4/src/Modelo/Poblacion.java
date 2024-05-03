@@ -16,11 +16,7 @@ public class Poblacion implements Comparable<Poblacion>{
         this.poblacion = poblacion;
         this.lat = lat;
         this.lon = lon;
-        carreterasPoblacion = new ArrayList<Carretera>();
-    }
-
-    public String getNom() {
-        return poblacion;
+        carreterasPoblacion = new ArrayList<>();
     }
 
     public String getComunidad() {
