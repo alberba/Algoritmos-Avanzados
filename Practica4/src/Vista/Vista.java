@@ -39,6 +39,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         // INSERCIÓN DE PANEL
         panel = new PanelGrafico(p);
         this.add(BorderLayout.CENTER, panel);
+        panel.repaint();
 
         // INSERCIÓN DE BARRA DE PROGRESO
         progreso = new JProgressBar();

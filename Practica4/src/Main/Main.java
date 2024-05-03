@@ -8,7 +8,7 @@ import Notification.Notificacion;
 import Vista.Vista;
 import Modelo.Grafo;
 
-import java.util.HashMap;
+import java.util.*;
 
 
 public class Main implements Notificacion {
@@ -57,19 +57,28 @@ public class Main implements Notificacion {
         new Main();
     }
 
-    // Método que recopila 20 poblaciones del hashmap de poblaciones
-    public HashMap<String, Poblacion> generarPoblacionesGrafo(HashMap<String, Poblacion> poblaciones) {
-        HashMap<String, Poblacion> poblacionesRecopiladas = new HashMap<>();
+    // Método que recopila 20 poblaciones aleatorias del hashmap de poblaciones (medio trash pero hecho rápido)
+    private HashMap<String, Poblacion> generarPoblacionesGrafo(HashMap<String, Poblacion> poblaciones) {
+        HashMap<String, Poblacion> poblacionesGrafo = new HashMap<>();
+        // Seleccionar 20 poblaciones aleatorias
+        Set<Integer> elegidos = new HashSet<>();
+        Random random = new Random();
+        while (elegidos.size() < 20) {
+            int num = random.nextInt(poblaciones.size());
+            elegidos.add(num);
+        }
+        // Añadir las poblaciones seleccionadas al hashmap de poblaciones del grafo
         int i = 0;
-        for (String key : poblaciones.keySet()) {
-            if (i == 20) {
-                break;
+        for (Poblacion poblacion : poblaciones.values()) {
+            if (elegidos.contains(i)) {
+                poblacionesGrafo.put(poblacion.getPoblacion(), poblacion);
             }
-            poblacionesRecopiladas.put(key, poblaciones.get(key));
             i++;
         }
-        return poblacionesRecopiladas;
+        System.out.println(poblacionesGrafo.toString());
+        return poblacionesGrafo;
     }
+
 
     private static void leerXML() {
         ParserSAX parserSAX = new ParserSAX();
@@ -81,6 +90,11 @@ public class Main implements Notificacion {
     public void notificar(NotiEnum s, Object o) {
         switch (s) {
             case INICIAR:
+                if (controlador == null) { // test
+                    controlador = new Controlador(this);
+                    controlador.start();
+                    vista.resetPanel();
+                }
                 break;
             case PARAR:
                 // Se detiene el controlador
