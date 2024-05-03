@@ -1,7 +1,7 @@
 package Controlador;
 
 import Modelo.Modelo;
-import Modelo.Algoritmo;
+import Modelo.AlgoritmoEnum;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,8 +19,8 @@ public class TimSort extends Thread {
     public void run() {
         long t = System.nanoTime();
         Collections.sort(array);
-        modelo.addTiempo(System.nanoTime() - t);
-        modelo.añadirAlgoritmo(Algoritmo.TIMSORT);
+        modelo.addTiempo(System.nanoTime() - t, AlgoritmoEnum.TIMSORT);
+        System.out.println("Tiempo Timsort: " + (System.nanoTime() - t) + " ns");
     }
 
 }

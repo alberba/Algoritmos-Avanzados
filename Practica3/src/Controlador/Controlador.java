@@ -3,7 +3,6 @@ package Controlador;
 import Controlador.TreeSort.TreeSort;
 import Modelo.Distribucion;
 import Modelo.Modelo;
-import Modelo.Algoritmo;
 import Main.Main;
 import Notification.NotiEnum;
 import Notification.Notificacion;
@@ -14,8 +13,7 @@ public class Controlador extends Thread implements Notificacion {
 
     private final Main prog;
     private boolean interrumpir = false;
-    private double pasos = 0;
-    private static int nPasosTotal = 0;
+    private int pasos = 0;
     private ArrayList<Double> datos;
 
     public Controlador(Main p) {
@@ -49,12 +47,11 @@ public class Controlador extends Thread implements Notificacion {
                     datos.add((num + 3) / 6);
                 }
                 break;
-
         }
         // Se ordenan los datos con cada uno de los algoritmos, se calcula el tiempo y se añade al modelo
         // Algoritmo 1
         // BUCKET //
-        BucketSort bucketSort = new BucketSort(new ArrayList<>(datos), dist, nBuckets, modelo);
+        BucketSort bucketSort = new BucketSort(new ArrayList<>(datos), dist, nBuckets, modelo, this);
         bucketSort.start();
         // Algoritmo 2
         // TIMSORT //
@@ -62,13 +59,22 @@ public class Controlador extends Thread implements Notificacion {
         timSort.start();
         // Algoritmo 3
         // TREESORT //
-        TreeSort treeSort = new TreeSort(new ArrayList<>(datos), modelo);
+        TreeSort treeSort = new TreeSort(new ArrayList<>(datos), modelo, this);
         treeSort.start();
         // Algoritmo 4
         // QUICKSORT //
-        QuickSort quickSort = new QuickSort(new ArrayList<>(datos), modelo);
+        QuickSort quickSort = new QuickSort(new ArrayList<>(datos), modelo, this);
         quickSort.start();
 
+        // Se espera a que todos los algoritmos terminen
+        try {
+            bucketSort.join();
+            timSort.join();
+            treeSort.join();
+            quickSort.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         if (!interrumpir) {
             prog.notificar(NotiEnum.PARAR, null);
@@ -85,11 +91,7 @@ public class Controlador extends Thread implements Notificacion {
      */
     public void actualizarProgreso() {
         pasos++;
-        while (pasos >=  (nPasosTotal * 1.0) / 100) {
-            // Aumentamos el porcentaje tantas veces como sea necesario
-            // Esto puede suceder en caso de que los polígonos totales a dibujar
-            // sea menor a 100
-            pasos -= (nPasosTotal * 1.0) / 100;
+        if (pasos % 1000 == 0) {
             prog.getVista().notificar(NotiEnum.PROGRESO, null);
         }
     }
