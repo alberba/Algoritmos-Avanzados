@@ -1,6 +1,6 @@
 package Vista;
 
-import Vista.dialogos.NDatosPanel;
+import Modelo.Algoritmo;
 import Vista.dialogos.TypePanel;
 import Main.Main;
 import Notification.NotiEnum;
@@ -20,8 +20,7 @@ public class Dialogo extends JDialog implements ActionListener {
     public Dialogo(Main prog, int bucketsActual, int nDatosActual) {
         this.interior = new JPanel();
         this.interior.setLayout(new BoxLayout(interior, BoxLayout.Y_AXIS));
-        this.interior.add(new NBucketsPanel(bucketsActual));
-        this.interior.add(new NDatosPanel(nDatosActual));
+        this.interior.add(new TypePanel(prog.getModelo().getAlgoritmo() == Algoritmo.DIJKSRA));
         this.prog = prog;
         this.setLayout(new BorderLayout());
         okButton.addActionListener(this);

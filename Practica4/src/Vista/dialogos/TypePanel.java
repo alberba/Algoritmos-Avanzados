@@ -7,10 +7,10 @@ public class TypePanel extends JPanel {
 
     private final ButtonGroup grupo;
 
-    public TypePanel(boolean esUniforme) {
+    public TypePanel(boolean esDijkstra) {
         grupo = new ButtonGroup();
-        JRadioButton r1 = new JRadioButton("Uniforme", esUniforme);
-        JRadioButton r2 = new JRadioButton("Gaussiana", !esUniforme);
+        JRadioButton r1 = new JRadioButton("Dijkstra", esDijkstra);
+        JRadioButton r2 = new JRadioButton("Prim", !esDijkstra);
         grupo.add(r1);
         grupo.add(r2);
         this.add(r1);

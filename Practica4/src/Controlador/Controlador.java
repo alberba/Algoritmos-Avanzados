@@ -15,6 +15,7 @@ public class Controlador extends Thread implements Notificacion {
     private Modelo modelo;
     private Grafo grafo;
     private ArrayList<Double> datos;
+    private ArrayList<Carretera> solucion;
 
     public Controlador(Main p) {
         prog = p;
@@ -22,7 +23,8 @@ public class Controlador extends Thread implements Notificacion {
     }
 
     public void run() {
-        prim();
+        solucion = prim();
+        modelo.setSolucionPrim(solucion);
     }
 
     /**
@@ -139,13 +141,16 @@ public class Controlador extends Thread implements Notificacion {
     }
 
     // Algoritmo de prim donde las keys son strings y los values son doubles
-    public HashMap<Poblacion, Double> prim() {
+    public ArrayList<Carretera> prim() {
         // Crear un mapa para almacenar los nodos visitados
         HashMap<Poblacion, Boolean> visitados = new HashMap<>();
+        // ArrayList<Poblacion> visitados = new ArrayList<Poblacion>;
         // Crear un mapa para almacenar las distancias mínimas desde el nodo de origen a cada nodo
         HashMap<Poblacion, Double> distancias = new HashMap<>();
         // Crear un mapa para almacenar el nodo anterior en el camino más corto
         HashMap<Poblacion, Poblacion> camino = new HashMap<>();
+        // Carreteras (aristas)
+        ArrayList<Carretera> carreteras = new ArrayList<>();
 
         // Inicializar las distancias a todos los nodos como infinito
         for (Poblacion poblacion : modelo.getGrafo().getPoblaciones().values()) {
@@ -161,12 +166,37 @@ public class Controlador extends Thread implements Notificacion {
             Poblacion nodo = obtenerNodoMasCercano(distancias, visitados);
             // Marcar el nodo como visitado
             visitados.put(nodo, true);
+            // visitados.add(nodo);
             // Actualizar las distancias a los vecinos del nodo
-            actualizarDistancias(nodo, distancias, camino, visitados);
+            actualizarDistancias(nodo, distancias, camino, visitados, carreteras);
         }
 
+        return caminoToCarreteras(camino);
+
         // Devolver el camino más corto
-        return distancias;
+        // return distancias;
+    }
+
+    private ArrayList<Carretera> caminoToCarreteras(HashMap<Poblacion, Poblacion> camino) {
+        ArrayList<Carretera> carreteras = new ArrayList<>();
+        for (Map.Entry<Poblacion, Poblacion> entry : camino.entrySet()) {
+            Poblacion poblacion1 = entry.getKey();
+            Poblacion poblacion2 = entry.getValue();
+            Carretera carretera = obtenerCarretera(poblacion1, poblacion2);
+            if (carretera != null) {
+                carreteras.add(carretera);
+            }
+        }
+        return carreteras;
+    }
+
+    private Carretera obtenerCarretera(Poblacion poblacion1, Poblacion poblacion2) {
+        for (Carretera carretera : poblacion1.getCarreteras()) {
+            if (carretera.getContrario(poblacion1).equals(poblacion2)) {
+                return carretera;
+            }
+        }
+        return null;
     }
 
     private boolean hayNodosPorVisitar(HashMap<Poblacion, Boolean> visitados) {
@@ -177,6 +207,12 @@ public class Controlador extends Thread implements Notificacion {
         }
         return false;
     }
+
+    /*
+    private boolean hayNodosPorVisitar(ArrayList<Poblaciones> visitados) {
+        return visitados.size() == poblacio;
+    }
+     */
 
     private Poblacion obtenerNodoMasCercano(HashMap<Poblacion, Double> distancias, HashMap<Poblacion, Boolean> visitados) {
         double minDistancia = Double.MAX_VALUE;
@@ -194,7 +230,7 @@ public class Controlador extends Thread implements Notificacion {
         return nodoMasCercano;
     }
 
-    private void actualizarDistancias(Poblacion nodo, HashMap<Poblacion, Double> distancias, HashMap<Poblacion, Poblacion> camino, HashMap<Poblacion, Boolean> visitados) {
+    private void actualizarDistancias(Poblacion nodo, HashMap<Poblacion, Double> distancias, HashMap<Poblacion, Poblacion> camino, HashMap<Poblacion, Boolean> visitados, ArrayList<Carretera> carreteras) {
         for (Carretera carretera : nodo.getCarreteras()) {
             Poblacion vecino = carretera.getContrario(nodo);
             double distancia = distancias.get(nodo) + carretera.getDistancia();
@@ -202,9 +238,16 @@ public class Controlador extends Thread implements Notificacion {
             if (!visitados.get(vecino) && distancia < distancias.get(vecino)) {
                 distancias.put(vecino, distancia);
                 camino.put(vecino, nodo);
+                //swapCarreteras(vecino, carreteras)
             }
         }
     }
+
+    /*
+    private void swapCarreteras(Poblacion vecino, ArrayList<Carretera> carreteras) {
+        if ()
+    }
+     */
 
     /*
     @SuppressWarnings("unchecked")

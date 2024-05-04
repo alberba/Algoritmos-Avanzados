@@ -6,6 +6,8 @@ import Notification.NotiEnum;
 import Notification.Notificacion;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +17,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
     private final Main prog;
     private final JButton iniButton, stopButton, paramButton;
     private final PanelGrafico panel;
+    private final PanelIndice panelIndice;
     private JScrollPane sp;
 
     private final JProgressBar progreso;
@@ -22,6 +25,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         super(title);
         prog = p;
         this.getContentPane().setLayout(new BorderLayout());
+        this.setPreferredSize(new Dimension(1000, 800));
 
         // INSERCIÓN DE BOTONES
         JPanel buttons = new JPanel();
@@ -39,14 +43,17 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
 
         // INSERCIÓN DE PANEL
         panel = new PanelGrafico(p);
-        //this.add(BorderLayout.CENTER, panel);
-        //panel.repaint();
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setViewportView(panel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        sp = new JScrollPane(panel);
-        sp.setPreferredSize(new Dimension(800, 600));
-        this.add(sp);
+        this.add(scrollPane, BorderLayout.CENTER);
 
         panel.repaint();
+
+        panelIndice = new PanelIndice(prog);
+        this.add(panelIndice, BorderLayout.EAST);
         // INSERCIÓN DE BARRA DE PROGRESO
         progreso = new JProgressBar();
         progreso.setValue(0);
@@ -93,6 +100,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
     public void notificar(NotiEnum s, Object o) {
         switch (s) {
             case DIBUJAR -> this.repaint();
+            case PINTAR -> System.out.println("");
             case PROGRESO -> progreso();
             // case ESTIMAR -> System.out.println("Set texto");
             default -> System.out.println();
