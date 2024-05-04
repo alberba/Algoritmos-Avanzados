@@ -80,13 +80,12 @@ public class PanelGrafico extends JPanel {
             // Dibujar el nombre del nodo
             Font boldFont = g.getFont().deriveFont(Font.BOLD);
             g.setFont(boldFont);
-            g.setColor(Color.RED);
-            g.drawString(pob.getPoblacion(), x+10, y-10);
         }
     }
 
     private void generarAristas(Graphics g) {
         aristas = new ArrayList<>();
+        Graphics2D g2 = (Graphics2D) g;
         ArrayList<Carretera> solucion = modelo.getSolucionPrim();
         // Obtener las carreteras del modelo
         ArrayList<Carretera> carreteras = modelo.getGrafo().getCarreteras();
@@ -96,15 +95,17 @@ public class PanelGrafico extends JPanel {
             Nodo destino = nodos.get(obtenerIndiceNodo(car.getPob2().getPoblacion()));
             // Crear la arista y añadirla a la lista
             this.aristas.add(new Arista(origen, destino));
-            // Dibujar la arista
-            g.setColor(Color.BLACK);
             // Si se encuentra en la solución, se dibuja en azul
-            if (solucion != null) {
-                if (solucion.contains(car)) {
-                    g.setColor(Color.BLUE);
-                }
+            if (solucion != null && solucion.contains(car)) {
+                g2.setStroke(new BasicStroke(2.0f));
+                g2.setColor(Color.BLUE);
+                g2.drawLine(origen.getX(), origen.getY(), destino.getX(), destino.getY());
+            } else {
+                g2.setColor(Color.BLACK);
+                g2.setStroke(new BasicStroke(1.0f));
+                g2.drawLine(origen.getX(), origen.getY(), destino.getX(), destino.getY());
             }
-            g.drawLine(origen.getX(), origen.getY(), destino.getX(), destino.getY());
+
         }
     }
 

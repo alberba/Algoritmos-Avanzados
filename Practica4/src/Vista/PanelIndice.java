@@ -12,7 +12,7 @@ public class PanelIndice extends JPanel {
 
     public PanelIndice(Main prog) {
         this.prog = prog;
-        this.setPreferredSize(new Dimension(100, 100));
+        this.setPreferredSize(new Dimension(200, 100));
     }
 
     @Override
@@ -23,7 +23,7 @@ public class PanelIndice extends JPanel {
         ArrayList<Poblacion> poblaciones = new ArrayList<>(prog.getModelo().getGrafo().getPoblaciones().values());
         for(Poblacion poblacion : poblaciones) {
             g.setColor(Color.BLACK);
-            g.drawString((i + 1) + ": " + poblacion.getPoblacion(), 0, (i * 15) + 5);
+            g.drawString((i + 1) + ": " + poblacion.getPoblacion(), 0, (i * 15) + 15);
             i++;
         }
     }

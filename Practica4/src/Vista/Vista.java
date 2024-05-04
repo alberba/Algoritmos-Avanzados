@@ -25,7 +25,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         super(title);
         prog = p;
         this.getContentPane().setLayout(new BorderLayout());
-        this.setPreferredSize(new Dimension(1000, 800));
+        this.setPreferredSize(new Dimension(1200, 800));
 
         // INSERCIÓN DE BOTONES
         JPanel buttons = new JPanel();
@@ -72,7 +72,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
     }
 
     public void resetPanel() {
-        panel.clear();
+        panel.repaint();
         setValueProgreso(0);
     }
 
