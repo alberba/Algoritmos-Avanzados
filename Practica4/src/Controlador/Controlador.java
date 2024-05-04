@@ -12,9 +12,7 @@ public class Controlador extends Thread implements Notificacion {
     private final Main prog;
     private boolean interrumpir = false;
     private int pasos = 0;
-    private Modelo modelo;
-    private ArrayList<Double> datos;
-    private ArrayList<Carretera> solucion;
+    private final Modelo modelo;
 
     public Controlador(Main p) {
         prog = p;
@@ -22,7 +20,7 @@ public class Controlador extends Thread implements Notificacion {
     }
 
     public void run() {
-        solucion = prim();
+        ArrayList<Carretera> solucion = prim();
         modelo.setSolucionPrim(solucion);
     }
 
@@ -44,14 +42,13 @@ public class Controlador extends Thread implements Notificacion {
      * @param poblacionFinal Población donde terminará el camino
      * @return Lista del camino con menor coste
      */
-    @SuppressWarnings("unchecked")
     public List<Carretera> dijkstra(Poblacion poblacionOrigen, Poblacion poblacionFinal) {
         // Mapa para almacenar las distancias mínimas desde el nodo de origen a cada nodo
         Map<Poblacion, Double> distancias = new HashMap<>();
         // Mapa para almacenar el camino más corto. La clave será el último pueblo del camino
         Map<Poblacion, ArrayList<Carretera>> camino = new HashMap<>();
         // Conjunto de pueblos no visitados. Usado para evitar revisitas innecesarias
-        HashSet noVisitados = new HashSet<>(modelo.getGrafo().getPoblaciones().values());
+        Set<Poblacion> noVisitados = new HashSet<>(modelo.getGrafo().getPoblaciones().values());
 
         // Inicializar las distancias a todos los nodos como infinito
         for (Poblacion poblacion : modelo.getGrafo().getPoblaciones().values()) {
@@ -82,7 +79,7 @@ public class Controlador extends Thread implements Notificacion {
      */
     private boolean dijkstraRecursivo
     (Poblacion poblacion1, Poblacion poblacionFinal, Map<Poblacion, Double> distancias, Map<Poblacion,
-        ArrayList<Carretera>> camino, HashSet<Poblacion> noVisitados) {
+        ArrayList<Carretera>> camino, Set<Poblacion> noVisitados) {
         // Eliminamos para no revisitarlo
         noVisitados.remove(poblacion1);
 
@@ -139,6 +136,10 @@ public class Controlador extends Thread implements Notificacion {
         }
     }
 
+    /**
+     * Método que se encargará de encontrar el árbol de expansión mínima de un grafo
+     * @return Lista del camino con menor coste
+     */
     public ArrayList<Carretera> prim() {
         // Crear un mapa para almacenar el nodo anterior en el camino más corto
         ArrayList<Carretera> camino = new ArrayList<>();
@@ -147,10 +148,13 @@ public class Controlador extends Thread implements Notificacion {
         double minDist;
         poblacionesEnArbol.add(poblaciones.get(0));
 
+        // No acabará hasta que no se hayan añadido todos los nodos al árbol
         while (poblacionesEnArbol.size() < poblaciones.size()) {
             minDist = Double.MAX_VALUE;
             Carretera mejorCarretera = null;
             Poblacion mejorPoblacion = null;
+
+            // Recorrer todas las poblaciones en el árbol en busca de la carretera más corta disponible
             for(int i = 0; i < poblacionesEnArbol.size(); i++) {
                 Poblacion poblacionActual = poblacionesEnArbol.get(i);
                 for(Carretera carretera : poblacionActual.getCarreteras()) {
@@ -163,6 +167,8 @@ public class Controlador extends Thread implements Notificacion {
                     }
                 }
             }
+
+            // Añadir la mejor carretera
             poblacionesEnArbol.add(mejorPoblacion);
             camino.add(mejorCarretera);
 
