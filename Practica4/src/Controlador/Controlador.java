@@ -22,6 +22,7 @@ public class Controlador extends Thread implements Notificacion {
     }
 
     public void run() {
+        prim();
     }
 
     /**

@@ -15,6 +15,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
     private final Main prog;
     private final JButton iniButton, stopButton, paramButton;
     private final PanelGrafico panel;
+    private JScrollPane sp;
 
     private final JProgressBar progreso;
     public Vista(String title, Main p) {
@@ -38,9 +39,14 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
 
         // INSERCIÓN DE PANEL
         panel = new PanelGrafico(p);
-        this.add(BorderLayout.CENTER, panel);
-        panel.repaint();
+        //this.add(BorderLayout.CENTER, panel);
+        //panel.repaint();
 
+        sp = new JScrollPane(panel);
+        sp.setPreferredSize(new Dimension(800, 600));
+        this.add(sp);
+
+        panel.repaint();
         // INSERCIÓN DE BARRA DE PROGRESO
         progreso = new JProgressBar();
         progreso.setValue(0);

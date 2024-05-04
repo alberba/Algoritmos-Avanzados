@@ -15,12 +15,17 @@ public class PanelGrafico extends JPanel {
     private final Modelo modelo;
     private final ArrayList<Nodo> nodos;
     private final ArrayList<Arista> aristas;
+    private int anchura;
+    private int altura;
 
     public PanelGrafico(Main p) {
         prog = p;
         modelo = prog.getModelo();
         nodos = new ArrayList<>();
         aristas = new ArrayList<>();
+        anchura = 800;
+        altura = 600;
+        this.setPreferredSize(new Dimension(anchura, altura));
     }
     // Método que dibuja el contenido del panel
     /*
@@ -37,22 +42,26 @@ public class PanelGrafico extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.setBackground(Color.WHITE);
-        this.setPreferredSize(new Dimension(800, 600));
         generarNodos(g, modelo.getGrafo().getPoblaciones().values());
         generarAristas(g);
+
+        anchura = (int) (Modelo.getRangoLon());
+        altura = (int) (Modelo.getRangoLat());
     }
 
     // Método que genera los 20 nodos del grafo
     private void generarNodos(Graphics g, Collection<Poblacion> poblaciones) {
         // Márgen de píxeles a cada lado del panel
-        int margenX = 20;
-        int margenY = 20;
-        g.fillOval(20, 20, 10, 10);
-        g.fillOval(this.getWidth()-20, this.getHeight()-20, 10, 10);
+        int margen = 20;
+        // Círculos de test
+        // g.fillOval(20, 20, 10, 10);
+        // g.fillOval(this.getWidth()-20, this.getHeight()-20, 10, 10);
         for (Poblacion pob : poblaciones) {
             // Calcular la posición del nodo como un porcentaje del tamaño del panel (con 20px de márgen a cada lado)
-            int x = (int) (((pob.getLon() - Nodo.getMinLon())/Nodo.getRangoLon()) * (this.getWidth() - 2 * margenX)) + margenX;
-            int y = (int) (((pob.getLat() - Nodo.getMinLat())/Nodo.getRangoLat()) * (this.getHeight() - 2 * margenY)) + margenY;
+            //int x = (int) (((pob.getLon() - Modelo.getMinLon())/Modelo.getRangoLon()) * (this.getWidth() - 2 * margenX)) + margenX;
+            int x = (int) ((pob.getLon() - Modelo.getMinLon()) * 100 + margen);
+            //int y = (int) (((pob.getLat() - Modelo.getMinLat())/Modelo.getRangoLat()) * (this.getHeight() - 2 * margenY)) + margenY;
+            int y = (int) ((pob.getLat() - Modelo.getMinLat()) * 100 + margen);
             // Print de los valores para debug
             System.out.println("Población: " + pob.getPoblacion() + ", x: " + x + ", y: " + y);
             // Crear el nodo y añadirlo a la lista
@@ -60,11 +69,14 @@ public class PanelGrafico extends JPanel {
 
             // Dibujar el nodo
             g.setColor(Color.BLACK);
-            g.fillOval(x, y, 10, 10);
+            g.fillOval(x - 10, y - 10, 20, 20);
             // Dibujar el nombre del nodo
             g.setColor(Color.BLACK);
             g.drawString(pob.getPoblacion(), x, y);
         }
+        setPreferredSize(new Dimension(anchura, altura));
+        revalidate();
+        this.getParent().getParent().repaint();
     }
 
     private void generarAristas(Graphics g) {
@@ -93,7 +105,7 @@ public class PanelGrafico extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(800, 600);
+        return new Dimension(anchura, altura);
     }
 
     /*

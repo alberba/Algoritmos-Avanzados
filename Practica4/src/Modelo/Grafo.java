@@ -3,7 +3,7 @@ package Modelo;
 import java.util.*;
 
 public class Grafo {
-    private final Map<String, Poblacion> poblaciones;
+    private final HashMap<String, Poblacion> poblaciones;
     private final ArrayList<Carretera> carreteras;
 
     public Grafo(HashMap<String, Poblacion> poblaciones) {
@@ -51,7 +51,7 @@ public class Grafo {
         return carreteras;
     }
 
-    public Map<String, Poblacion> getPoblaciones() {
+    public HashMap<String, Poblacion> getPoblaciones() {
         return poblaciones;
     }
 }

@@ -22,11 +22,12 @@ public class Main implements Notificacion {
         HashMap<String, Poblacion> poblaciones = parserSAX.parse("src/poblaciones.xml");
         //imprimirMayoryMenorLatyLon(poblaciones);
         modelo = new Modelo(this, new Grafo(generarPoblacionesGrafo(poblaciones)));
-        controlador = new Controlador(this);
+        controlador = null;
         vista = new Vista("Grafo", this);
         vista.mostrar();
     }
 
+    /*
     private void imprimirMayoryMenorLatyLon(HashMap<String, Poblacion> poblaciones) {
         Poblacion poblacionMayorLat = null;
         Poblacion poblacionMenorLat = null;
@@ -51,6 +52,7 @@ public class Main implements Notificacion {
         System.out.println("Población con mayor longitud: " + poblacionMayorLon.getPoblacion() + ", longitud: " + poblacionMayorLon.getLon());
         System.out.println("Población con menor longitud: " + poblacionMenorLon.getPoblacion() + ", longitud: " + poblacionMenorLon.getLon());
     }
+    */
 
     public static void main(String[] args) {
         //Mesurament24.mesura();
