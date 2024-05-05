@@ -43,9 +43,7 @@ public class Poblacion implements Comparable<Poblacion>{
         this.poblacion = poblacion;
     }
 
-    public double getLat() {
-        return lat;
-    }
+    public double getLat() { return lat; }
 
     public void setLat(double lat) {
         this.lat = lat;

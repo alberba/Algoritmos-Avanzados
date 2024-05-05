@@ -20,8 +20,23 @@ public class Controlador extends Thread implements Notificacion {
     }
 
     public void run() {
-        ArrayList<Carretera> solucion = prim();
-        modelo.setSolucionPrim(solucion);
+        modelo.randomOrigenYDestino();
+        ArrayList<Carretera> solucion = dijkstra(modelo.getOrigen(), modelo.getDestino());
+        imprimir(solucion);
+        if (modelo.getAlgoritmo() == Algoritmo.DIJKSTRA) {
+            modelo.getOrigen();
+            modelo.getDestino();
+            //solucion = dijkstra();
+        } else {
+            //solucion = prim();
+        }
+        modelo.setSolucion(solucion);
+    }
+
+    private void imprimir(ArrayList<Carretera> solucion) {
+        for (Carretera carretera : solucion) {
+            System.out.println(carretera.getPob1().getPoblacion() + " -> " + carretera.getPob2().getPoblacion());
+        }
     }
 
     /**
@@ -42,7 +57,9 @@ public class Controlador extends Thread implements Notificacion {
      * @param poblacionFinal Población donde terminará el camino
      * @return Lista del camino con menor coste
      */
-    public List<Carretera> dijkstra(Poblacion poblacionOrigen, Poblacion poblacionFinal) {
+    public ArrayList<Carretera> dijkstra(Poblacion poblacionOrigen, Poblacion poblacionFinal) {
+        System.out.println("Origen: " + poblacionOrigen.getPoblacion());
+        System.out.println("Destino: " + poblacionFinal.getPoblacion());
         // Mapa para almacenar las distancias mínimas desde el nodo de origen a cada nodo
         Map<Poblacion, Double> distancias = new HashMap<>();
         // Mapa para almacenar el camino más corto. La clave será el último pueblo del camino
@@ -57,6 +74,7 @@ public class Controlador extends Thread implements Notificacion {
 
         // La distancia al nodo de origen es 0
         distancias.put(poblacionOrigen, 0.0);
+        camino.put(poblacionOrigen, new ArrayList<>());
 
         dijkstraRecursivo(poblacionOrigen, poblacionFinal, distancias, camino, noVisitados);
 
@@ -83,7 +101,7 @@ public class Controlador extends Thread implements Notificacion {
         // Eliminamos para no revisitarlo
         noVisitados.remove(poblacion1);
 
-        //Comprueba si el poblado actual es el final
+        //Comprueba si la población actual es el destino
         if (poblacion1.equals(poblacionFinal)) {
             for (Poblacion poblacion : noVisitados) {
                 if (distancias.get(poblacion) < distancias.get(poblacionFinal)) {
@@ -117,7 +135,7 @@ public class Controlador extends Thread implements Notificacion {
      * un camino hasta el vecino con coste más bajo
      * @param poblacion Población en el que se aplica el método
      * @param distancias Conjunto mapeado del pueblo junto a su coste mínimo encontrado para llegar hasta él
-     * @param camino Conjunto mapeado del mejor camino encontrado para cado pueblo
+     * @param camino Conjunto mapeado del mejor camino encontrado para cada población
      */
     private void asignarCosteVecinos
     (Poblacion poblacion, Map<Poblacion, Double> distancias, Map<Poblacion, ArrayList<Carretera>> camino) {

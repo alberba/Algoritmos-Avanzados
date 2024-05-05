@@ -3,16 +3,19 @@ package Modelo;
 import Main.Main;
 import Notification.NotiEnum;
 import Notification.Notificacion;
+import Main.ParserSAX;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class Modelo implements Notificacion {
     private final Main prog;
     private Grafo grafo;
     private Algoritmo algoritmo;
     private ArrayList<Carretera> solucionPrim;
+    private Poblacion origen;
+    private Poblacion destino;
+    private String xml;
 
     private static double minLat;
     private static double maxLat;
@@ -24,10 +27,31 @@ public class Modelo implements Notificacion {
     public Modelo (Main p, Grafo grafo) {
         this.prog = p;
         this.grafo = grafo;
+        //origen = null;
+        //destino = null;
+        //randomOrigenYDestino();
         minLat = 100;
         maxLat = -100;
         minLon = 100;
         maxLon = -100;
+        obtenerMinyMax(grafo.getPoblaciones());
+    }
+
+    // Método que permite reinicializar el modelo con los datos de un nuevo xml
+    public void reset() {
+        ParserSAX parserSAX = new ParserSAX();
+        if (!xml.equals("poblaciones.xml")) {
+            xml = "poblaciones2";
+            HashMap<String, Poblacion> poblaciones = parserSAX.parse("src/" + xml);
+            this.grafo = new Grafo(poblaciones);
+            //randomOrigenYDestino();
+            minLat = 100;
+            maxLat = -100;
+            minLon = 100;
+            maxLon = -100;
+        } else {
+            int a = 0;
+        }
         obtenerMinyMax(grafo.getPoblaciones());
     }
 
@@ -83,8 +107,42 @@ public class Modelo implements Notificacion {
         return solucionPrim;
     }
 
-    public void setSolucionPrim(ArrayList<Carretera> sol) {
+    public void setSolucion(ArrayList<Carretera> sol) {
         this.solucionPrim = sol;
+    }
+
+    public void randomOrigenYDestino() {
+        ArrayList<String> poblaciones = getPoblaciones();
+        Random random = new Random();
+        int origenIndex = random.nextInt(poblaciones.size());
+        int destinoIndex = random.nextInt(poblaciones.size());
+        while (origenIndex == destinoIndex) {
+            destinoIndex = random.nextInt(poblaciones.size());
+        }
+        System.out.println("Indice origen:" + (origenIndex + 1));
+        System.out.println("Indice destino:" + (destinoIndex + 1));
+        origen = grafo.getPoblacion(poblaciones.get(origenIndex));
+        destino = grafo.getPoblacion(poblaciones.get(destinoIndex));
+    }
+
+    public Poblacion getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(Poblacion origen) {
+        this.origen = origen;
+    }
+
+    public Poblacion getDestino() {
+        return destino;
+    }
+
+    public void setDestino(Poblacion destino) {
+        this.destino = destino;
+    }
+
+    public void setGrafo(Grafo grafo) {
+        this.grafo = grafo;
     }
 
     @Override

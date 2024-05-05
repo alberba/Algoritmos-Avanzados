@@ -6,7 +6,6 @@ import Notification.NotiEnum;
 import Notification.Notificacion;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,10 +14,9 @@ import java.awt.event.ActionListener;
 public class Vista extends JFrame implements ActionListener, Notificacion {
 
     private final Main prog;
-    private final JButton iniButton, stopButton, paramButton;
+    private final JButton iniButton, stopButton, algoritmoButton, poblacionesButton;
     private final PanelGrafico panel;
     private final PanelIndice panelIndice;
-    private JScrollPane sp;
 
     private final JProgressBar progreso;
     public Vista(String title, Main p) {
@@ -35,9 +33,12 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         stopButton = new JButton("Parar");
         stopButton.addActionListener(this);
         buttons.add(stopButton);
-        paramButton = new JButton("Parámetros");
-        paramButton.addActionListener(this);
-        buttons.add(paramButton);
+        algoritmoButton = new JButton("Algoritmo");
+        algoritmoButton.addActionListener(this);
+        buttons.add(algoritmoButton);
+        poblacionesButton = new JButton("Poblaciones");
+        poblacionesButton.addActionListener(this);
+        buttons.add(poblacionesButton);
         this.add(buttons);
         this.add(BorderLayout.NORTH, buttons);
 
@@ -82,6 +83,12 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
             prog.notificar(NotiEnum.INICIAR, null);
         } else if (e.getSource() == stopButton) {
             prog.notificar(NotiEnum.PARAR, null);
+        }
+        else if (e.getSource() == poblacionesButton) {
+            Dialogo dialogo = new Dialogo(prog, prog.getModelo().getPoblaciones().size(), prog.getModelo().getGrafo());
+            dialogo.setVisible(true);
+        } else if (e.getSource() == algoritmoButton) {
+            Dialogo dialogo = new Dialogo(prog, prog.getModelo().getAlgoritmo());
         }
     }
 

@@ -1,10 +1,11 @@
 package Vista;
 
+import Modelo.Grafo;
 import Modelo.Algoritmo;
-import Vista.dialogos.TypePanel;
+import Vista.dialogos.NPoblacionesPanel;
 import Main.Main;
-import Notification.NotiEnum;
-import Vista.dialogos.NBucketsPanel;
+import Vista.dialogos.OrigenDestinoPanel;
+import Vista.dialogos.TypePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,15 +18,26 @@ public class Dialogo extends JDialog implements ActionListener {
     private final Main prog;
     private final JPanel interior;
 
-    public Dialogo(Main prog, int bucketsActual, int nDatosActual) {
+    public Dialogo(Main prog, int nPueblosActual, Grafo grafo) {
         this.interior = new JPanel();
         this.interior.setLayout(new BoxLayout(interior, BoxLayout.Y_AXIS));
-        this.interior.add(new TypePanel(prog.getModelo().getAlgoritmo() == Algoritmo.DIJKSRA));
+        this.interior.add(new NPoblacionesPanel(nPueblosActual));
+        this.interior.add(new OrigenDestinoPanel(grafo));
         this.prog = prog;
         this.setLayout(new BorderLayout());
-        okButton.addActionListener(this);
         this.add(interior, BorderLayout.CENTER);
+        okButton.addActionListener(this);
         this.add(okButton, BorderLayout.SOUTH);
+        mostrar();
+    }
+    
+    public Dialogo(Main prog, Algoritmo algoritmo) {
+        this.interior = new TypePanel(algoritmo == Algoritmo.DIJKSTRA);
+        this.interior.setLayout(new BoxLayout(interior, BoxLayout.Y_AXIS));
+        this.prog = prog;
+        okButton.addActionListener(this);
+        this.interior.add(okButton);
+        this.add(interior);
         mostrar();
     }
 

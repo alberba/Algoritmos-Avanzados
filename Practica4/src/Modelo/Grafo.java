@@ -3,12 +3,26 @@ package Modelo;
 import java.util.*;
 
 public class Grafo {
-    private final HashMap<String, Poblacion> poblaciones;
-    private final ArrayList<Carretera> carreteras;
+    private HashMap<String, Poblacion> poblaciones;
+    private ArrayList<Carretera> carreteras;
+    private int numMinCarreteras;
+
+    public Grafo() {
+        poblaciones = new HashMap<>();
+        carreteras = new ArrayList<>();
+        numMinCarreteras = 5;
+    }
+
+    public void init(HashMap<String, Poblacion> poblaciones) {
+        this.poblaciones = poblaciones;
+        carreteras = new ArrayList<>();
+        generarAristasCercanas();
+    }
 
     public Grafo(HashMap<String, Poblacion> poblaciones) {
         this.poblaciones = poblaciones;
         carreteras = new ArrayList<>();
+        numMinCarreteras = 5;
         generarAristasCercanas();
     }
 
@@ -24,7 +38,7 @@ public class Grafo {
         for (Poblacion origen : poblaciones.values()) {
             ArrayList<Carretera> carreterasPob = new ArrayList<>();
             // Si la población ya tiene 5 o más carreteras, se salta
-            if (origen.getNumCarreteras() >= 5) {
+            if (origen.getNumCarreteras() >= numMinCarreteras) {
                 continue;
             }
             // Se obtiene la distancia entre la población y el resto
@@ -37,7 +51,7 @@ public class Grafo {
             // Se ordenan las carreteras para obtener las 5 menores
             carreterasPob.sort(Comparator.comparing(Carretera::getDistancia));
 
-            for (int i = origen.getNumCarreteras(); i < 5; i++) {
+            for (int i = origen.getNumCarreteras(); i < numMinCarreteras; i++) {
                 afegirCarretera(origen, carreterasPob.get(i).getPob2(), carreterasPob.get(i));
             }
         }

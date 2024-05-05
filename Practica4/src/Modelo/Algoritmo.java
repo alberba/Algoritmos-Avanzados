@@ -1,5 +1,5 @@
 package Modelo;
 
 public enum Algoritmo {
-    DIJKSRA, PRIM, KRUSCAL
+    DIJKSTRA, PRIM, KRUSCAL
 }
