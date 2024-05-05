@@ -3,9 +3,9 @@ package Modelo;
 import java.util.*;
 
 public class Grafo {
-    private HashMap<String, Poblacion> poblaciones;
-    private ArrayList<Carretera> carreteras;
-    private int numMinCarreteras;
+    private final HashMap<String, Poblacion> poblaciones;
+    private final ArrayList<Carretera> carreteras;
+    private final int numMinCarreteras;
 
     public Grafo() {
         poblaciones = new HashMap<>();
@@ -13,16 +13,17 @@ public class Grafo {
         numMinCarreteras = 5;
     }
 
-    public void init(HashMap<String, Poblacion> poblaciones) {
-        this.poblaciones = poblaciones;
-        carreteras = new ArrayList<>();
-        generarAristasCercanas();
-    }
-
     public Grafo(HashMap<String, Poblacion> poblaciones) {
         this.poblaciones = poblaciones;
         carreteras = new ArrayList<>();
         numMinCarreteras = 5;
+        generarAristasCercanas();
+    }
+
+    public Grafo(HashMap<String, Poblacion> poblaciones, int numMinCarreteras) {
+        this.poblaciones = poblaciones;
+        carreteras = new ArrayList<>();
+        this.numMinCarreteras = numMinCarreteras;
         generarAristasCercanas();
     }
 
@@ -63,6 +64,10 @@ public class Grafo {
 
     public ArrayList<Carretera> getCarreteras() {
         return carreteras;
+    }
+
+    public int getNumMinCarreteras() {
+        return numMinCarreteras;
     }
 
     public HashMap<String, Poblacion> getPoblaciones() {

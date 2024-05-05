@@ -33,7 +33,7 @@ public class OrigenDestinoPanel extends JPanel {
         this.add(origenComboBox);
 
         // Crear lista desplegable de destino
-        destinoComboBox = new JComboBox<>(nombresPoblacionesFormateados.toArray(new String[0]));
+        destinoComboBox = new JComboBox<>(nombresPoblacionesFormateados.toArray(new String[1]));
         JLabel destinoLabel = new JLabel("Destino:");
         this.add(destinoLabel);
         this.add(destinoComboBox);

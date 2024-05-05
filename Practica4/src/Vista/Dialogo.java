@@ -3,15 +3,14 @@ package Vista;
 import Modelo.Grafo;
 import Modelo.Algoritmo;
 import Notification.NotiEnum;
-import Vista.dialogos.NPoblacionesPanel;
 import Main.Main;
-import Vista.dialogos.OrigenDestinoPanel;
-import Vista.dialogos.TypePanel;
+import Vista.dialogos.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class Dialogo extends JDialog implements ActionListener {
 
@@ -21,8 +20,8 @@ public class Dialogo extends JDialog implements ActionListener {
     private TypePanel typePanel;
     private OrigenDestinoPanel origenDestinoPanel;
 
-    public Dialogo(Main prog, int nPueblosActual) {
-        this.interior = new NPoblacionesPanel(nPueblosActual);
+    public Dialogo(Main prog, int nPueblosActual, int nCarreterasActual) {
+        this.interior = new NPoblacionesPanel(nPueblosActual, nCarreterasActual);
         this.prog = prog;
         this.setLayout(new BorderLayout());
         okButton.addActionListener(this);
@@ -38,16 +37,26 @@ public class Dialogo extends JDialog implements ActionListener {
 
         this.interior = new JPanel();
         this.interior.setLayout(new BoxLayout(interior, BoxLayout.Y_AXIS));
-        this.interior.add(new TypePanel(esDijkstra, origenDestinoPanel));
+        this.interior.add(typePanel);
         this.interior.add(origenDestinoPanel);
+        this.prog = prog;
+        this.setLayout(new BorderLayout());
+        this.add(okButton, BorderLayout.SOUTH);
+        this.add(interior, BorderLayout.CENTER);
+        mostrar();
         if(!esDijkstra) {
             origenDestinoPanel.setVisible(false);
         }
+        okButton.addActionListener(this);
+    }
+
+    public Dialogo(Main prog, String path) {
+        this.interior = new XMLPanel(path);
         this.prog = prog;
         this.setLayout(new BorderLayout());
         okButton.addActionListener(this);
-        this.add(okButton, BorderLayout.SOUTH);
         this.add(interior, BorderLayout.CENTER);
+        this.add(okButton, BorderLayout.SOUTH);
         mostrar();
     }
 
@@ -61,9 +70,11 @@ public class Dialogo extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == okButton) {
-            if(!(interior instanceof NPoblacionesPanel) && origenDestinoPanel.getOrigenSeleccionado() == origenDestinoPanel.getDestinoSeleccionado()) {
-                JOptionPane.showMessageDialog(this, "El origen y el destino no pueden ser iguales", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+            if(!(interior instanceof NPoblacionesPanel) && !(interior instanceof XMLPanel)) {
+                if (Objects.equals(typePanel.getTipo(), "Dijkstra") && Objects.equals(origenDestinoPanel.getOrigenSeleccionado(), origenDestinoPanel.getDestinoSeleccionado())) {
+                    JOptionPane.showMessageDialog(this, "El origen y el destino no pueden ser iguales", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
             notificar();
             this.dispose();
@@ -73,9 +84,12 @@ public class Dialogo extends JDialog implements ActionListener {
     public void notificar() {
         try {
             if (interior instanceof NPoblacionesPanel) {
-                prog.getModelo().notificar(NotiEnum.SETNPOBLACIONES, ((NPoblacionesPanel) interior).getNPoblaciones());
+                prog.getModelo().notificar(NotiEnum.SETDATOSGRAFO, new int[]{((NPoblacionesPanel) interior).getNPoblaciones(), ((NPoblacionesPanel) interior).getNCarreteras()});
+            } else if (interior instanceof XMLPanel) {
+                prog.getModelo().notificar(NotiEnum.SETXML, ((XMLPanel) interior).getPathXML());
             } else {
-                Algoritmo algoritmo = typePanel.getTipo().equals("Dijkstra") ? Algoritmo.DIJKSTRA : Algoritmo.PRIM;
+                System.out.println(typePanel.getTipo());
+                Algoritmo algoritmo = Objects.equals(typePanel.getTipo(), "Dijkstra") ? Algoritmo.DIJKSTRA : Algoritmo.PRIM;
                 if (algoritmo == Algoritmo.DIJKSTRA) {
                     prog.getModelo().notificar(NotiEnum.PARAMPUEBLO, new String[]{origenDestinoPanel.getOrigenSeleccionado(), origenDestinoPanel.getDestinoSeleccionado()});
                 }
@@ -84,21 +98,5 @@ public class Dialogo extends JDialog implements ActionListener {
         } catch (Exception e) {
             System.out.println("Error en la entrada de datos");
         }
-    }
-
-    public TypePanel getTypePanel() {
-        return typePanel;
-    }
-
-    public void setTypePanel(TypePanel typePanel) {
-        this.typePanel = typePanel;
-    }
-
-    public OrigenDestinoPanel getOrigenDestinoPanel() {
-        return origenDestinoPanel;
-    }
-
-    public void setOrigenDestinoPanel(OrigenDestinoPanel origenDestinoPanel) {
-        this.origenDestinoPanel = origenDestinoPanel;
     }
 }

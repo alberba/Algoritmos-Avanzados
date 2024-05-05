@@ -14,11 +14,10 @@ import java.awt.event.ActionListener;
 public class Vista extends JFrame implements ActionListener, Notificacion {
 
     private final Main prog;
-    private final JButton iniButton, stopButton, algoritmoButton, poblacionesButton;
+    private final JButton iniButton, stopButton, algoritmoButton, poblacionesButton, xmlButton;
     private final PanelGrafico panel;
     private final PanelIndice panelIndice;
 
-    private final JProgressBar progreso;
     public Vista(String title, Main p) {
         super(title);
         prog = p;
@@ -30,7 +29,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         iniButton = new JButton("Iniciar");
         iniButton.addActionListener(this);
         buttons.add(iniButton);
-        stopButton = new JButton("Parar");
+        stopButton = new JButton("Reiniciar");
         stopButton.addActionListener(this);
         buttons.add(stopButton);
         algoritmoButton = new JButton("Algoritmo");
@@ -39,6 +38,9 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         poblacionesButton = new JButton("Poblaciones");
         poblacionesButton.addActionListener(this);
         buttons.add(poblacionesButton);
+        xmlButton = new JButton("Cambiar XML");
+        xmlButton.addActionListener(this);
+        buttons.add(xmlButton);
         this.add(buttons);
         this.add(BorderLayout.NORTH, buttons);
 
@@ -55,13 +57,6 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
 
         panelIndice = new PanelIndice(prog);
         this.add(panelIndice, BorderLayout.EAST);
-        // INSERCIÓN DE BARRA DE PROGRESO
-        progreso = new JProgressBar();
-        progreso.setValue(0);
-        // Se muestra el porcentaje de la barra, inicialmente 0%
-        progreso.setString("0%");
-        progreso.setStringPainted(true);
-        this.add(progreso, BorderLayout.SOUTH);
     }
 
     public void mostrar() {
@@ -74,7 +69,6 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
 
     public void resetPanel() {
         panel.repaint();
-        setValueProgreso(0);
     }
 
     @Override
@@ -82,35 +76,24 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         if (e.getSource() == iniButton) {
             prog.notificar(NotiEnum.INICIAR, null);
         } else if (e.getSource() == stopButton) {
-            prog.notificar(NotiEnum.PARAR, null);
+            prog.getModelo().notificar(NotiEnum.RESETGRAFO, null);
         }
         else if (e.getSource() == poblacionesButton) {
-            Dialogo dialogo = new Dialogo(prog, prog.getModelo().getPoblaciones().size());
+            Dialogo dialogo = new Dialogo(prog, prog.getModelo().getPoblaciones().size(), prog.getModelo().getGrafo().getNumMinCarreteras());
             dialogo.setVisible(true);
         } else if (e.getSource() == algoritmoButton) {
             Dialogo dialogo = new Dialogo(prog, prog.getModelo().getAlgoritmo(), prog.getModelo().getGrafo());
+            dialogo.setVisible(true);
+        } else if (e.getSource() == xmlButton) {
+            Dialogo dialogo = new Dialogo(prog, prog.getModelo().getXml());
+            dialogo.setVisible(true);
         }
-    }
-
-    public void progreso() {
-        int p = progreso.getValue();
-        p = p == 100 ? 0 : p + 1;
-        setValueProgreso(p);
-    }
-
-    public void setValueProgreso(int p) {
-        progreso.setValue(p);
-        progreso.setString(p + "%");
     }
 
     @Override
     public void notificar(NotiEnum s, Object o) {
         switch (s) {
             case DIBUJAR -> this.repaint();
-            case PINTAR -> System.out.println("");
-            case PROGRESO -> progreso();
-            // case ESTIMAR -> System.out.println("Set texto");
-            default -> System.out.println();
         }
     }
 }

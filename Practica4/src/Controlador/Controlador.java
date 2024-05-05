@@ -2,52 +2,25 @@ package Controlador;
 
 import Main.Main;
 import Modelo.*;
-import Notification.NotiEnum;
-import Notification.Notificacion;
 
 import java.util.*;
 
-public class Controlador extends Thread implements Notificacion {
+public class Controlador {
 
-    private final Main prog;
-    private boolean interrumpir = false;
-    private int pasos = 0;
     private final Modelo modelo;
 
     public Controlador(Main p) {
-        prog = p;
-        modelo = prog.getModelo();
+        modelo = p.getModelo();
     }
 
     public void run() {
-        modelo.randomOrigenYDestino();
-        ArrayList<Carretera> solucion = dijkstra(modelo.getOrigen(), modelo.getDestino());
-        imprimir(solucion);
+        ArrayList<Carretera> solucion;
         if (modelo.getAlgoritmo() == Algoritmo.DIJKSTRA) {
-            modelo.getOrigen();
-            modelo.getDestino();
-            //solucion = dijkstra();
+            solucion = dijkstra(modelo.getOrigen(), modelo.getDestino());
         } else {
-            //solucion = prim();
+            solucion = prim();
         }
         modelo.setSolucion(solucion);
-    }
-
-    private void imprimir(ArrayList<Carretera> solucion) {
-        for (Carretera carretera : solucion) {
-            System.out.println(carretera.getPob1().getPoblacion() + " -> " + carretera.getPob2().getPoblacion());
-        }
-    }
-
-    /**
-     * Método encargado de actualizar el progreso en función de los pasos realizados hasta el momento
-     * y el número de pasos totales a realizar
-     */
-    public void actualizarProgreso() {
-        pasos++;
-        if (pasos % 1000 == 0) {
-            prog.getVista().notificar(NotiEnum.PROGRESO, null);
-        }
     }
 
     /**
@@ -58,8 +31,6 @@ public class Controlador extends Thread implements Notificacion {
      * @return Lista del camino con menor coste
      */
     public ArrayList<Carretera> dijkstra(Poblacion poblacionOrigen, Poblacion poblacionFinal) {
-        System.out.println("Origen: " + poblacionOrigen.getPoblacion());
-        System.out.println("Destino: " + poblacionFinal.getPoblacion());
         // Mapa para almacenar las distancias mínimas desde el nodo de origen a cada nodo
         Map<Poblacion, Double> distancias = new HashMap<>();
         // Mapa para almacenar el camino más corto. La clave será el último pueblo del camino
@@ -103,13 +74,16 @@ public class Controlador extends Thread implements Notificacion {
 
         //Comprueba si la población actual es el destino
         if (poblacion1.equals(poblacionFinal)) {
+
             for (Poblacion poblacion : noVisitados) {
+
                 if (distancias.get(poblacion) < distancias.get(poblacionFinal)) {
                     // Hay un nodo no visitado que tiene un menor coste a la población final. Esto significa que puede
                     // existir un mejor camino a él
                     return false;
                 }
             }
+
             // Todos los pueblos no visitados tienen un coste mayor a la población final, significando que no habrá un
             // mejor camino para llegar hasta él
             return true;
@@ -119,8 +93,11 @@ public class Controlador extends Thread implements Notificacion {
 
         // Mientras la cola de prioridad no esté vacía
         for(Carretera carretera : poblacion1.getCarreteras()) {
+
             Poblacion pobDestCamino = carretera.getContrario(poblacion1);
+
             if (noVisitados.contains(pobDestCamino)) {
+
                 if (dijkstraRecursivo(pobDestCamino, poblacionFinal, distancias, camino, noVisitados)) {
                     return true;
                 }
@@ -195,10 +172,4 @@ public class Controlador extends Thread implements Notificacion {
         return camino;
     }
 
-    @Override
-    public void notificar(NotiEnum s, Object o) {
-        if (s == NotiEnum.PARAR) {
-            interrumpir = true;
-        }
-    }
 }

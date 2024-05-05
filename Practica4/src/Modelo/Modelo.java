@@ -5,17 +5,16 @@ import Notification.NotiEnum;
 import Notification.Notificacion;
 import Main.ParserSAX;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Modelo implements Notificacion {
     private final Main prog;
     private Grafo grafo;
-    private Algoritmo algoritmo = Algoritmo.DIJKSTRA;
+    private Algoritmo algoritmo = Algoritmo.PRIM;
     private ArrayList<Carretera> solucionPrim;
-    private Poblacion origen;
-    private Poblacion destino;
-    private String xml;
+    private Poblacion origen = null;
+    private Poblacion destino = null;
+    private String xml = "src/poblaciones.xml";
 
     private static double minLat;
     private static double maxLat;
@@ -27,13 +26,7 @@ public class Modelo implements Notificacion {
     public Modelo (Main p, Grafo grafo) {
         this.prog = p;
         this.grafo = grafo;
-        //origen = null;
-        //destino = null;
-        //randomOrigenYDestino();
-        minLat = 100;
-        maxLat = -100;
-        minLon = 100;
-        maxLon = -100;
+        resetMinYMax();
         obtenerMinyMax(grafo.getPoblaciones());
     }
 
@@ -90,14 +83,10 @@ public class Modelo implements Notificacion {
         return minLat;
     }
 
-    public static double getMaxLat() {
-        return maxLat;
-    }
-
     public static double getMinLon() {
         return minLon;
     }
-    public static double getMaxLon() { return maxLon; }
+
     public static double getRangoLat() {
         return rangoLat;
     }
@@ -114,38 +103,25 @@ public class Modelo implements Notificacion {
         this.solucionPrim = sol;
     }
 
-    public void randomOrigenYDestino() {
-        ArrayList<String> poblaciones = getPoblaciones();
-        Random random = new Random();
-        int origenIndex = random.nextInt(poblaciones.size());
-        int destinoIndex = random.nextInt(poblaciones.size());
-        while (origenIndex == destinoIndex) {
-            destinoIndex = random.nextInt(poblaciones.size());
-        }
-        System.out.println("Indice origen:" + (origenIndex + 1));
-        System.out.println("Indice destino:" + (destinoIndex + 1));
-        origen = grafo.getPoblacion(poblaciones.get(origenIndex));
-        destino = grafo.getPoblacion(poblaciones.get(destinoIndex));
-    }
-
     public Poblacion getOrigen() {
         return origen;
-    }
-
-    public void setOrigen(Poblacion origen) {
-        this.origen = origen;
     }
 
     public Poblacion getDestino() {
         return destino;
     }
 
-    public void setDestino(Poblacion destino) {
-        this.destino = destino;
+    public String getXml() {
+        return xml;
     }
 
-    public void setGrafo(Grafo grafo) {
-        this.grafo = grafo;
+    private void nuevoGrafo(int nPoblaciones, int nMinCarreteras) {
+        if (xml.equals("src/poblaciones.xml")) {
+            grafo = new Grafo(prog.generarPoblacionesGrafo(prog.getTotalPoblaciones(), nPoblaciones), nMinCarreteras);
+        } else {
+            HashMap<String, Poblacion> poblaciones = new ParserSAX().parse(xml);
+            grafo = new Grafo(prog.generarPoblacionesGrafo(poblaciones, nPoblaciones), nMinCarreteras);
+        }
     }
 
     @Override
@@ -154,12 +130,29 @@ public class Modelo implements Notificacion {
             case SETALGORITMO -> algoritmo = (Algoritmo) message;
             case PARAMPUEBLO -> {
                 String[] pueblos = (String[]) message;
+                pueblos[0] = pueblos[0].substring(pueblos[0].indexOf(". ") + 2);
+                pueblos[1] = pueblos[1].substring(pueblos[1].indexOf(". ") + 2);
                 origen = grafo.getPoblacion(pueblos[0]);
                 destino = grafo.getPoblacion(pueblos[1]);
             }
-            case SETNPOBLACIONES -> {
-                int n = (int) message;
-                grafo = new Grafo(prog.generarPoblacionesGrafo(prog.getTotalPoblaciones(), n));
+            case SETDATOSGRAFO -> {
+                nuevoGrafo(((int[]) message)[0], ((int[]) message)[1]);
+                resetMinYMax();
+                obtenerMinyMax(grafo.getPoblaciones());
+                prog.getVista().repaint();
+            }
+            case RESETGRAFO -> {
+                nuevoGrafo(grafo.getPoblaciones().size(), grafo.getNumMinCarreteras());
+                resetMinYMax();
+                obtenerMinyMax(grafo.getPoblaciones());
+                prog.getVista().repaint();
+            }
+            case SETXML -> {
+                xml = (String) message;
+                HashMap<String, Poblacion> poblaciones = new ParserSAX().parse(xml);
+                int nPoblaciones = grafo.getPoblaciones().size();
+                int nMinCarreteras = grafo.getNumMinCarreteras();
+                grafo = new Grafo(prog.generarPoblacionesGrafo(poblaciones, nPoblaciones), nMinCarreteras);
                 resetMinYMax();
                 obtenerMinyMax(grafo.getPoblaciones());
                 prog.getVista().repaint();

@@ -66,11 +66,9 @@ public class Main implements Notificacion {
     public void notificar(NotiEnum s, Object o) {
         switch (s) {
             case INICIAR:
-                if (controlador == null) { // test
-                    controlador = new Controlador(this);
-                    controlador.start();
-                    vista.resetPanel();
-                }
+                controlador = new Controlador(this);
+                controlador.run();
+                vista.resetPanel();
                 break;
             case PARAR:
                 // Se detiene el controlador
