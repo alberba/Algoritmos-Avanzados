@@ -151,8 +151,6 @@ public class Modelo implements Notificacion {
             case SETALGORITMO -> {
                 algoritmo = (Algoritmo) message;
             }
-            case SETNBUCKET -> {
-            }
         }
     }
 }
