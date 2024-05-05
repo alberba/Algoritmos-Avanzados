@@ -11,7 +11,7 @@ public class Modelo implements Notificacion {
     private final Main prog;
     private Grafo grafo;
     private Algoritmo algoritmo = Algoritmo.PRIM;
-    private ArrayList<Carretera> solucionPrim;
+    private ArrayList<Carretera> solucion;
     private Poblacion origen = null;
     private Poblacion destino = null;
     private String xml = "src/poblaciones.xml";
@@ -131,9 +131,9 @@ public class Modelo implements Notificacion {
 
     public Algoritmo getAlgoritmo() { return algoritmo; }
 
-    public ArrayList<Carretera> getSolucionPrim() { return solucionPrim; }
+    public ArrayList<Carretera> getSolucion() { return solucion; }
 
-    public void setSolucion(ArrayList<Carretera> sol) { this.solucionPrim = sol; }
+    public void setSolucion(ArrayList<Carretera> sol) { this.solucion = sol; }
 
     public Poblacion getOrigen() { return origen; }
 

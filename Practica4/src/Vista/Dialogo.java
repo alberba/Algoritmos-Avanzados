@@ -90,6 +90,7 @@ public class Dialogo extends JDialog implements ActionListener {
         try {
             if (interior instanceof NPoblacionesPanel) {
                 prog.getModelo().notificar(NotiEnum.SETDATOSGRAFO, new int[]{((NPoblacionesPanel) interior).getNPoblaciones(), ((NPoblacionesPanel) interior).getNCarreteras()});
+                prog.getVista().resetPanelIndice();
             } else if (interior instanceof XMLPanel) {
                 prog.getModelo().notificar(NotiEnum.SETXML, ((XMLPanel) interior).getPathXML());
             } else {

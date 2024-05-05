@@ -65,7 +65,7 @@ public class PanelGrafico extends JPanel {
      */
     private void generarAristas(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        ArrayList<Carretera> solucion = modelo.getSolucionPrim();
+        ArrayList<Carretera> solucion = modelo.getSolucion();
         // Obtener las carreteras del modelo
         ArrayList<Carretera> carreteras = modelo.getGrafo().getCarreteras();
         for (Carretera car : carreteras) {

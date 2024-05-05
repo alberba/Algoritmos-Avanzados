@@ -4,7 +4,6 @@ package Vista;
 import Main.Main;
 import Modelo.Algoritmo;
 import Notification.NotiEnum;
-import Notification.Notificacion;
 
 import javax.swing.*;
 
@@ -15,7 +14,7 @@ import java.awt.event.ActionListener;
 public class Vista extends JFrame implements ActionListener {
 
     private final Main prog;
-    private final JButton iniButton, stopButton, algoritmoButton, poblacionesButton, xmlButton;
+    private final JButton iniButton, resetButton, algoritmoButton, poblacionesButton, xmlButton;
     private final PanelGrafico panel;
     private final PanelIndice panelIndice;
 
@@ -30,9 +29,9 @@ public class Vista extends JFrame implements ActionListener {
         iniButton = new JButton("Iniciar");
         iniButton.addActionListener(this);
         buttons.add(iniButton);
-        stopButton = new JButton("Reiniciar");
-        stopButton.addActionListener(this);
-        buttons.add(stopButton);
+        resetButton = new JButton("Reiniciar");
+        resetButton.addActionListener(this);
+        buttons.add(resetButton);
         algoritmoButton = new JButton("Algoritmo");
         algoritmoButton.addActionListener(this);
         buttons.add(algoritmoButton);
@@ -76,8 +75,9 @@ public class Vista extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == iniButton) {
             prog.notificar(NotiEnum.INICIAR, null);
-        } else if (e.getSource() == stopButton) {
+        } else if (e.getSource() == resetButton) {
             prog.getModelo().notificar(NotiEnum.RESETGRAFO, null);
+            prog.getVista().resetPanelIndice();
         }
         else if (e.getSource() == poblacionesButton) {
             Dialogo dialogo = new Dialogo(prog, prog.getModelo().getPoblaciones().size(), prog.getModelo().getGrafo().getNumMinCarreteras());
@@ -90,6 +90,10 @@ public class Vista extends JFrame implements ActionListener {
             dialogo.setVisible(true);
             prog.getModelo().notificar(NotiEnum.SETALGORITMO, Algoritmo.PRIM);
         }
+    }
+
+    public void resetPanelIndice() {
+        panelIndice.actualizarJTextArea();
     }
 
 }
