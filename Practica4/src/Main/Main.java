@@ -9,63 +9,37 @@ import Vista.Vista;
 import Modelo.Grafo;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Main implements Notificacion {
     private final Vista vista;
     private final Modelo modelo;
     private Controlador controlador;
+    private final HashMap<String, Poblacion> totalPoblaciones;
 
     public Main() {
         // Lectura del XML
         ParserSAX parserSAX = new ParserSAX();
-        HashMap<String, Poblacion> poblaciones = parserSAX.parse("src/poblaciones.xml");
-        //imprimirMayoryMenorLatyLon(poblaciones);
-        modelo = new Modelo(this, new Grafo(generarPoblacionesGrafo(poblaciones)));
+        totalPoblaciones = parserSAX.parse("src/poblaciones.xml");
+        modelo = new Modelo(this, new Grafo(generarPoblacionesGrafo(totalPoblaciones, 20)));
         controlador = null;
         vista = new Vista("Grafo", this);
         vista.mostrar();
     }
-
-    /*
-    private void imprimirMayoryMenorLatyLon(HashMap<String, Poblacion> poblaciones) {
-        Poblacion poblacionMayorLat = null;
-        Poblacion poblacionMenorLat = null;
-        Poblacion poblacionMayorLon = null;
-        Poblacion poblacionMenorLon = null;
-        for (Poblacion poblacion : poblaciones.values()) {
-            if (poblacionMayorLat == null || poblacion.getLat() > poblacionMayorLat.getLat()) {
-                poblacionMayorLat = poblacion;
-            }
-            if (poblacionMenorLat == null || poblacion.getLat() < poblacionMenorLat.getLat()) {
-                poblacionMenorLat = poblacion;
-            }
-            if (poblacionMayorLon == null || poblacion.getLon() > poblacionMayorLon.getLon()) {
-                poblacionMayorLon = poblacion;
-            }
-            if (poblacionMenorLon == null || poblacion.getLon() < poblacionMenorLon.getLon()) {
-                poblacionMenorLon = poblacion;
-            }
-        }
-        System.out.println("Población con mayor latitud: " + poblacionMayorLat.getPoblacion() + ", latitud: " + poblacionMayorLat.getLat());
-        System.out.println("Población con menor latitud: " + poblacionMenorLat.getPoblacion() + ", latitud: " + poblacionMenorLat.getLat());
-        System.out.println("Población con mayor longitud: " + poblacionMayorLon.getPoblacion() + ", longitud: " + poblacionMayorLon.getLon());
-        System.out.println("Población con menor longitud: " + poblacionMenorLon.getPoblacion() + ", longitud: " + poblacionMenorLon.getLon());
-    }
-    */
 
     public static void main(String[] args) {
         //Mesurament24.mesura();
         new Main();
     }
 
-    // Método que recopila 20 poblaciones aleatorias del hashmap de poblaciones (medio trash pero hecho rápido)
-    private HashMap<String, Poblacion> generarPoblacionesGrafo(HashMap<String, Poblacion> poblaciones) {
+    // Método que recopila N poblaciones aleatorias del hashmap de poblaciones (medio trash pero hecho rápido)
+    public HashMap<String, Poblacion> generarPoblacionesGrafo(HashMap<String, Poblacion> poblaciones, int numPoblaciones) {
         HashMap<String, Poblacion> poblacionesGrafo = new HashMap<>();
-        // Seleccionar 20 poblaciones aleatorias
+        // Seleccionar N poblaciones aleatorias
         Set<Integer> elegidos = new HashSet<>();
         Random random = new Random();
-        while (elegidos.size() < 20) {
+        while (elegidos.size() < numPoblaciones) {
             int num = random.nextInt(poblaciones.size());
             elegidos.add(num);
         }
@@ -112,6 +86,10 @@ public class Main implements Notificacion {
 
     public Modelo getModelo() {
         return modelo;
+    }
+
+    public HashMap<String, Poblacion> getTotalPoblaciones() {
+        return totalPoblaciones;
     }
 
 }

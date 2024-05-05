@@ -15,7 +15,7 @@ public class NPoblacionesPanel extends JPanel {
         this.add(nPoblaciones);
     }
 
-    public int getnPoblaciones() {
+    public int getNPoblaciones() {
         try {
             return Integer.parseInt(nPoblaciones.getText());
         } catch (Exception e) {

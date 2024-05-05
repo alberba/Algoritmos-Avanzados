@@ -85,10 +85,10 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
             prog.notificar(NotiEnum.PARAR, null);
         }
         else if (e.getSource() == poblacionesButton) {
-            Dialogo dialogo = new Dialogo(prog, prog.getModelo().getPoblaciones().size(), prog.getModelo().getGrafo());
+            Dialogo dialogo = new Dialogo(prog, prog.getModelo().getPoblaciones().size());
             dialogo.setVisible(true);
         } else if (e.getSource() == algoritmoButton) {
-            Dialogo dialogo = new Dialogo(prog, prog.getModelo().getAlgoritmo());
+            Dialogo dialogo = new Dialogo(prog, prog.getModelo().getAlgoritmo(), prog.getModelo().getGrafo());
         }
     }
 

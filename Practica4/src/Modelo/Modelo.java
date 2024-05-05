@@ -11,7 +11,7 @@ import java.util.*;
 public class Modelo implements Notificacion {
     private final Main prog;
     private Grafo grafo;
-    private Algoritmo algoritmo;
+    private Algoritmo algoritmo = Algoritmo.DIJKSTRA;
     private ArrayList<Carretera> solucionPrim;
     private Poblacion origen;
     private Poblacion destino;
@@ -44,11 +44,7 @@ public class Modelo implements Notificacion {
             xml = "poblaciones2";
             HashMap<String, Poblacion> poblaciones = parserSAX.parse("src/" + xml);
             this.grafo = new Grafo(poblaciones);
-            //randomOrigenYDestino();
-            minLat = 100;
-            maxLat = -100;
-            minLon = 100;
-            maxLon = -100;
+            resetMinYMax();
         } else {
             int a = 0;
         }
@@ -81,6 +77,13 @@ public class Modelo implements Notificacion {
 
         rangoLat = maxLat - minLat;
         rangoLon = maxLon - minLon;
+    }
+
+    private void resetMinYMax() {
+        minLat = 100;
+        maxLat = -100;
+        minLon = 100;
+        maxLon = -100;
     }
 
     public static double getMinLat() {
@@ -148,8 +151,18 @@ public class Modelo implements Notificacion {
     @Override
     public void notificar(NotiEnum s, Object message) {
         switch (s) {
-            case SETALGORITMO -> {
-                algoritmo = (Algoritmo) message;
+            case SETALGORITMO -> algoritmo = (Algoritmo) message;
+            case PARAMPUEBLO -> {
+                String[] pueblos = (String[]) message;
+                origen = grafo.getPoblacion(pueblos[0]);
+                destino = grafo.getPoblacion(pueblos[1]);
+            }
+            case SETNPOBLACIONES -> {
+                int n = (int) message;
+                grafo = new Grafo(prog.generarPoblacionesGrafo(prog.getTotalPoblaciones(), n));
+                resetMinYMax();
+                obtenerMinyMax(grafo.getPoblaciones());
+                prog.getVista().repaint();
             }
         }
     }

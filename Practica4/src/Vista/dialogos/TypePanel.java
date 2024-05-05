@@ -7,10 +7,12 @@ public class TypePanel extends JPanel {
 
     private final ButtonGroup grupo;
 
-    public TypePanel(boolean esDijkstra) {
+    public TypePanel(boolean esDijkstra, OrigenDestinoPanel origenDestinoPanel) {
         grupo = new ButtonGroup();
         JRadioButton r1 = new JRadioButton("Dijkstra", esDijkstra);
         JRadioButton r2 = new JRadioButton("Prim", !esDijkstra);
+        r1.addActionListener(e -> origenDestinoPanel.setVisible(true));
+        r2.addActionListener(e -> origenDestinoPanel.setVisible(false));
         grupo.add(r1);
         grupo.add(r2);
         this.add(r1);
