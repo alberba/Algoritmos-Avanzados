@@ -19,6 +19,10 @@ public class Poblacion implements Comparable<Poblacion>{
         carreterasPoblacion = new ArrayList<>();
     }
 
+    public void reset() {
+        carreterasPoblacion.clear();
+    }
+
     public String getComunidad() {
         return comunidad;
     }

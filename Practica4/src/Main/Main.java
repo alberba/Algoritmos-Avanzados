@@ -7,6 +7,7 @@ import Notification.NotiEnum;
 import Notification.Notificacion;
 import Vista.Vista;
 import Modelo.Grafo;
+import mesurament.Mesurament24;
 
 import java.util.*;
 
@@ -28,7 +29,7 @@ public class Main implements Notificacion {
     }
 
     public static void main(String[] args) {
-        //Mesurament24.mesura();
+        Mesurament24.mesura();
         new Main();
     }
 
@@ -51,6 +52,7 @@ public class Main implements Notificacion {
         // Añadir las poblaciones seleccionadas al hashmap de poblaciones del grafo
         int i = 0;
         for (Poblacion poblacion : poblaciones.values()) {
+            poblacion.reset();
             if (elegidos.contains(i)) {
                 poblacionesGrafo.put(poblacion.getPoblacion(), poblacion);
             }
