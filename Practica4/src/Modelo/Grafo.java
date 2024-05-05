@@ -45,8 +45,14 @@ public class Grafo {
             carreterasPob.sort(Comparator.comparing(Carretera::getDistancia));
 
             // Se añaden las carreteras a la población y al grafo
-            for (int i = origen.getNumCarreteras(); i < numMinCarreteras; i++) {
-                añadirCarretera(origen, carreterasPob.get(i).getPob2(), carreterasPob.get(i));
+            int offset = 0;
+            for (int i = origen.getNumCarreteras(); i < (numMinCarreteras + offset) && offset < carreterasPob.size(); i++) {
+                // Si la carretera ya existe, se salta hasta encontrar una nueva,
+                // en caso de no encontrarla, el nodo tendrá menos aristas que el mínimo establecido
+                // lo cual ocurrirá en casos en los que el número de aristas es muy cercano al número de nodos
+                if (!añadirCarretera(origen, carreterasPob.get(offset).getPob2(), carreterasPob.get(offset))) {
+                    offset++;
+                }
             }
         }
     }
@@ -57,13 +63,16 @@ public class Grafo {
      * @param destino Población destino
      * @param carretera Carretera a añadir
      */
-    public void añadirCarretera(Poblacion origen, Poblacion destino, Carretera carretera) {
+    public boolean añadirCarretera(Poblacion origen, Poblacion destino, Carretera carretera) {
 
-        if (!carreteras.contains(carretera))
+        if (!carreteras.contains(carretera)) {
             carreteras.add(carretera);
 
-        origen.addCarretera(carretera);
-        destino.addCarretera(carretera);
+            origen.addCarretera(carretera);
+            destino.addCarretera(carretera);
+            return true;
+        }
+        return false;
     }
 
     public Poblacion getPoblacion(String nombre) {

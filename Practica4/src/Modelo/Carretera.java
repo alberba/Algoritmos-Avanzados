@@ -37,6 +37,17 @@ public class Carretera {
                 || this.pob1.equals(carretera.pob1) && this.pob2.equals(carretera.pob2));
     }
 
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + Double.hashCode(distancia);
+        result = 31 * result + (pob1 != null ? pob1.hashCode() : 0);
+        result = 31 * result + (pob2 != null ? pob2.hashCode() : 0);
+        return result;
+    }
+
+
+
     public double getDistancia() {
         return distancia;
     }

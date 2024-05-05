@@ -78,6 +78,7 @@ public class Vista extends JFrame implements ActionListener {
         } else if (e.getSource() == resetButton) {
             prog.getModelo().notificar(NotiEnum.RESETGRAFO, null);
             prog.getVista().resetPanelIndice();
+            prog.getModelo().notificar(NotiEnum.SETALGORITMO, Algoritmo.PRIM);
         }
         else if (e.getSource() == poblacionesButton) {
             Dialogo dialogo = new Dialogo(prog, prog.getModelo().getPoblaciones().size(), prog.getModelo().getGrafo().getNumMinCarreteras());
