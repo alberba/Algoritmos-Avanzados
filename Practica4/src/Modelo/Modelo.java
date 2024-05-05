@@ -30,28 +30,11 @@ public class Modelo implements Notificacion {
         obtenerMinyMax(grafo.getPoblaciones());
     }
 
-    // Método que permite reinicializar el modelo con los datos de un nuevo xml
-    public void reset() {
-        ParserSAX parserSAX = new ParserSAX();
-        if (!xml.equals("poblaciones.xml")) {
-            xml = "poblaciones2";
-            HashMap<String, Poblacion> poblaciones = parserSAX.parse("src/" + xml);
-            this.grafo = new Grafo(poblaciones);
-            resetMinYMax();
-        } else {
-            int a = 0;
-        }
-        obtenerMinyMax(grafo.getPoblaciones());
-    }
-
-    public Grafo getGrafo() {
-        return grafo;
-    }
-
-    public ArrayList<String> getPoblaciones() {
-        return new ArrayList<>(grafo.getPoblaciones().keySet());
-    }
-
+    /**
+     * Obtiene el valor mínimo y máximo de latitud y longitud de las poblaciones de la muestra. Servirá para luego
+     * poder escalar el mapa
+     * @param poblaciones HashMap con las poblaciones
+     */
     private void obtenerMinyMax(HashMap<String, Poblacion> poblaciones) {
         for (Poblacion poblacion : poblaciones.values()) {
             if (poblacion.getLat() > maxLat) {
@@ -79,42 +62,11 @@ public class Modelo implements Notificacion {
         maxLon = -100;
     }
 
-    public static double getMinLat() {
-        return minLat;
-    }
-
-    public static double getMinLon() {
-        return minLon;
-    }
-
-    public static double getRangoLat() {
-        return rangoLat;
-    }
-
-    public static double getRangoLon() { return rangoLon; }
-
-    public Algoritmo getAlgoritmo() { return algoritmo; }
-
-    public ArrayList<Carretera> getSolucionPrim() {
-        return solucionPrim;
-    }
-
-    public void setSolucion(ArrayList<Carretera> sol) {
-        this.solucionPrim = sol;
-    }
-
-    public Poblacion getOrigen() {
-        return origen;
-    }
-
-    public Poblacion getDestino() {
-        return destino;
-    }
-
-    public String getXml() {
-        return xml;
-    }
-
+    /**
+     * Método que crea un nuevo grafo a partir de los parámetros pasados por el usuario
+     * @param nPoblaciones Número de poblaciones
+     * @param nMinCarreteras Número mínimo de carreteras
+     */
     private void nuevoGrafo(int nPoblaciones, int nMinCarreteras) {
         if (xml.equals("src/poblaciones.xml")) {
             grafo = new Grafo(prog.generarPoblacionesGrafo(prog.getTotalPoblaciones(), nPoblaciones), nMinCarreteras);
@@ -129,34 +81,69 @@ public class Modelo implements Notificacion {
         switch (s) {
             case SETALGORITMO -> algoritmo = (Algoritmo) message;
             case PARAMPUEBLO -> {
+                // Los pueblos iran con el formato "1. Pueblo", hay que formatearlo
                 String[] pueblos = (String[]) message;
                 pueblos[0] = pueblos[0].substring(pueblos[0].indexOf(". ") + 2);
                 pueblos[1] = pueblos[1].substring(pueblos[1].indexOf(". ") + 2);
+
                 origen = grafo.getPoblacion(pueblos[0]);
                 destino = grafo.getPoblacion(pueblos[1]);
             }
             case SETDATOSGRAFO -> {
+                // Hay que generar un nuevo grafo con los datos pasados
                 nuevoGrafo(((int[]) message)[0], ((int[]) message)[1]);
                 resetMinYMax();
                 obtenerMinyMax(grafo.getPoblaciones());
+                // Actualizar vista
                 prog.getVista().repaint();
             }
             case RESETGRAFO -> {
+                // Se resetea el grafo
                 nuevoGrafo(grafo.getPoblaciones().size(), grafo.getNumMinCarreteras());
                 resetMinYMax();
                 obtenerMinyMax(grafo.getPoblaciones());
                 prog.getVista().repaint();
             }
             case SETXML -> {
+                // Se parsea el nuevo xml
                 xml = (String) message;
                 HashMap<String, Poblacion> poblaciones = new ParserSAX().parse(xml);
+
+                // Se crea un nuevo grafo con las poblaciones del xml
                 int nPoblaciones = grafo.getPoblaciones().size();
                 int nMinCarreteras = grafo.getNumMinCarreteras();
                 grafo = new Grafo(prog.generarPoblacionesGrafo(poblaciones, nPoblaciones), nMinCarreteras);
+
                 resetMinYMax();
                 obtenerMinyMax(grafo.getPoblaciones());
                 prog.getVista().repaint();
             }
         }
+    }
+
+    public static double getMinLat() { return minLat; }
+
+    public static double getMinLon() { return minLon; }
+
+    public static double getRangoLat() { return rangoLat; }
+
+    public static double getRangoLon() { return rangoLon; }
+
+    public Algoritmo getAlgoritmo() { return algoritmo; }
+
+    public ArrayList<Carretera> getSolucionPrim() { return solucionPrim; }
+
+    public void setSolucion(ArrayList<Carretera> sol) { this.solucionPrim = sol; }
+
+    public Poblacion getOrigen() { return origen; }
+
+    public Poblacion getDestino() { return destino; }
+
+    public String getXml() { return xml; }
+
+    public Grafo getGrafo() { return grafo; }
+
+    public ArrayList<String> getPoblaciones() {
+        return new ArrayList<>(grafo.getPoblaciones().keySet());
     }
 }

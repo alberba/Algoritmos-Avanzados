@@ -5,18 +5,11 @@ import java.util.*;
 public class Grafo {
     private final HashMap<String, Poblacion> poblaciones;
     private final ArrayList<Carretera> carreteras;
-    private final int numMinCarreteras;
-
-    public Grafo() {
-        poblaciones = new HashMap<>();
-        carreteras = new ArrayList<>();
-        numMinCarreteras = 5;
-    }
+    private int numMinCarreteras = 5;
 
     public Grafo(HashMap<String, Poblacion> poblaciones) {
         this.poblaciones = poblaciones;
         carreteras = new ArrayList<>();
-        numMinCarreteras = 5;
         generarAristasCercanas();
     }
 
@@ -27,21 +20,19 @@ public class Grafo {
         generarAristasCercanas();
     }
 
-    public void afegirCarretera(Poblacion origen, Poblacion destino, Carretera carretera) {
-        if (!carreteras.contains(carretera))
-            carreteras.add(carretera);
-        origen.addCarretera(carretera);
-        destino.addCarretera(carretera);
-    }
-
+    /**
+     * Genera las carreteras más cercanas a cada población
+     */
     private void generarAristasCercanas() {
         // Se recorren las poblaciones
         for (Poblacion origen : poblaciones.values()) {
             ArrayList<Carretera> carreterasPob = new ArrayList<>();
-            // Si la población ya tiene 5 o más carreteras, se salta
+
+            // Si la población ya tiene mas carreteras qeu numMinCarreteras, se salta
             if (origen.getNumCarreteras() >= numMinCarreteras) {
                 continue;
             }
+
             // Se obtiene la distancia entre la población y el resto
             for (Poblacion destino : poblaciones.values()) {
                 if (!origen.equals(destino)) {
@@ -49,13 +40,30 @@ public class Grafo {
                     carreterasPob.add(new Carretera(distancia, origen, destino));
                 }
             }
-            // Se ordenan las carreteras para obtener las 5 menores
+
+            // Se ordenan las carreteras para obtener las numMinCarreteras menores
             carreterasPob.sort(Comparator.comparing(Carretera::getDistancia));
 
+            // Se añaden las carreteras a la población y al grafo
             for (int i = origen.getNumCarreteras(); i < numMinCarreteras; i++) {
-                afegirCarretera(origen, carreterasPob.get(i).getPob2(), carreterasPob.get(i));
+                añadirCarretera(origen, carreterasPob.get(i).getPob2(), carreterasPob.get(i));
             }
         }
+    }
+
+    /**
+     * Añade una carretera al grafo
+     * @param origen Población origen
+     * @param destino Población destino
+     * @param carretera Carretera a añadir
+     */
+    public void añadirCarretera(Poblacion origen, Poblacion destino, Carretera carretera) {
+
+        if (!carreteras.contains(carretera))
+            carreteras.add(carretera);
+
+        origen.addCarretera(carretera);
+        destino.addCarretera(carretera);
     }
 
     public Poblacion getPoblacion(String nombre) {

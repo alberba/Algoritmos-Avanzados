@@ -9,7 +9,6 @@ import Vista.Vista;
 import Modelo.Grafo;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 public class Main implements Notificacion {
@@ -33,16 +32,22 @@ public class Main implements Notificacion {
         new Main();
     }
 
-    // Método que recopila N poblaciones aleatorias del hashmap de poblaciones (medio trash pero hecho rápido)
+    /**
+     * Método que recopila N poblaciones aleatorias del hashmap de poblaciones
+     * @param poblaciones HashMap con todas las poblaciones
+     * @param numPoblaciones Número de poblaciones a seleccionar
+     * @return HashMap con las N poblaciones seleccionadas
+     */
     public HashMap<String, Poblacion> generarPoblacionesGrafo(HashMap<String, Poblacion> poblaciones, int numPoblaciones) {
         HashMap<String, Poblacion> poblacionesGrafo = new HashMap<>();
-        // Seleccionar N poblaciones aleatorias
         Set<Integer> elegidos = new HashSet<>();
         Random random = new Random();
+
         while (elegidos.size() < numPoblaciones) {
             int num = random.nextInt(poblaciones.size());
             elegidos.add(num);
         }
+
         // Añadir las poblaciones seleccionadas al hashmap de poblaciones del grafo
         int i = 0;
         for (Poblacion poblacion : poblaciones.values()) {
@@ -51,15 +56,8 @@ public class Main implements Notificacion {
             }
             i++;
         }
-        System.out.println(poblacionesGrafo.toString());
+
         return poblacionesGrafo;
-    }
-
-
-    private static void leerXML() {
-        ParserSAX parserSAX = new ParserSAX();
-        HashMap<String, Poblacion> poblaciones = parserSAX.parse("src/poblaciones.xml");
-        Grafo grafo = new Grafo(poblaciones);
     }
 
     @Override
@@ -69,9 +67,6 @@ public class Main implements Notificacion {
                 controlador = new Controlador(this);
                 controlador.run();
                 vista.resetPanel();
-                break;
-            case PARAR:
-                // Se detiene el controlador
                 break;
             default:
                 break;

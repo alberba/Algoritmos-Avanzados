@@ -65,8 +65,6 @@ public class Poblacion implements Comparable<Poblacion>{
         return carreterasPoblacion;
     }
 
-
-
     public void addCarretera(Carretera carretera) {
         this.carreterasPoblacion.add(carretera);
     }

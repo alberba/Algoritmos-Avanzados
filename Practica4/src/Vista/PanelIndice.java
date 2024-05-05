@@ -9,10 +9,19 @@ import java.util.ArrayList;
 public class PanelIndice extends JPanel {
 
     private final Main prog;
+    private final JScrollPane scrollPane;
 
     public PanelIndice(Main prog) {
         this.prog = prog;
-        this.setPreferredSize(new Dimension(200, 100));
+        this.setPreferredSize(new Dimension(200, this.getHeight()));
+
+        // Crear el JScrollPane y agregar este panel a él
+        scrollPane = new JScrollPane(this);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    }
+
+    public JScrollPane getScrollPane() {
+        return scrollPane;
     }
 
     @Override

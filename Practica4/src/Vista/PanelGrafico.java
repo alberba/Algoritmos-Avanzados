@@ -32,20 +32,21 @@ public class PanelGrafico extends JPanel {
         escribirNumeros(g);
 
     }
-    
 
-    // Método que genera los 20 nodos del grafo
+
+    /**
+     * Método que genera los nodos en el panel
+     * @param g
+     * @param poblaciones Colección de poblaciones
+     */
     private void generarNodos(Graphics g, Collection<Poblacion> poblaciones) {
         nodos = new ArrayList<>();
         // Márgen de píxeles a cada lado del panel
         int margenX = 100;
         int margenY = 20;
-        // Círculos de test
-        // g.fillOval(20, 20, 10, 10);
-        // g.fillOval(this.getWidth()-20, this.getHeight()-20, 10, 10);
         int i = 0;
         for (Poblacion pob : poblaciones) {
-            // Calcular la posición del nodo como un porcentaje del tamaño del panel (con 20px de márgen a cada lado)
+            // Calcular la posición del nodo normalizandolo al tamaño del panel
             int x = (int) (((pob.getLon() - Modelo.getMinLon())/Modelo.getRangoLon()) * (this.getWidth() - 2 * margenX)) + margenX;
             int y = (int) (((pob.getLat() - Modelo.getMinLat())/Modelo.getRangoLat()) * (this.getHeight() - 2 * margenY)) + margenY;
             // Crear el nodo y añadirlo a la lista
@@ -55,12 +56,13 @@ public class PanelGrafico extends JPanel {
             // Dibujar el nodo
             g.setColor(Color.BLACK);
             g.fillOval(x - 15, y - 15, 30, 30);
-            // Dibujar el nombre del nodo
-            Font boldFont = g.getFont().deriveFont(Font.BOLD);
-            g.setFont(boldFont);
         }
     }
 
+    /**
+     * Método que se encarga de dibujar las aristas en el panel
+     * @param g
+     */
     private void generarAristas(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         ArrayList<Carretera> solucion = modelo.getSolucionPrim();
@@ -84,7 +86,12 @@ public class PanelGrafico extends JPanel {
         }
     }
 
+    /**
+     * Método que escribe los números de los nodos encima de ellos
+     * @param g Objeto Graphics
+     */
     private void escribirNumeros(Graphics g) {
+        g.setFont(new Font("Arial", Font.BOLD, 12));
         g.setColor(Color.WHITE);
         for (Nodo nodo : nodos) {
             g.drawString("" + nodo.getIndice(), nodo.getX() - 5, nodo.getY() + 5);

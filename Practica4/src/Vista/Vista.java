@@ -2,6 +2,7 @@ package Vista;
 
 
 import Main.Main;
+import Modelo.Algoritmo;
 import Notification.NotiEnum;
 import Notification.Notificacion;
 
@@ -11,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Vista extends JFrame implements ActionListener, Notificacion {
+public class Vista extends JFrame implements ActionListener {
 
     private final Main prog;
     private final JButton iniButton, stopButton, algoritmoButton, poblacionesButton, xmlButton;
@@ -56,7 +57,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         panel.repaint();
 
         panelIndice = new PanelIndice(prog);
-        this.add(panelIndice, BorderLayout.EAST);
+        this.add(panelIndice.getScrollPane(), BorderLayout.EAST);
     }
 
     public void mostrar() {
@@ -87,13 +88,8 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         } else if (e.getSource() == xmlButton) {
             Dialogo dialogo = new Dialogo(prog, prog.getModelo().getXml());
             dialogo.setVisible(true);
+            prog.getModelo().notificar(NotiEnum.SETALGORITMO, Algoritmo.PRIM);
         }
     }
 
-    @Override
-    public void notificar(NotiEnum s, Object o) {
-        switch (s) {
-            case DIBUJAR -> this.repaint();
-        }
-    }
 }

@@ -96,6 +96,7 @@ public class Controlador {
 
             Poblacion pobDestCamino = carretera.getContrario(poblacion1);
 
+            // Si el pueblo no ha sido visitado
             if (noVisitados.contains(pobDestCamino)) {
 
                 if (dijkstraRecursivo(pobDestCamino, poblacionFinal, distancias, camino, noVisitados)) {

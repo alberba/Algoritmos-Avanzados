@@ -75,6 +75,11 @@ public class Dialogo extends JDialog implements ActionListener {
                     JOptionPane.showMessageDialog(this, "El origen y el destino no pueden ser iguales", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+            } else if (interior instanceof NPoblacionesPanel) {
+                if (((NPoblacionesPanel) interior).getNCarreteras() >= ((NPoblacionesPanel) interior).getNPoblaciones()) {
+                    JOptionPane.showMessageDialog(this, "El número de carreteras debe ser menor que el número de poblaciones", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
             notificar();
             this.dispose();

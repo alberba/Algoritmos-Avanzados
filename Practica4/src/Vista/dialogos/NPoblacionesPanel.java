@@ -14,7 +14,6 @@ public class NPoblacionesPanel extends JPanel {
         nPoblaciones = new JTextField(4);
         nPoblaciones.setText(Integer.toString(numPoblaciones));
         this.add(nPoblaciones);
-        //nPoblaciones.setEnabled(false);
         this.add(new JLabel("Numero mínimo de carreteras: "));
         nCarreteras = new JTextField(4);
         nCarreteras.setText(Integer.toString(numCarreteras));
@@ -24,13 +23,13 @@ public class NPoblacionesPanel extends JPanel {
     public int getNPoblaciones() {
         try {
             if (Integer.parseInt(nPoblaciones.getText()) < 2) {
-                JOptionPane.showMessageDialog(this, "El valor debe ser mayor o igual a 2.", "Valor incorrecto", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "El valor debe ser mayor o igual a 2.\nSe tomará el valor por defecto 20", "Valor incorrecto", JOptionPane.ERROR_MESSAGE);
                 return 20;
             }
             return Integer.parseInt(nPoblaciones.getText());
         } catch (Exception e) {
             // Notificar mediante pop-up el error
-            JOptionPane.showMessageDialog(this, "El valor debe ser numérico entero.", "Valor incorrecto", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El valor debe ser numérico entero.\nSe tomará el valor por defecto 20", "Valor incorrecto", JOptionPane.ERROR_MESSAGE);
             return 20;
         }
     }
@@ -38,13 +37,13 @@ public class NPoblacionesPanel extends JPanel {
     public int getNCarreteras() {
         try {
             if (Integer.parseInt(nCarreteras.getText()) < 2) {
-                JOptionPane.showMessageDialog(this, "El valor debe ser mayor o igual a 2.", "Valor incorrecto", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "El valor debe ser mayor o igual a 2.\nSe tomará el valor por defecto 5", "Valor incorrecto", JOptionPane.ERROR_MESSAGE);
                 return 5;
             }
             return Integer.parseInt(nCarreteras.getText());
         } catch (Exception e) {
             // Notificar mediante pop-up el error
-            JOptionPane.showMessageDialog(this, "El valor debe ser numérico entero.", "Valor incorrecto", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El valor debe ser numérico entero.\nSe tomará el valor por defecto 5", "Valor incorrecto", JOptionPane.ERROR_MESSAGE);
             return 5;
         }
     }
