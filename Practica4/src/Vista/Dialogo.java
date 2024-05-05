@@ -93,6 +93,7 @@ public class Dialogo extends JDialog implements ActionListener {
                 prog.getVista().resetPanelIndice();
             } else if (interior instanceof XMLPanel) {
                 prog.getModelo().notificar(NotiEnum.SETXML, ((XMLPanel) interior).getPathXML());
+                prog.getVista().resetPanelIndice();
             } else {
                 System.out.println(typePanel.getTipo());
                 Algoritmo algoritmo = Objects.equals(typePanel.getTipo(), "Dijkstra") ? Algoritmo.DIJKSTRA : Algoritmo.PRIM;
