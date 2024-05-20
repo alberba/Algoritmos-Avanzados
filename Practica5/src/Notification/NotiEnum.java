@@ -1,0 +1,5 @@
+package Notification;
+
+public enum NotiEnum {
+    INICIAR, SETDICCIONARIO, SETALGORITMO, RESETGRAFO, SETDICPATH, SETPREDOMINANTE
+}
