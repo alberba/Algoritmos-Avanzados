@@ -18,6 +18,7 @@ public class PanelGrafico extends JTextPane {
         this.setPreferredSize(new Dimension(anchura, altura));
         this.setEditable(true);
         this.setText(p.getModelo().getTexto().getTextoOriginal());
+        this.setFont(new Font("Roboto", Font.PLAIN, 25));
     }
 
     @Override

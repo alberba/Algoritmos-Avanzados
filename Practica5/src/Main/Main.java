@@ -12,7 +12,7 @@ import java.util.*;
 
 public class Main implements Notificacion {
     private final Vista vista;
-    private final Modelo modelo;
+    private Modelo modelo;
     private Controlador controlador;
     private ArrayList<String> diccionario;
 
@@ -35,10 +35,10 @@ public class Main implements Notificacion {
     @Override
     public void notificar(NotiEnum s, Object o) {
         switch (s) {
-            case INICIAR:
+            case DETIDIOMA:
                 controlador = new Controlador(this);
-                controlador.run();
-                //vista.resetPanel();
+                this.modelo = new Modelo(this, (String) o);
+                controlador.detectarIdioma(modelo.getTexto().getTexto());
                 break;
             default:
                 break;

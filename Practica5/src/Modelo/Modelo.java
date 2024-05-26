@@ -20,6 +20,17 @@ public class Modelo implements Notificacion {
         diccionarios = new ParserDic(new String[]{"ca.dic", "es_ES.dic", "en_GB.dic"}).parse();
     }
 
+    /**
+     * Constructor objeto Modelo
+     * @param p Objeto Main
+     * @param texto Texto modelo
+     */
+    public Modelo(Main p, String texto) {
+        this.prog = p;
+        this.texto = new Texto(texto);
+        diccionarios = new ParserDic(new String[]{"ca.dic", "es_ES.dic", "en_GB.dic"}).parse();
+    }
+
     public ArrayList<Diccionario> getDiccionarios() {
         return diccionarios;
     }
