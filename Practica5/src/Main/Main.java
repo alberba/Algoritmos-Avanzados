@@ -35,10 +35,10 @@ public class Main implements Notificacion {
     @Override
     public void notificar(NotiEnum s, Object o) {
         switch (s) {
-            case DETIDIOMA:
+            case INICIAR:
                 controlador = new Controlador(this);
                 this.modelo = new Modelo(this, (String) o);
-                controlador.detectarIdioma(modelo.getTexto().getTexto());
+                controlador.run();
                 break;
             default:
                 break;

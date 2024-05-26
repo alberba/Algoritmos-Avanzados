@@ -47,6 +47,14 @@ public class Modelo implements Notificacion {
         return texto;
     }
 
+    public Diccionario getDiccionario(Idioma idioma) {
+        return switch (idioma) {
+            case CAT -> diccionarios.get(0);
+            case ESP -> diccionarios.get(1);
+            case ING -> diccionarios.get(2);
+        };
+    }
+
     @Override
     public void notificar(NotiEnum s, Object message) {
         switch (s) {

@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class Vista extends JFrame implements ActionListener {
 
     private final Main prog;
-    private final JButton detButton, ficheroButton;
+    private final JButton iniciaButton, ficheroButton;
     private final PanelGrafico panel;
 
     public Vista(String title, Main p) {
@@ -27,9 +27,9 @@ public class Vista extends JFrame implements ActionListener {
 
         // INSERCIÓN DE BOTONES
         JPanel buttons = new JPanel();
-        detButton = new JButton("Detectar Idioma");
-        detButton.addActionListener(this);
-        buttons.add(detButton);
+        iniciaButton = new JButton("Comprobar texto");
+        iniciaButton.addActionListener(this);
+        buttons.add(iniciaButton);
         ficheroButton = new JButton("Abrir fichero");
         ficheroButton.addActionListener(this);
         buttons.add(ficheroButton);
@@ -61,8 +61,8 @@ public class Vista extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == detButton) {
-            prog.notificar(NotiEnum.DETIDIOMA, panel.getText());
+        if (e.getSource() == iniciaButton) {
+            prog.notificar(NotiEnum.INICIAR, panel.getText());
         } else if (e.getSource() == ficheroButton) {
             JFileChooser fileChooser = new JFileChooser();
             // El directorio inicial por defecto será la carpeta del proyecto
