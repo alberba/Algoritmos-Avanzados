@@ -127,10 +127,6 @@ public class Controlador implements Notificacion {
         return matrizDistancias[palabra1.length()][palabra2.length()];
     }
 
-    private int min(int a, int b, int c) {
-        return Math.min(a, Math.min(b, c));
-    }
-
     @Override
     public void notificar(NotiEnum s, Object message) {
         switch (s) {

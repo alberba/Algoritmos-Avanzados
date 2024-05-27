@@ -53,6 +53,10 @@ public class Modelo implements Notificacion {
         return correcciones;
     }
 
+    public void resetCorrecciones() {
+        correcciones = null;
+    }
+
     public Diccionario getDiccionario(Idioma idioma) {
         return switch (idioma) {
             case CAT -> diccionarios.get(0);
@@ -71,7 +75,7 @@ public class Modelo implements Notificacion {
                 @SuppressWarnings("unchecked")
                 TreeMap<String, ArrayList<Candidato>> correcciones = (TreeMap<String, ArrayList<Candidato>>) message;
                 this.correcciones = correcciones;
-                prog.getVista().repaint();
+                prog.getVista().resetTextPane();
                 break;
             case CORREGIR:
                 String palabraOriginal = ((String) message).split("\\$")[0];

@@ -2,8 +2,8 @@ package Vista;
 
 
 import Main.Main;
+import Modelo.Candidato;
 import Notification.NotiEnum;
-import Notification.Notificacion;
 
 import javax.swing.*;
 
@@ -12,8 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Vista extends JFrame implements ActionListener {
 
@@ -61,8 +63,10 @@ public class Vista extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    public void resetPanel() {
+    public void resetTextPane() {
+        panel.setModelo(prog.getModelo());
         panel.repaint();
+        panel.revalidate();
     }
 
     @Override
@@ -77,11 +81,20 @@ public class Vista extends JFrame implements ActionListener {
             if (returnValue == JFileChooser.APPROVE_OPTION) {
                 // Se ha escogido un fichero
                 panel.setText(leerFichero(fileChooser.getSelectedFile()));
+                prog.getModelo().resetCorrecciones();
+                resetTextPane();
             }
         } else if (e.getSource() == correccionButton) {
             if (Objects.equals(prog.getModelo().getTexto().getTextoOriginal(), panel.getText())) {
-                CorreccionPanel correccionPanel = new CorreccionPanel(prog.getModelo().getCorrecciones(), prog);
-                correccionPanel.mostrar();
+                TreeMap<String, ArrayList<Candidato>> correcciones = prog.getModelo().getCorrecciones();
+                if (correcciones == null) {
+                    JOptionPane.showMessageDialog(this, "No hay palabras incorrectas", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                CorreccionPanel dialog = new CorreccionPanel(correcciones, prog, this);
+                if (dialog.hayPalabrasIncorrectas()) {
+                    dialog.mostrar();
+                }
             }
         }
     }

@@ -12,7 +12,7 @@ import java.util.TreeMap;
 
 public class PanelGrafico extends JTextPane {
 
-    private final Modelo modelo;
+    private Modelo modelo;
     private static final int anchura = 1200;
     private static final int altura = 1000;
 
@@ -27,7 +27,6 @@ public class PanelGrafico extends JTextPane {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        this.setBackground(Color.WHITE);
 
         // Definimos el subrayado
         SimpleAttributeSet highlightStyle = new SimpleAttributeSet();
@@ -38,7 +37,7 @@ public class PanelGrafico extends JTextPane {
         // Comprueba si ya hay correcciones asignadas
         if (correcciones != null) {
             StyledDocument doc = this.getStyledDocument();
-            String[] palabras = this.getText().split(" ");
+            String[] palabras = this.getText().toLowerCase().split("(\\s|\\.|,|\n)+");
             int pos = 0;
             for (String palabra : palabras) {
                 if (correcciones.containsKey(palabra)) {
@@ -47,14 +46,20 @@ public class PanelGrafico extends JTextPane {
                     doc.setCharacterAttributes(pos, wordLength, highlightStyle, false);
                 }
                 // +1 para saltar el espacio
-                pos += palabra.length() + 1;
+                if((pos + palabra.length() < this.getText().length()) && (this.getText().charAt(pos + palabra.length()) == ' '))
+                    pos += palabra.length() + 1;
+                else
+                    pos += palabra.length() + 2;
             }
         }
     }
 
+    public void setModelo(Modelo modelo) {
+        this.modelo = modelo;
+    }
+
     public void setTexto(String texto) {
         this.setText(texto);
-        this.repaint();
     }
 
     @Override
@@ -65,7 +70,7 @@ public class PanelGrafico extends JTextPane {
     @Override
     public void repaint() {
         super.repaint();
+        this.revalidate();
     }
-
 
 }
