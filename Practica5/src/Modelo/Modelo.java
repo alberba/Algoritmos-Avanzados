@@ -74,12 +74,11 @@ public class Modelo implements Notificacion {
                 prog.getVista().repaint();
                 break;
             case CORREGIR:
-                    ArrayList<String> palabras = (ArrayList<String>) message;
-                    if (palabras.size() == 2) {
-                        String palabraOriginal = palabras.get(0);
-                        String palabraCorregida = palabras.get(1);
-                        texto.corregirPalabra(palabraOriginal, palabraCorregida);
-                    }
+                String palabraOriginal = ((String) message).split("\\$")[0];
+                String palabraCorregida = ((String) message).split("\\$")[1];
+
+                texto.cambiarPalabra(palabraOriginal, palabraCorregida);
+                prog.getVista().getPanel().setTexto(texto.getTextoOriginal());
 
                 break;
 

@@ -52,6 +52,11 @@ public class PanelGrafico extends JTextPane {
         }
     }
 
+    public void setTexto(String texto) {
+        this.setText(texto);
+        this.repaint();
+    }
+
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(anchura, altura);

@@ -25,16 +25,24 @@ public class Texto {
         return wordCounts;
     }
 
-    public void detectarIdioma() {
-
-    }
-
     public String getTextoOriginal() {
         return textoOriginal;
     }
 
     public TreeMap<String, Integer> getTexto() {
         return texto;
+    }
+
+    public void cambiarPalabra(String palabra1, String palabra2){
+        String regex = "\\b" + palabra1 + "\\b";
+        textoOriginal = textoOriginal.replaceFirst(regex, palabra2);
+        texto.merge(palabra2, 1, Integer::sum);
+
+        int count = texto.get(palabra1) - 1;
+        texto.put(palabra1, count);
+        if(count == 0){
+            texto.remove(palabra1);
+        }
     }
 
 }

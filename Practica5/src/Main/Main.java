@@ -36,8 +36,8 @@ public class Main implements Notificacion {
     public void notificar(NotiEnum s, Object o) {
         switch (s) {
             case INICIAR:
-                controlador = new Controlador(this);
                 this.modelo = new Modelo(this, (String) o);
+                controlador = new Controlador(this);
                 controlador.run();
                 break;
             default:

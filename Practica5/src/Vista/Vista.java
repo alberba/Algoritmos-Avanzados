@@ -3,6 +3,7 @@ package Vista;
 
 import Main.Main;
 import Notification.NotiEnum;
+import Notification.Notificacion;
 
 import javax.swing.*;
 
@@ -11,12 +12,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Vista extends JFrame implements ActionListener {
 
     private final Main prog;
-    private final JButton iniciaButton, ficheroButton;
+    private final JButton iniciaButton, ficheroButton, correccionButton;
     private final PanelGrafico panel;
 
     public Vista(String title, Main p) {
@@ -33,7 +35,11 @@ public class Vista extends JFrame implements ActionListener {
         ficheroButton = new JButton("Abrir fichero");
         ficheroButton.addActionListener(this);
         buttons.add(ficheroButton);
+        correccionButton = new JButton("Corregir");
+        correccionButton.addActionListener(this);
+        buttons.add(correccionButton);
         this.add(BorderLayout.NORTH, buttons);
+
 
         // INSERCIÓN DE PANEL
         panel = new PanelGrafico(p);
@@ -72,8 +78,14 @@ public class Vista extends JFrame implements ActionListener {
                 // Se ha escogido un fichero
                 panel.setText(leerFichero(fileChooser.getSelectedFile()));
             }
+        } else if (e.getSource() == correccionButton) {
+            if (Objects.equals(prog.getModelo().getTexto().getTextoOriginal(), panel.getText())) {
+                CorreccionPanel correccionPanel = new CorreccionPanel(prog.getModelo().getCorrecciones(), prog);
+                correccionPanel.mostrar();
+            }
         }
     }
+
 
     /**
      * Lee un fichero y devuelve su contenido en forma de String
@@ -92,5 +104,9 @@ public class Vista extends JFrame implements ActionListener {
             throw new RuntimeException(ex);
         }
         return texto.toString();
+    }
+
+    public PanelGrafico getPanel() {
+        return panel;
     }
 }
