@@ -10,10 +10,11 @@ import java.util.*;
 public class Controlador implements Notificacion {
 
     private final Modelo modelo;
-    private String pathDic;
+    private final Main main;
 
     public Controlador(Main p) {
         modelo = p.getModelo();
+        main = p;
     }
 
     public void run() {
@@ -62,6 +63,8 @@ public class Controlador implements Notificacion {
             candidatos.sort(Comparator.comparingInt(Candidato::getDistancia));
             correcciones.put(palabra, candidatos);
         }
+
+        modelo.notificar(NotiEnum.CORRECIONES, correcciones);
     }
 
     /**
@@ -131,9 +134,6 @@ public class Controlador implements Notificacion {
     @Override
     public void notificar(NotiEnum s, Object message) {
         switch (s) {
-            case SETDICPATH:
-                pathDic = (String) message;
-                break;
             default:
                 break;
         }

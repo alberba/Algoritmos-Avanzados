@@ -13,7 +13,7 @@ public class Texto {
 
     public TreeMap<String, Integer> textoToTreeMap(String texto) {
         TreeMap<String, Integer> wordCounts = new TreeMap<>();
-        String[] words = texto.toLowerCase().split("\\W+");
+        String[] words = texto.toLowerCase().split("");
 
         for (String word : words) {
             if (wordCounts.containsKey(word)) {

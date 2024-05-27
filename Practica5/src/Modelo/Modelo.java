@@ -6,6 +6,7 @@ import Notification.NotiEnum;
 import Notification.Notificacion;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class Modelo implements Notificacion {
     private final Main prog;
@@ -13,6 +14,7 @@ public class Modelo implements Notificacion {
     private ArrayList<Diccionario> diccionarios; // 0: catalan, 1: español 2: inglés
     private Texto texto;
     private Idioma idiomaPredominante;
+    private TreeMap<String, ArrayList<Candidato>> correcciones;
 
     public Modelo (Main p) {
         this.prog = p;
@@ -47,6 +49,10 @@ public class Modelo implements Notificacion {
         return texto;
     }
 
+    public TreeMap<String, ArrayList<Candidato>> getCorrecciones() {
+        return correcciones;
+    }
+
     public Diccionario getDiccionario(Idioma idioma) {
         return switch (idioma) {
             case CAT -> diccionarios.get(0);
@@ -61,6 +67,22 @@ public class Modelo implements Notificacion {
             case SETPREDOMINANTE:
                 setPredominante((Idioma) message);
                 break;
+            case CORRECIONES:
+                @SuppressWarnings("unchecked")
+                TreeMap<String, ArrayList<Candidato>> correcciones = (TreeMap<String, ArrayList<Candidato>>) message;
+                this.correcciones = correcciones;
+                prog.getVista().repaint();
+                break;
+            case CORREGIR:
+                    ArrayList<String> palabras = (ArrayList<String>) message;
+                    if (palabras.size() == 2) {
+                        String palabraOriginal = palabras.get(0);
+                        String palabraCorregida = palabras.get(1);
+                        texto.corregirPalabra(palabraOriginal, palabraCorregida);
+                    }
+
+                break;
+
         }
     }
 }

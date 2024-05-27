@@ -4,8 +4,11 @@ import Main.Main;
 import Modelo.*;
 
 import javax.swing.*;
+import javax.swing.text.*;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class PanelGrafico extends JTextPane {
 
@@ -26,6 +29,27 @@ public class PanelGrafico extends JTextPane {
         super.paintComponent(g);
         this.setBackground(Color.WHITE);
 
+        // Definimos el subrayado
+        SimpleAttributeSet highlightStyle = new SimpleAttributeSet();
+        StyleConstants.setUnderline(highlightStyle, true);
+        StyleConstants.setForeground(highlightStyle, Color.RED);
+
+        TreeMap<String, ArrayList<Candidato>> correcciones = modelo.getCorrecciones();
+        // Comprueba si ya hay correcciones asignadas
+        if (correcciones != null) {
+            StyledDocument doc = this.getStyledDocument();
+            String[] palabras = this.getText().split(" ");
+            int pos = 0;
+            for (String palabra : palabras) {
+                if (correcciones.containsKey(palabra)) {
+                    int wordLength = palabra.length();
+                    // Subrayamos la palabra
+                    doc.setCharacterAttributes(pos, wordLength, highlightStyle, false);
+                }
+                // +1 para saltar el espacio
+                pos += palabra.length() + 1;
+            }
+        }
     }
 
     @Override
