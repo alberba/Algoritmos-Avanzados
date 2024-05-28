@@ -1,5 +1,5 @@
 package Modelo;
 
 public enum Idioma {
-    ESP, CAT, ING
+    CAT, ESP, ING
 }

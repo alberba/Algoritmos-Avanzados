@@ -71,6 +71,7 @@ public class Vista extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == iniciaButton) {
+            panel.resetStyle();
             prog.notificar(NotiEnum.INICIAR, panel.getText());
         } else if (e.getSource() == ficheroButton) {
             JFileChooser fileChooser = new JFileChooser();

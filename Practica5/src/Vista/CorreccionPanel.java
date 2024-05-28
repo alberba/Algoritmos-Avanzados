@@ -82,6 +82,8 @@ public class CorreccionPanel extends JDialog implements ActionListener {
             this.notificar();
             // Muestra la siguiente palabra incorrecta si hay
             if (!palabrasIncorrectasOrdenadas.isEmpty()) {
+                this.remove(label);
+                this.remove(comboBox);
                 mostrarCorreccion(palabrasIncorrectasOrdenadas.remove(0));
             } else {
                 JOptionPane.showMessageDialog(this, "No hay más palabras por corregir", "Error", JOptionPane.ERROR_MESSAGE);

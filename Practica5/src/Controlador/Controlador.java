@@ -75,7 +75,7 @@ public class Controlador {
         ArrayList<String> palabrasDic = diccionario.getDiccionario();
 
         // Inicialización a infinito
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             similitudes.add(new Candidato("", Integer.MAX_VALUE));
         }
         // Recorrido del diccionario

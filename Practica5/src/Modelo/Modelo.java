@@ -17,7 +17,7 @@ public class Modelo implements Notificacion {
 
     public Modelo (Main p) {
         this.prog = p;
-        texto = new Texto("Today es un día Jorge day gay crec que no és possible anar a cercar el coche it is not possible");
+        texto = new Texto("Hola, esto es un txto de prueva. El progrma se va a enkarga d corrjir ls errores de ortografía.");
         diccionarios = new ParserDic(new String[]{"ca.dic", "es_ES.dic", "en_GB.dic"}).parse();
     }
 

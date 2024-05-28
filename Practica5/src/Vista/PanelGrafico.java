@@ -67,6 +67,19 @@ public class PanelGrafico extends JTextPane {
         return new Dimension(anchura, altura);
     }
 
+    public void resetStyle() {
+        // Crear un nuevo SimpleAttributeSet sin ningún estilo
+        SimpleAttributeSet defaultStyle = new SimpleAttributeSet();
+        StyleConstants.setUnderline(defaultStyle, false);
+        StyleConstants.setForeground(defaultStyle, Color.BLACK);
+
+        // Obtener el StyledDocument
+        StyledDocument doc = this.getStyledDocument();
+
+        // Aplicar el estilo predeterminado a todo el texto
+        doc.setCharacterAttributes(0, this.getText().length(), defaultStyle, true);
+    }
+
     @Override
     public void repaint() {
         super.repaint();
