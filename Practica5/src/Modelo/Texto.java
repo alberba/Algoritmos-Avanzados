@@ -1,15 +1,23 @@
 package Modelo;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 public class Texto {
-    private TreeMap<String, Integer> texto;
+    private final TreeMap<String, Integer> texto;
     private String textoOriginal;
 
     public Texto(String texto) {
         this.texto = textoToTreeMap(texto);
         this.textoOriginal = texto;
+    }
+
+    public Texto(File fichero) {
+        this.textoOriginal = leerFichero(fichero);
+        this.texto = textoToTreeMap(textoOriginal);
     }
 
     public TreeMap<String, Integer> textoToTreeMap(String texto) {
@@ -48,6 +56,28 @@ public class Texto {
 
         // Actualiza el TreeMap. En caso de que exista, se le suma 1 a la palabra2, si no, se añade
         texto.merge(palabra2, 1, Integer::sum);
+    }
+
+    /**
+     * Lee un fichero y devuelve su contenido en forma de String
+     * @param fichero Fichero a leer
+     * @return Contenido del fichero
+     */
+    public String leerFichero(File fichero) {
+        if (!fichero.getName().split("\\.")[1].equals("txt")) {
+            return "Fichero incorrecto. Selecciona un fichero .txt";
+        }
+        StringBuilder texto = new StringBuilder();
+        try {
+            Scanner myReader = new Scanner(fichero);
+            while (myReader.hasNextLine()) {
+                texto.append(myReader.nextLine()).append("\n");
+            }
+            myReader.close();
+        } catch (FileNotFoundException ex) {
+            throw new RuntimeException(ex);
+        }
+        return texto.toString();
     }
 
 }

@@ -14,7 +14,6 @@ public class Main implements Notificacion {
     private final Vista vista;
     private Modelo modelo;
     private Controlador controlador;
-    private ArrayList<String> diccionario;
 
     public Main() {
         this.modelo = new Modelo(this);
@@ -25,7 +24,7 @@ public class Main implements Notificacion {
     }
 
     public static void main(String[] args) {
-        //Mesurament24.mesura();
+        Mesurament24.mesura();
         new Main();
     }
 
@@ -34,14 +33,10 @@ public class Main implements Notificacion {
 
     @Override
     public void notificar(NotiEnum s, Object o) {
-        switch (s) {
-            case INICIAR:
-                this.modelo = new Modelo(this, (String) o);
-                controlador = new Controlador(this);
-                controlador.run();
-                break;
-            default:
-                break;
+        if (Objects.requireNonNull(s) == NotiEnum.INICIAR) {
+            this.modelo = new Modelo(this, (String) o);
+            controlador = new Controlador(this);
+            controlador.run();
         }
     }
 

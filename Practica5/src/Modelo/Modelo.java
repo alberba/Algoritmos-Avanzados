@@ -10,9 +10,8 @@ import java.util.TreeMap;
 
 public class Modelo implements Notificacion {
     private final Main prog;
-    private static final int NDICCIONARIOS = 3;
-    private ArrayList<Diccionario> diccionarios; // 0: catalan, 1: español 2: inglés
-    private Texto texto;
+    private final ArrayList<Diccionario> diccionarios; // 0: catalan, 1: español 2: inglés
+    private final Texto texto;
     private Idioma idiomaPredominante;
     private TreeMap<String, ArrayList<Candidato>> correcciones;
 

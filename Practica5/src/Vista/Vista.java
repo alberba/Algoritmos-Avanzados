@@ -3,6 +3,7 @@ package Vista;
 
 import Main.Main;
 import Modelo.Candidato;
+import Modelo.Texto;
 import Notification.NotiEnum;
 
 import javax.swing.*;
@@ -11,10 +12,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Vista extends JFrame implements ActionListener {
@@ -80,7 +79,8 @@ public class Vista extends JFrame implements ActionListener {
             int returnValue = fileChooser.showOpenDialog(null);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
                 // Se ha escogido un fichero
-                panel.setText(leerFichero(fileChooser.getSelectedFile()));
+
+                panel.setText(new Texto(fileChooser.getSelectedFile()).getTextoOriginal());
                 prog.getModelo().resetCorrecciones();
                 resetTextPane();
             }
@@ -97,26 +97,6 @@ public class Vista extends JFrame implements ActionListener {
                 }
             }
         }
-    }
-
-
-    /**
-     * Lee un fichero y devuelve su contenido en forma de String
-     * @param fichero Fichero a leer
-     * @return Contenido del fichero
-     */
-    public String leerFichero(File fichero) {
-        StringBuilder texto = new StringBuilder();
-        try {
-            Scanner myReader = new Scanner(fichero);
-            while (myReader.hasNextLine()) {
-                texto.append(myReader.nextLine()).append("\n");
-            }
-            myReader.close();
-        } catch (FileNotFoundException ex) {
-            throw new RuntimeException(ex);
-        }
-        return texto.toString();
     }
 
     public PanelGrafico getPanel() {

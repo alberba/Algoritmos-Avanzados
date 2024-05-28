@@ -3,18 +3,15 @@ package Controlador;
 import Main.Main;
 import Modelo.*;
 import Notification.NotiEnum;
-import Notification.Notificacion;
 
 import java.util.*;
 
-public class Controlador implements Notificacion {
+public class Controlador {
 
     private final Modelo modelo;
-    private final Main main;
 
     public Controlador(Main p) {
         modelo = p.getModelo();
-        main = p;
     }
 
     public void run() {
@@ -125,13 +122,5 @@ public class Controlador implements Notificacion {
 
         // Devolver la distancia de Levenshtein para las cadenas completas, que es el valor en la esquina inferior derecha de la matriz
         return matrizDistancias[palabra1.length()][palabra2.length()];
-    }
-
-    @Override
-    public void notificar(NotiEnum s, Object message) {
-        switch (s) {
-            default:
-                break;
-        }
     }
 }
