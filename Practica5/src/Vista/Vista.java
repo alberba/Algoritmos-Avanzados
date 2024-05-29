@@ -1,6 +1,5 @@
 package Vista;
 
-
 import Main.Main;
 import Modelo.Candidato;
 import Modelo.Texto;
@@ -65,6 +64,7 @@ public class Vista extends JFrame implements ActionListener {
     public void resetTextPane() {
         panel.setModelo(prog.getModelo());
         panel.repaint();
+        panel.resetStyle();
         panel.revalidate();
     }
 
