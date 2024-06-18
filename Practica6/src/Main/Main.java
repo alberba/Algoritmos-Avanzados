@@ -1,6 +1,7 @@
 package Main;
 
 import Controlador.Controlador;
+import Controlador.Factorizador;
 import Modelo.Modelo;
 import Notification.NotiEnum;
 import Notification.Notificacion;
@@ -20,7 +21,6 @@ public class Main implements Notificacion {
         vista = new Vista("Algoritmos probabilistas", this);
         vista.mostrar();
         controlador = new Controlador(this);
-        controlador.run();
     }
 
     public static void main(String[] args) {
@@ -33,10 +33,11 @@ public class Main implements Notificacion {
 
     @Override
     public void notificar(NotiEnum s, Object o) {
-        if (Objects.requireNonNull(s) == NotiEnum.INICIAR) {
-            this.modelo = new Modelo(this, (String) o);
+        if(NotiEnum.FACTORIZAR == s){
+            modelo.notificar(NotiEnum.FACTORIZAR, o);
             controlador = new Controlador(this);
-            controlador.run();
+            Factorizador factorizador = new Factorizador(controlador);
+            factorizador.factorizar((String) o);
         }
     }
 

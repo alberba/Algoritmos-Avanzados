@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class Vista extends JFrame implements ActionListener {
 
     private final Main prog;
-    private final JButton iniciaButton, ficheroButton, correccionButton;
+    private final JButton factorizarButton, claveRSAButton, encriptarButton, desencriptarButton;
     private final PanelGrafico panel;
 
     public Vista(String title, Main p) {
@@ -22,15 +22,18 @@ public class Vista extends JFrame implements ActionListener {
 
         // INSERCIÓN DE BOTONES
         JPanel buttons = new JPanel();
-        iniciaButton = new JButton("Comprobar texto");
-        iniciaButton.addActionListener(this);
-        buttons.add(iniciaButton);
-        ficheroButton = new JButton("Abrir fichero");
-        ficheroButton.addActionListener(this);
-        buttons.add(ficheroButton);
-        correccionButton = new JButton("Corregir");
-        correccionButton.addActionListener(this);
-        buttons.add(correccionButton);
+        factorizarButton = new JButton("Factorizar");
+        factorizarButton.addActionListener(this);
+        buttons.add(factorizarButton);
+        claveRSAButton = new JButton("Generador clave RSA");
+        claveRSAButton.addActionListener(this);
+        buttons.add(claveRSAButton);
+        encriptarButton = new JButton("Encriptar fichero");
+        encriptarButton.addActionListener(this);
+        buttons.add(encriptarButton);
+        desencriptarButton = new JButton("Desencriptar fichero");
+        desencriptarButton.addActionListener(this);
+        buttons.add(desencriptarButton);
         this.add(BorderLayout.NORTH, buttons);
 
 
@@ -62,11 +65,11 @@ public class Vista extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == iniciaButton) {
+        if (e.getSource() == factorizarButton) {
+            FactorizarDialogo factorizarDialogo = new FactorizarDialogo(prog, "2305843009213693951");
+        } else if (e.getSource() == claveRSAButton) {
 
-        } else if (e.getSource() == ficheroButton) {
-
-        } else if (e.getSource() == correccionButton) {
+        } else if (e.getSource() == encriptarButton) {
 
         }
     }
