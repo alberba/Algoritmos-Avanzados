@@ -82,7 +82,7 @@ public class Controlador {
                 if ((res.compareTo(ONE) == 0) || (res.compareTo(num.subtract(ONE)) == 0)) { // mod == 1 o -1 (n-1)
                     return true;
                 }
-                /*
+
                 res = a.modPow(dCandidato, ONE); // x = a^d, uso modPow(d, 1) porque no existe a.pow(BigInteger)
                 //BigInteger a2 = a.pow(2);
                 // Se recorren las posibles r (0 < r < s; r = 0 ya se ha comprobado) hasta encontrar una posibilidad
@@ -94,7 +94,7 @@ public class Controlador {
                         return true;
                     }
                 }
-                */
+                /*
 
                 BigInteger i;
                 for (i = new BigInteger("0"); (i.compareTo(s.subtract(ONE)) == -1); i = i.add(ONE)) {
@@ -104,6 +104,8 @@ public class Controlador {
                         return true;
                     }
                 }
+
+                 */
 
             }
         }

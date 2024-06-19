@@ -7,8 +7,7 @@ import java.math.BigInteger;
 import java.util.Random;
 
 public class Modelo implements Notificacion {
-    private int bitLength = 1995;
-    private BigInteger expPrivado,expPublico,Modulo;
+    private BigInteger expPrivado, expPublico, Modulo;
     private Random random = new Random();
     private final Main prog;
 
@@ -20,16 +19,16 @@ public class Modelo implements Notificacion {
         this.prog = p;
     }
 
-    public int getBitLength(){
-        return bitLength;
+    public int getBitLength() {
+        return 1995;
     }
-    public void setExpPrivado( BigInteger expPriv){
-        this.expPrivado=expPriv;
+    public void setExpPrivado(BigInteger expPriv){
+        this.expPrivado = expPriv;
     }
-    public void setExpPublico( BigInteger expPubli){
-        this.expPublico=expPubli;
+    public void setExpPublico(BigInteger expPubli){
+        this.expPublico = expPubli;
     }
-    public void setModulo( BigInteger modul){
+    public void setModulo(BigInteger modul){
         this.Modulo=modul;
     }
 

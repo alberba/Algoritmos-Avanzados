@@ -32,8 +32,9 @@ public class Factorizador extends Thread {
         BigInteger num = new BigInteger(n);
         BigInteger zero = new BigInteger("0");
         BigInteger dos = new BigInteger("2");
+        BigInteger tres = new BigInteger("3");
         BigInteger uno = new BigInteger("1");
-        BigInteger test = new BigInteger("3");
+        BigInteger test = new BigInteger("5");
         TreeMap<BigInteger, Integer> factores = new TreeMap<>();
         vista.notificar(NotiEnum.ADDOUTPUT, "Voy a factorizar " + num + "\n");
         vista.notificar(NotiEnum.ADDOUTPUT, "Estimación de tiempo: " + polinomioNewton(n.length()) + " segundos\n");
@@ -43,6 +44,11 @@ public class Factorizador extends Thread {
         while (num.remainder(dos).compareTo(zero) == 0) {
             num = num.divide(dos);
             factores.put(dos, factores.getOrDefault(dos, 0) + 1);
+        }
+        // De igual forma mientras sea múltiplo de 3
+        while (factor3(num)) {
+            num = num.divide(tres);
+            factores.put(tres, factores.getOrDefault(tres, 0) + 1);
         }
 
         // Mientras el test sea menor o igual que el resto por factorizar
@@ -67,6 +73,21 @@ public class Factorizador extends Thread {
             vista.notificar(NotiEnum.ADDOUTPUT, "   factor -------> " + factor + "  (x" + factores.get(factor) + ")\n");
         }
         vista.notificar(NotiEnum.ADDOUTPUT, "He tardado " + temps + " nanosec\n");
+    }
+
+    /**
+     * Devuelve true si el valor es divisible por 3,
+     * lo es cuando la suma de sus dígitos da un múltiplo de 3
+     * @param num
+     * @return
+     */
+    private boolean factor3(BigInteger num) {
+        // Se recorren los dígitos de num y se suman
+        int suma = 0;
+        for (char c : num.toString().toCharArray()) {
+            suma += c - '0';
+        }
+        return suma % 3 == 0;
     }
 
     private double polinomioNewton(int n) {   // Estimación de un polinomio aproximado en segundos
