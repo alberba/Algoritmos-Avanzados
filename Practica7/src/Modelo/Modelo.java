@@ -6,10 +6,6 @@ import Notification.Notificacion;
 import java.math.BigInteger;
 import java.util.Random;
 
-
-import java.util.ArrayList;
-import java.util.TreeMap;
-
 public class Modelo implements Notificacion {
     private int bitLength = 1995;
     private BigInteger expPrivado,expPublico,Modulo;
@@ -37,15 +33,13 @@ public class Modelo implements Notificacion {
         this.Modulo=modul;
     }
 
-
-
     @Override
     public void notificar(NotiEnum s, Object message) {
         switch (s) {
             case SETCLAVES:
                 this.setExpPrivado(((BigInteger)message) );
-                this.setExpPublico(message[1]);
-                this.setModulo(message[2]);
+                //this.setExpPublico(message[1]);
+                //this.setModulo(message[2]);
                 break;
 
         }

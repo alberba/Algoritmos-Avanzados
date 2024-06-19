@@ -1,5 +1,5 @@
 package Notification;
 
 public enum NotiEnum {
-    SETCLAVES, SETNUM, FACTORIZAR
+    SETCLAVES, SETNUM, ADDOUTPUT, FACTORIZAR
 }

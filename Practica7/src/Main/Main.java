@@ -36,8 +36,8 @@ public class Main implements Notificacion {
         if(NotiEnum.FACTORIZAR == s){
             modelo.notificar(NotiEnum.FACTORIZAR, o);
             controlador = new Controlador(this);
-            Factorizador factorizador = new Factorizador(controlador);
-            factorizador.factorizar((String) o);
+            Factorizador factorizador = new Factorizador(this, controlador, (String) o);
+            factorizador.start();
         }
     }
 

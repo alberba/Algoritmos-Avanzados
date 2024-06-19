@@ -1,6 +1,8 @@
 package Vista;
 
 import Main.Main;
+import Notification.NotiEnum;
+import Notification.Notificacion;
 
 import javax.swing.*;
 
@@ -8,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Vista extends JFrame implements ActionListener {
+public class Vista extends JFrame implements ActionListener, Notificacion {
 
     private final Main prog;
     private final JButton factorizarButton, claveRSAButton, encriptarButton, desencriptarButton;
@@ -57,16 +59,11 @@ public class Vista extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    public void resetTextPane() {
-        panel.setModelo(prog.getModelo());
-        panel.repaint();
-        panel.revalidate();
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == factorizarButton) {
             FactorizarDialogo factorizarDialogo = new FactorizarDialogo(prog, "2305843009213693951");
+            panel.setText("");
         } else if (e.getSource() == claveRSAButton) {
 
         } else if (e.getSource() == encriptarButton) {
@@ -76,5 +73,12 @@ public class Vista extends JFrame implements ActionListener {
 
     public PanelGrafico getPanel() {
         return panel;
+    }
+
+    @Override
+    public void notificar(NotiEnum s, Object message) {
+        if(s == NotiEnum.ADDOUTPUT){
+            panel.añadirTexto((String) message);
+        }
     }
 }

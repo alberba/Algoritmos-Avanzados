@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="80c815e6-b21c-44ec-83f9-0fd5ebc751c1" name="Changes" comment="Puesta en Marcha Práctica 6">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Mesurament24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Practica5.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Mesurament24.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controlador/Controlador.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controlador/Factorizador.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controlador/Hoffman.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Modelo/Modelo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Notification/NotiEnum.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Notification/Notificacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Vista/CorreccionPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Vista/FactorizarDialogo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Vista/PanelGrafico.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Vista/Vista.java" beforeDir="false" />
+    </list>
+    <list id="2e1e26ca-16ec-4c09-93bd-a44c23506831" name="Changes by Santi" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;alberba&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/alberba/Algoritmos-Avanzados.git&quot;,
+    &quot;accountId&quot;: &quot;d23b1913-a79e-41b7-8b3a-4dab1653cbf9&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2eaShwLzfZJMChCi39dt3soCV9F" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Albert/01. Proyectos/Algoritmos Avanzados/Código/Algoritmos-Avanzados/Practica7",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Albert\01. Proyectos\Algoritmos Avanzados\Código\Algoritmos-Avanzados\Practica4\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Albert\01. Proyectos\Algoritmos Avanzados\Código\Algoritmos-Avanzados\Practica5\src" />
+      <recent name="C:\Albert\UIB\Algoritmos-Avanzados\Practica3\src" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main.Main" />
+      <module name="Practica7" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Practica7" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Practica7" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="80c815e6-b21c-44ec-83f9-0fd5ebc751c1" name="Changes" comment="" />
+      <created>1712141320919</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1712141320919</updated>
+      <workItem from="1712141322028" duration="747000" />
+      <workItem from="1712158203830" duration="861000" />
+      <workItem from="1712743267571" duration="86000" />
+      <workItem from="1712743950216" duration="226000" />
+      <workItem from="1712744190400" duration="652000" />
+      <workItem from="1712745651896" duration="7830000" />
+      <workItem from="1712846816104" duration="6114000" />
+      <workItem from="1712853849781" duration="37000" />
+      <workItem from="1712853899180" duration="2499000" />
+      <workItem from="1712856932081" duration="588000" />
+      <workItem from="1713079476899" duration="3417000" />
+      <workItem from="1714834960009" duration="12573000" />
+      <workItem from="1714852302233" duration="3318000" />
+      <workItem from="1714933093144" duration="9367000" />
+      <workItem from="1714944526739" duration="748000" />
+      <workItem from="1716192161277" duration="8579000" />
+      <workItem from="1716736460037" duration="13336000" />
+      <workItem from="1716814811174" duration="301000" />
+      <workItem from="1716815133683" duration="27090000" />
+      <workItem from="1716846701742" duration="996000" />
+      <workItem from="1716903182697" duration="9959000" />
+      <workItem from="1716974000733" duration="824000" />
+      <workItem from="1718640576436" duration="23000" />
+      <workItem from="1718640616484" duration="1269000" />
+      <workItem from="1718643167259" duration="147000" />
+      <workItem from="1718701231566" duration="8891000" />
+      <workItem from="1718787987213" duration="12301000" />
+    </task>
+    <task id="LOCAL-00001" summary="ns">
+      <option name="closed" value="true" />
+      <created>1712745982699</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1712745982699</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Implementar parser de XML a objetos Poblacion">
+      <option name="closed" value="true" />
+      <created>1714744903140</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1714744903140</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Posible solución Dijkstra y Prim">
+      <option name="closed" value="true" />
+      <created>1714745015513</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1714745015513</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Avanzando">
+      <option name="closed" value="true" />
+      <created>1714842760237</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1714842760237</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Solucionamos Algoritmo Prim">
+      <option name="closed" value="true" />
+      <created>1714857433624</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1714857433624</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Comento Algoritmo Prim">
+      <option name="closed" value="true" />
+      <created>1714859627513</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1714859627513</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Finalizamos comentarios">
+      <option name="closed" value="true" />
+      <created>1714936092666</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1714936092666</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Finalizamos comentarios">
+      <option name="closed" value="true" />
+      <created>1714939372092</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1714939372092</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Finalizamos">
+      <option name="closed" value="true" />
+      <created>1714941970229</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1714941970229</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Finalizamos">
+      <option name="closed" value="true" />
+      <created>1714944647752</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1714944647752</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Primer commit Practica 5&#10;&#10;Co-authored-by: AdondeBoy &lt;106172989+adondeboy@users.noreply.github.com&gt;">
+      <option name="closed" value="true" />
+      <created>1716203674153</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1716203674153</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Cambios Vista">
+      <option name="closed" value="true" />
+      <created>1716743058679</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1716743058679</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Implementamos detección de fallos ortográficos&#10;&#10;Co-authored-by: AdondeBoy &lt;106172989+adondeboy@users.noreply.github.com&gt;">
+      <option name="closed" value="true" />
+      <created>1716751033869</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1716751033869</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Mostramos por la GUI las palabras incorrectas">
+      <option name="closed" value="true" />
+      <created>1716820227561</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1716820227561</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Mostramos por la GUI las palabras incorrectas">
+      <option name="closed" value="true" />
+      <created>1716820558206</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1716820558206</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Implementación corrección palabras">
+      <option name="closed" value="true" />
+      <created>1716827830326</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1716827830326</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Implementación corrección palabras">
+      <option name="closed" value="true" />
+      <created>1716847701280</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1716847701280</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Retocando cosas">
+      <option name="closed" value="true" />
+      <created>1716906477740</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1716906477740</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Retocando cosas">
+      <option name="closed" value="true" />
+      <created>1716913142590</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1716913142590</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Retocando cosas">
+      <option name="closed" value="true" />
+      <created>1716974114568</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1716974114568</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Puesta en Marcha Práctica 6">
+      <option name="closed" value="true" />
+      <created>1718640966006</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1718640966006</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Primeros cambios">
+      <option name="closed" value="true" />
+      <created>1718710680547</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1718710680547</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Cambio Estructura archivos" />
+    <MESSAGE value="ns" />
+    <MESSAGE value="Creamos Práctica 4" />
+    <MESSAGE value="Implementar parser de XML a objetos Poblacion" />
+    <MESSAGE value="Posible solución Dijkstra y Prim" />
+    <MESSAGE value="Avanzando" />
+    <MESSAGE value="Solucionamos Algoritmo Prim" />
+    <MESSAGE value="Comento Algoritmo Prim" />
+    <MESSAGE value="Finalizamos comentarios" />
+    <MESSAGE value="Finalizamos" />
+    <MESSAGE value="Primer commit Practica 5&#10;&#10;Co-authored-by: AdondeBoy &lt;106172989+adondeboy@users.noreply.github.com&gt;" />
+    <MESSAGE value="Cambios Vista" />
+    <MESSAGE value="Changes by Santi" />
+    <MESSAGE value="Implementamos detección de fallos ortográficos&#10;&#10;Co-authored-by: AdondeBoy &lt;106172989+adondeboy@users.noreply.github.com&gt;" />
+    <MESSAGE value="Mostramos por la GUI las palabras incorrectas" />
+    <MESSAGE value="Changes by rmart" />
+    <MESSAGE value="Implementación corrección palabras" />
+    <MESSAGE value="Retocando cosas" />
+    <MESSAGE value="Puesta en Marcha Práctica 6" />
+    <MESSAGE value="Primeros cambios" />
+    <option name="LAST_COMMIT_MESSAGE" value="Primeros cambios" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Vista/CorreccionPanel.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="((Modelo.Candidato)((java.util.ArrayList)((TreeMap.Entry)correcciones.entrySet().toArray()[0]).getValue()).get(1)).distancia" custom="java.util.TreeMap.Entry,Modelo.Candidato,java.util.ArrayList" />
+        <watch expression="correcciones.entrySet().toArray()[0]" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>

@@ -43,8 +43,8 @@ public class FactorizarDialogo extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == okButton) {
             String num = ((JTextField) ((JPanel) this.getContentPane().getComponent(0)).getComponent(1)).getText();
-            prog.notificar(NotiEnum.FACTORIZAR, num);
             this.dispose();
+            prog.notificar(NotiEnum.FACTORIZAR, num);
         }
     }
 }

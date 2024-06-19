@@ -2,7 +2,7 @@ package Controlador;
 
 import java.util.*;
 
-public class Hoffman {
+public class Huffman {
 
     // Clase para almacenar nodos del árbol Huffman
     static class HuffmanNode implements Comparable<HuffmanNode> {

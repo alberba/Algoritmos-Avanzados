@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import java.awt.*;
 
-public class PanelGrafico extends JPanel {
+public class PanelGrafico extends JTextArea {
 
     private Modelo modelo;
     private static final int anchura = 1200;
@@ -16,6 +16,7 @@ public class PanelGrafico extends JPanel {
     public PanelGrafico(Main p) {
         modelo = p.getModelo();
         this.setPreferredSize(new Dimension(anchura, altura));
+        this.setEditable(false);
     }
 
     @Override
@@ -31,6 +32,10 @@ public class PanelGrafico extends JPanel {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(anchura, altura);
+    }
+
+    public void añadirTexto(String texto) {
+        this.append(texto);
     }
 
     @Override
