@@ -24,7 +24,6 @@ public class Factorizador extends Thread {
     public void run() {
         factorizar();
         if (modelo.getCifras().size() > 1) {
-            System.out.println("Entró en el if");
             vista.notificar(NotiEnum.PINTARGRAFICO, null);
         }
     }

@@ -17,7 +17,6 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
     private final Main prog;
     private final JButton factorizarButton, claveRSAButton, encriptarButton, desencriptarButton, comprimirFicheroButton;
     private final PanelGrafico panel;
-//    private final PanelGraficoDibujo panelDibujo;
 
     public Vista(String title, Main p) {
         super(title);
@@ -102,6 +101,9 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
             if (returnValue == JFileChooser.APPROVE_OPTION) {
                 // Se ha escogido un fichero
                 prog.notificar(NotiEnum.COMPRIMIR, fileChooser.getSelectedFile().getAbsolutePath());
+                // pop-up de confirmación
+                JOptionPane.showMessageDialog(null, "Fichero comprimido correctamente", "Fichero comprimido", JOptionPane.INFORMATION_MESSAGE);
+
             }
 
         }

@@ -36,18 +36,20 @@ public class PanelGraficoDibujo extends JPanel {
             // Escalas para los ejes
             //int margen = 10;
             int maxX = arrayCifras.stream().max(Integer::compareTo).get();
+            int minX = arrayCifras.stream().min(Integer::compareTo).get();
             long maxY = arrayTiempos.stream().max(Long::compareTo).get();
-            double scaleX = (double) this.getWidth() / maxX;
+
+            double scaleX = (double) this.getWidth() / (maxX - minX);
             double scaleY = (double) this.getHeight() / maxY;
 
             // Recorrido para pintar la gráfica
             // Se recorren los tiempos de cada algoritmo
             g.setColor(Color.BLUE);
             for(int i = 0; i < (arrayTiempos.size() - 1); i++) {
-                int x1 = (int) (arrayCifras.get(i) * scaleX);
+                int x1 = (int) ((arrayCifras.get(i) - minX) * scaleX);
                 // Se invierte el eje Y para que la gráfica tenga una visión más intuitiva
                 int y1 = (int) (this.getHeight() - (arrayTiempos.get(i) * scaleY));
-                int x2 = (int) (arrayCifras.get(i + 1) * scaleX);
+                int x2 = (int) ((arrayCifras.get(i + 1) - minX) * scaleX);
                 // Se invierte el eje Y para que la gráfica tenga una visión más intuitiva
                 int y2 = (int) (this.getHeight() - (arrayTiempos.get(i + 1) * scaleY));
                 // Une los puntos con una línea

@@ -6,9 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class Modal extends JDialog implements ActionListener {
-
-    private JButton ok;
+public class Modal extends JDialog {
 
     public Modal(Vista p, String event) {
         JPanel interior = new PanelGraficoDibujo(p.getProg());
@@ -24,20 +22,5 @@ public class Modal extends JDialog implements ActionListener {
         this.pack();
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setLayout(new BorderLayout());
-    }
-
-    private void constructB() {
-        ok = new JButton("Ok");
-        ok.addActionListener(this);
-        this.add(ok, BorderLayout.SOUTH);
-        this.pack();
-        this.setLocationRelativeTo(null);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == ok) {
-            this.dispose();
-        }
     }
 }

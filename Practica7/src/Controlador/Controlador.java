@@ -232,19 +232,17 @@ public class Controlador {
     }
 
     public BigInteger encriptar(BigInteger m) {
-        System.out.println("Valor original: " + m + " (" + (char) m.intValue() + ")");
+        //System.out.println("Valor original: " + m + " (" + (char) m.intValue() + ")");
         BigInteger[] clave = modelo.getClavePublica(); // [0] = e, [1] = n
         BigInteger num = m.modPow(clave[0], clave[1]);
-        System.out.println("Valor encriptado: " + num);
+        //System.out.println("Valor encriptado: " + num);
         return num;
     }
 
     public char desencriptar(BigInteger c) {
         BigInteger[] clave = modelo.getClavePrivada(); // [0] = d, [1] = n
         BigInteger num = c.modPow(clave[0], clave[1]);
-        // Mod 256 porque es el id máximo en ASCII
-        //num = num.mod(new BigInteger("256"));
-        System.out.println("Valor desencriptado: " + num + " (" + (char) num.intValue() + ")");
+        //System.out.println("Valor desencriptado: " + num + " (" + (char) num.intValue() + ")");
         return (char) num.intValue();
     }
 

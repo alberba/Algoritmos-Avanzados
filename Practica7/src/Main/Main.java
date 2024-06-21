@@ -29,9 +29,6 @@ public class Main implements Notificacion {
         new Main();
     }
 
-
-
-
     @Override
     public void notificar(NotiEnum s, Object o)  {
         if(NotiEnum.FACTORIZAR == s){
