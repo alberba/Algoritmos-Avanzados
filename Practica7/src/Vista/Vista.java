@@ -1,6 +1,7 @@
 package Vista;
 
 import Main.Main;
+import Modelo.Modelo;
 import Notification.NotiEnum;
 import Notification.Notificacion;
 
@@ -16,6 +17,7 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
     private final Main prog;
     private final JButton factorizarButton, claveRSAButton, encriptarButton, desencriptarButton, comprimirFicheroButton;
     private final PanelGrafico panel;
+//    private final PanelGraficoDibujo panelDibujo;
 
     public Vista(String title, Main p) {
         super(title);
@@ -51,6 +53,10 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         this.add(scrollPane, BorderLayout.CENTER);
+
+        // PANEL GRAFICO DIBUJO
+//        panelDibujo = new PanelGraficoDibujo(p);
+//        this.add(panelDibujo, BorderLayout.CENTER);
 
         panel.repaint();
     }
@@ -105,10 +111,17 @@ public class Vista extends JFrame implements ActionListener, Notificacion {
         return panel;
     }
 
+    public Main getProg() {
+        return prog;
+    }
+
     @Override
     public void notificar(NotiEnum s, Object message) {
-        if(s == NotiEnum.ADDOUTPUT){
+        if (s == NotiEnum.ADDOUTPUT) {
             panel.añadirTexto((String) message);
+        } else if (s == NotiEnum.PINTARGRAFICO) {
+            Modal m = new Modal(this, "Tiempos de Factorización");
+            m.setVisible(true);
         }
     }
 }

@@ -1,5 +1,7 @@
 package Controlador;
 
+import Modelo.NodoHuffman;
+
 import java.util.*;
 
 public class Huffman {

@@ -3,6 +3,7 @@ package Controlador;
 import Main.Main;
 import Notification.NotiEnum;
 import Vista.Vista;
+import Modelo.Modelo;
 
 import java.math.BigInteger;
 import java.util.TreeMap;
@@ -10,16 +11,22 @@ import java.util.TreeMap;
 public class Factorizador extends Thread {
     private final Controlador controlador;
     private final Vista vista;
+    private final Modelo modelo;
     private String n;
 
     public Factorizador(Main p, Controlador controlador, String n) {
         this.vista = p.getVista();
         this.controlador = controlador;
+        this.modelo = p.getModelo();
         this.n = n;
     }
 
     public void run() {
         factorizar();
+        if (modelo.getCifras().size() > 1) {
+            System.out.println("Entró en el if");
+            vista.notificar(NotiEnum.PINTARGRAFICO, null);
+        }
     }
 
     /**
@@ -69,7 +76,8 @@ public class Factorizador extends Thread {
             vista.notificar(NotiEnum.ADDOUTPUT, "   factor -------> " + factor + "  (x" + factores.get(factor) + ")\n");
         }
         vista.notificar(NotiEnum.ADDOUTPUT, "He tardado " + temps + " nanosec\n");
-        //modelo.notificar(NotiEnum.ADDTIEMPO, [n.length().toLong(), temps]);
+        // Se almacenan los resultados
+        modelo.notificar(NotiEnum.ADDTIEMPO, new long[]{(long) n.length(), temps});
     }
 
     /**

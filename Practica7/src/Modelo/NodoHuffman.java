@@ -1,4 +1,4 @@
-package Controlador;
+package Modelo;
 
 public class NodoHuffman implements Comparable<NodoHuffman> {
 

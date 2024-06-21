@@ -5,21 +5,16 @@ import Notification.NotiEnum;
 import Notification.Notificacion;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.TreeMap;
 
 public class Modelo implements Notificacion {
     private BigInteger expPrivado, expPublico, modulo;
     TreeMap<Integer, Long> tiempos; // Almacena los tiempos de factorizar según las cifras del valor factorizado
-    private Random random = new Random();
     private final Main prog;
 
     public Modelo (Main p) {
         this.prog = p;
-    }
-
-    public Modelo(Main p, String texto) {
-        this.prog = p;
+        this.tiempos = new TreeMap<>();
     }
 
     // Bits necesarios para un valor de 600 dígitos (aprox)
@@ -34,6 +29,20 @@ public class Modelo implements Notificacion {
     }
     public void setModulo(BigInteger modul){
         this.modulo = modul;
+    }
+
+    public ArrayList<Integer> getCifras() {
+        // Se devuelven las keys del TreeMap tiempos
+        return new ArrayList<>(this.tiempos.keySet());
+    }
+
+    public ArrayList<Long> getTiempos() {
+        ArrayList<Long> tiempos = new ArrayList<>();
+        // Se devuelven los values de cada key del TreeMap tiempos
+        for (int key : this.tiempos.keySet()) {
+            tiempos.add(this.tiempos.get(key));
+        }
+        return tiempos;
     }
 
     public BigInteger[] getClavePublica() {
