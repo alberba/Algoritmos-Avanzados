@@ -17,6 +17,7 @@ public class PanelGrafico extends JTextArea {
         modelo = p.getModelo();
         this.setPreferredSize(new Dimension(anchura, altura));
         this.setEditable(false);
+        this.setLineWrap(true);
     }
 
     @Override

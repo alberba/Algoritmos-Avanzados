@@ -8,6 +8,7 @@ import Notification.Notificacion;
 import Vista.Vista;
 import mesurament.Mesurament24;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -32,12 +33,24 @@ public class Main implements Notificacion {
 
 
     @Override
-    public void notificar(NotiEnum s, Object o) {
+    public void notificar(NotiEnum s, Object o)  {
         if(NotiEnum.FACTORIZAR == s){
             modelo.notificar(NotiEnum.FACTORIZAR, o);
             controlador = new Controlador(this);
             Factorizador factorizador = new Factorizador(this, controlador, (String) o);
             factorizador.start();
+        } else if(NotiEnum.COMPRIMIR == s){
+            try {
+                controlador.comprimirArchivo((String) o);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (NotiEnum.RSA == s) {
+            controlador.RSA();
+        } else if (NotiEnum.ENCRIPTAR == s) {
+            controlador.encriptarArchivo((String) o);
+        } else if (NotiEnum.DESENCRIPTAR == s) {
+            controlador.desencriptarArchivo((String) o);
         }
     }
 

@@ -20,9 +20,6 @@ public class Factorizador extends Thread {
 
     public void run() {
         factorizar();
-        factorizar();
-        factorizar();
-        factorizar();
     }
 
     /**
@@ -33,7 +30,6 @@ public class Factorizador extends Thread {
         BigInteger zero = new BigInteger("0");
         BigInteger dos = new BigInteger("2");
         BigInteger tres = new BigInteger("3");
-        BigInteger uno = new BigInteger("1");
         BigInteger test = new BigInteger("5");
         TreeMap<BigInteger, Integer> factores = new TreeMap<>();
         vista.notificar(NotiEnum.ADDOUTPUT, "Voy a factorizar " + num + "\n");
@@ -73,6 +69,7 @@ public class Factorizador extends Thread {
             vista.notificar(NotiEnum.ADDOUTPUT, "   factor -------> " + factor + "  (x" + factores.get(factor) + ")\n");
         }
         vista.notificar(NotiEnum.ADDOUTPUT, "He tardado " + temps + " nanosec\n");
+        //modelo.notificar(NotiEnum.ADDTIEMPO, [n.length().toLong(), temps]);
     }
 
     /**
